@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module' 
 import { AppComponent } from './app.component';
@@ -17,6 +18,10 @@ import { FlightListComponent } from './components/content/flights/flight-list/fl
 import { FlightDetailsComponent } from './components/content/flights/flight-details/flight-details.component';
 import { FlightComponent } from './components/content/flights/flight-list/flight/flight.component';
 import { AirlineCompanyDetailsComponent } from './components/content/flights/airline-company-details/airline-company-details.component';
+import { ServerService } from './components/content/server.service';
+import { LoginComponent } from './components/content/login/login.component';
+import { ErrorPageComponent } from './components/content/error-page/error-page.component';
+import { RegisterComponent } from './components/content/register/register.component';
 
 @NgModule({
   declarations: [
@@ -35,12 +40,17 @@ import { AirlineCompanyDetailsComponent } from './components/content/flights/air
     FlightDetailsComponent,
     FlightComponent,
     AirlineCompanyDetailsComponent,
+    LoginComponent,
+    ErrorPageComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

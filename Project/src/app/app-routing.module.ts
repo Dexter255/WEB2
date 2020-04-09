@@ -7,6 +7,9 @@ import { RentACarCompanyDetailsComponent } from './components/content/rent-a-car
 import { FlightsComponent } from './components/content/flights/flights.component';
 import { FlightDetailsComponent } from './components/content/flights/flight-details/flight-details.component';
 import { AirlineCompanyDetailsComponent } from './components/content/flights/airline-company-details/airline-company-details.component';
+import { ErrorPageComponent } from './components/content/error-page/error-page.component';
+import { LoginComponent } from './components/content/login/login.component';
+import { RegisterComponent } from './components/content/register/register.component';
 
 
 const routes: Routes = [
@@ -19,7 +22,9 @@ const routes: Routes = [
       { path: ":id", component: VehicleDetailsComponent },
       { path: ":id/:rac-companyName", component: RentACarCompanyDetailsComponent }
     ]},
-    //{ path: "**", component: }
+    { path: "login", component: LoginComponent },
+    { path: "register", component: RegisterComponent },
+    { path: "**", component: ErrorPageComponent }
 ];
 
 @NgModule({

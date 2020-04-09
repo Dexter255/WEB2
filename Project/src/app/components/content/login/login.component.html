@@ -1,0 +1,24 @@
+<div class="row justify-content-center">
+    <form class="w-25 p-3" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h3 class="text-center p-3">Sign in</h3>
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="Email address" formControlName="email" id="email">
+            <span class="p-2 text-red" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">
+                Email must be entered!
+            </span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" placeholder="Password" formControlName="password" id="password">
+            <span class="p-2 text-red" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+                Password must be entered!
+            </span>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit">Sign in</button>
+        </div>
+        <div style="color: black" class="p-3">
+            Don't have an account?
+            <a class="ml-3" style="color: blue" routerLink="/register">Sign up</a>
+        </div>
+    </form>
+</div>
