@@ -1,29 +1,50 @@
 <div class="row justify-content-center">
-    <form class="w-25 p-3">
+    <form class="w-25 p-3" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <h3 class="text-center p-3">Sign up</h3>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Name">
+            <input class="form-control" type="text" placeholder="Name" formControlName="name" id="name">
+            <span class="p-2 text-red" *ngIf="!registerForm.get('name').valid && registerForm.get('name').touched">
+                Name must be entered!
+            </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Lastname">
+            <input class="form-control" type="text" placeholder="Lastname" formControlName="lastname" id="lastname">
+            <span class="p-2 text-red" *ngIf="!registerForm.get('lastname').valid && registerForm.get('lastname').touched">
+                Lastname must be entered!
+            </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="email" placeholder="Email address">
+            <input class="form-control" type="email" placeholder="Email address" formControlName="email" id="email">
+            <span *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
+                <span class="p-2 text-red" *ngIf="registerForm.get('email').errors['email'] || registerForm.get('email').errors['required']">
+                    Email must be entered!
+                </span>
+                <span class="p-2 text-red" *ngIf="registerForm.get('email').errors['emailIsInvalid']">
+                    Email is invalid!
+                </span>
+            </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Mobile phone">
+            <input class="form-control" type="password" placeholder="Password" formControlName="password" id="password">
+            <span *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
+                <span class="p-2 text-red" *ngIf="registerForm.get('password').errors['passwordTooShort']">
+                    Password must be atleast 6 character!
+                </span>
+                <!-- <span class="p-2 text-red" *ngIf="registerForm.get('password').errors['required']">
+                    Password must be atleast 6 character!
+                </span> -->
+            </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Address">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" placeholder="Confirm password">
+            <input class="form-control" type="password" placeholder="Confirm password" formControlName="passwordConfirmed" id="passwordConfirmed">
+            <span *ngIf="!registerForm.get('passwordConfirmed').valid && registerForm.get('passwordConfirmed').touched">
+                <span class="p-2 text-red" *ngIf="registerForm.get('passwordConfirmed').errors['passwordNotMatch']">
+                    Passwords must be the same!
+                </span>
+            </span>
         </div>
         <div class="text-center">
-            <button class="btn btn-primary">Sign in</button>
+            <button type="submit" class="btn btn-primary">Sign up</button>
         </div>
         <div style="color: black" class="p-3">
             Already have an account?
