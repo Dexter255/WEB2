@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -8,8 +7,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  registerForm: FormGroup;
-  forbiddenEmails = ['mihajlo@gmail.com', 'rohalj@gmail.com'];
+  public registerForm: FormGroup;
     
   constructor() { }
 
@@ -19,14 +17,15 @@ export class RegisterComponent implements OnInit {
       'lastname': new FormControl(null, Validators.required),
       'email': new FormControl(null, [Validators.required, Validators.email, this.checkEmail]),
       'password': new FormControl(null, [Validators.required, this.checkPassword]),
-      'passwordConfirmed': new FormControl(null, [Validators.required, this.checkPasswordConfirmed.bind(this)]),
+      'passwordConfirmed': new FormControl(null, Validators.required),
     });
   }
 
   onSubmit() {
     //console.log(this.registerForm.get('email'));
     //console.log(this.registerForm.get('password').value.length);
-    console.log(this.registerForm.get('passwordConfirmed'));
+    //console.log(this.registerForm.get('passwordConfirmed'));
+    console.log(this.registerForm.get('password'));
   }
 
   checkEmail(formControl: FormControl): { [s: string]: boolean } {
@@ -51,13 +50,14 @@ export class RegisterComponent implements OnInit {
 
   // mora da se podudara sa sifrom
   checkPasswordConfirmed(formControl: FormControl): { [s: string]: boolean } {
-    if(this.registerForm.get('password').value !== null){
-      if(this.registerForm.get('password').value !== formControl.value){
-        return { 'passwordNotMatch': true };
-      }
-    }
-    else{
-      return null;
-    }
+    // if(this.registerForm.get('password').value !== null){
+    //   // if(this.registerForm.get('password').value !== formControl.value){
+    //   //   return { 'passwordNotMatch': true };
+    //   // }
+    // }
+    // else{
+    //   return null;
+    // }
+    return null;
   }
 }
