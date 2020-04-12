@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightsService } from '../flights.service';
+import { Flight } from 'src/app/models/flight/flight.model';
+
 
 @Component({
   selector: 'app-flight-list',
@@ -7,7 +9,7 @@ import { FlightsService } from '../flights.service';
   styleUrls: ['./flight-list.component.css']
 })
 export class FlightListComponent implements OnInit {
-  flights: string[];
+  flights: Flight[];
 
   constructor(private flightsService: FlightsService) { }
 

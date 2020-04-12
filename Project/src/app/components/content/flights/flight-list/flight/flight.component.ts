@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Flight } from 'src/app/models/flight/flight.model';
+
 
 @Component({
   selector: 'app-flight',
@@ -6,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./flight.component.css']
 })
 export class FlightComponent implements OnInit {
-  @Input() flight: string;
+  @Input() flight: Flight;
   @Input() id: number;
 
   constructor() { }

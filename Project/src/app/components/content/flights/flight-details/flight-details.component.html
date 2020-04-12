@@ -1,7 +1,58 @@
-<div class="row">
-    <label> IZLISTATI PODATKE O LETU </label>
-</div>
-<div class="row">
-    <label> PROMENITI RUTU ZA DETAILS </label>
-    <a class="btn btn-info ml-4" [routerLink]="[flight]">Details</a>
+<div class="container" style="background-color: white;">
+    <div class="row">
+        <div class="col-md-4">
+            <label> Starting flight date and time:</label>
+        </div>
+        <div class="col-md-8">
+            <label> {{ flight.startFlightDateAndTime }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Ending flight date and time: </label>
+        </div>
+        <div class="col-md-8">
+            <label > {{ flight.endFlightDateAndTime }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Flight hours: </label>
+        </div>
+        <div class="col-md-8">
+            <label> {{ flight.flightHours }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Flight distance: </label>
+        </div>
+        <div class="col-md-8">
+            <label> {{ flight.flightDistance }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Number of flight locations: </label>
+        </div>
+        <div class="col-md-8">
+            <label> {{ flight.numberOfLocations }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Flight locations: </label>
+        </div>
+        <div class="col-md-8">
+            <label> {{ flight.flightLocations }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Ticket price: </label>
+        </div>
+        <div class="col-md-8">
+            <label> {{ flight.flightTicketPrice }} </label>
+        </div>
+    </div>
 </div>
