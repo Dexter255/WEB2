@@ -25,12 +25,31 @@
             </span>
         </div>
         <div class="form-group">
+            <input class="form-control" type="text" placeholder="City" formControlName="city" id="city">
+            <span *ngIf="!registerForm.get('city').valid && registerForm.get('city').touched">
+                <span class="p-2 text-red" *ngIf="registerForm.get('city').errors['required']">
+                    City must be entered!
+                </span>
+            </span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="Number" formControlName="number" id="number">
+            <span *ngIf="!registerForm.get('number').valid && registerForm.get('number').touched">
+                <span class="p-2 text-red" *ngIf="registerForm.get('number').errors['required']">
+                    Number must be entered!
+                </span>
+                <span class="p-2 text-red" *ngIf="registerForm.get('number').errors['pattern']">
+                    Only numbers from 0-9 are allowed!
+                </span>
+            </span>
+        </div>
+        <div class="form-group">
             <input class="form-control" type="password" placeholder="Password" formControlName="password" id="password">
             <span *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
                 <span class="p-2 text-red" *ngIf="registerForm.get('password').errors['required']">
                     Password must be entered!
                 </span>
-                <span class="p-2 text-red" *ngIf="registerForm.get('password').errors['passwordTooShort']">
+                <span class="p-2 text-red" *ngIf="registerForm.get('password').errors['minlength']">
                     Password must be atleast 6 character!
                 </span>
             </span>
@@ -38,13 +57,16 @@
         <div class="form-group">
             <input class="form-control" type="password" placeholder="Confirm password" formControlName="passwordConfirmed" id="passwordConfirmed">
             <span *ngIf="!registerForm.get('passwordConfirmed').valid && registerForm.get('passwordConfirmed').touched">
-                <span class="p-2 text-red" *ngIf="registerForm.get('passwordConfirmed').errors['passwordNotMatch']">
-                    Passwords must be the same!
+                <span class="p-2 text-red" *ngIf="registerForm.get('passwordConfirmed').errors['required']">
+                    Passwords must be entered!
                 </span>
+                <!-- <span class="p-2 text-red" *ngIf="registerForm.get('passwordConfirmed').errors['passwordNotMatch']">
+                    Passwords must be the same!
+                </span> -->
             </span>
         </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-primary">Sign up</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Sign up</button>
         </div>
         <div style="color: black" class="p-3">
             Already have an account?

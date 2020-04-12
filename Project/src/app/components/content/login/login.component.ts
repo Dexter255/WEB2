@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ServerService } from '../../server.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,8 +10,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  error = false;
 
-  constructor() { }
+  constructor(private serverService: ServerService, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -19,6 +22,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log("ASD");
+    this.serverService.login(
+      this.loginForm.get('email').value,
+      this.loginForm.get('password').value
+    ) === 0 ? this.error = true : this.router.navigate(['']);
   }
 }

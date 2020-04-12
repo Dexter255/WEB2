@@ -13,6 +13,9 @@
                 Password must be entered!
             </span>
         </div>
+        <span class="p-2 text-red" *ngIf="error === true">
+            Incorrect email or password!
+        </span>
         <div class="text-center">
             <button class="btn btn-primary" type="submit">Sign in</button>
         </div>

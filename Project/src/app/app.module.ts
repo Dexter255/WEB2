@@ -18,12 +18,12 @@ import { FlightListComponent } from './components/content/flights/flight-list/fl
 import { FlightDetailsComponent } from './components/content/flights/flight-details/flight-details.component';
 import { FlightComponent } from './components/content/flights/flight-list/flight/flight.component';
 import { AirlineCompanyDetailsComponent } from './components/content/flights/airline-company-details/airline-company-details.component';
-import { ServerService } from './components/content/server.service';
 import { LoginComponent } from './components/content/login/login.component';
 import { ErrorPageComponent } from './components/content/error-page/error-page.component';
 import { RegisterComponent } from './components/content/register/register.component';
 import { ListaPrijateljaComponent } from './components/content/profil-korisnika/lista-prijatelja/lista-prijatelja.component';
 import { PrijateljComponent } from './components/content/profil-korisnika/lista-prijatelja/prijatelj/prijatelj.component';
+import { ServerService } from './components/server.service';
 
 @NgModule({
   declarations: [
