@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ServerService } from '../../server.service';
 import { korisnik } from 'src/app/models/korisnik/korisnik';
 import { Router } from '@angular/router';
+import { UserType } from 'src/app/models/korisnik/user-type.model';
 
 @Component({
   selector: 'app-register',
@@ -37,6 +38,7 @@ export class RegisterComponent implements OnInit {
       this.registerForm.get('city').value,
       this.registerForm.get('number').value,
       this.registerForm.get('password').value,
+      UserType.User
     )
 
     this.serverService.register(user);

@@ -1,3 +1,4 @@
+import { UserType } from './user-type.model';
 
 export class korisnik
 {
@@ -5,15 +6,21 @@ export class korisnik
     prezime: string;
     email: string;
     adresa: string;
-    telefon: number;
+    telefon: string;
     password: string;
+    type: UserType;
 
-    constructor(ime: string, prezime: string, email: string, adresa: string, telefon: number, password: string){
+    constructor(ime: string, prezime: string, email: string, adresa: string, telefon: string, password: string, type: UserType){
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;
         this.adresa = adresa;
         this.telefon = telefon;
         this.password = password;
+        this.type = type;
+    }
+
+    getType(){
+        return UserType[this.type];
     }
 };

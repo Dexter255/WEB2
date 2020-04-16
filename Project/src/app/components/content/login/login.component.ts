@@ -25,6 +25,6 @@ export class LoginComponent implements OnInit {
     this.serverService.login(
       this.loginForm.get('email').value,
       this.loginForm.get('password').value
-    ) === 0 ? this.error = true : this.router.navigate(['']);
+    ) === false ? this.error = true : this.router.navigate(['']);
   }
 }

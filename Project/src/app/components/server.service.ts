@@ -1,5 +1,6 @@
 import { korisnik } from '../models/korisnik/korisnik';
 import { OnInit } from '@angular/core';
+import { UserType } from '../models/korisnik/user-type.model';
 
 export class ServerService{
     private loggedIn = false;
@@ -8,24 +9,42 @@ export class ServerService{
 
     constructor(){
         this.users = [];
+        this.loggedIn = true;
+        this.user = new korisnik('Mihajlo', 'Rohalj', 'mihajlorohalj97@gmail.com', 'Sremska Mitrovica, Ratarska 32', '0640551693',
+        '123123', UserType.User);
+        this.users.push(this.user);
     }
 
-    login(email: string, password: string): number{
-        this.users.forEach(element => {
-            if(element.email === email){
-                if(element.password === password){
-                    return 1;
+    login(email: string, password: string): boolean{
+        for(let i = 0; i < this.users.length; i++){
+            if(this.users[i].email === email){
+                if(this.users[i].password === password){
+                    this.user = this.users[i];
+                    this.loggedIn =  true;
+                    return true;
+                }
+                else{
+                    return false;
                 }
             }
-        });
-        return 0;
+        }
+        return false;
     }
 
     logout(){
-
+        this.user = null;
+        this.loggedIn = false;
     }
 
     register(user: korisnik){
         this.users.push(user);
+    }
+
+    isUserLoggedIn(){
+        return this.loggedIn;
+    }
+
+    getUserType(){
+        return this.user.getType();
     }
 }
