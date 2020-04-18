@@ -23,4 +23,8 @@ export class korisnik
     getType(){
         return UserType[this.type];
     }
+    
+    setType(userType: UserType){
+        this.type = userType;
+    }
 };

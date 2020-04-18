@@ -1,0 +1,77 @@
+<div class="container mt-3 ml-5">
+    <h3>Add admin</h3>
+    <form [formGroup]="addAdmin" (ngSubmit)="onSubmit()">
+       <div class="form-group row">
+            <label for="name" class="col-md-1 col-form-label">Name</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="name" formControlName="name" autocomplete="off">
+            </div>
+            <div class="col-md-7">
+                <span *ngIf="!addAdmin.get('name').valid && addAdmin.get('name').touched">
+                    <span *ngIf="addAdmin.get('name').errors['required']">Name must be entered</span>
+                    <span *ngIf="addAdmin.get('name').errors['minlength']">Name must be atleast 4 characters!</span>
+                </span>
+            </div>
+        </div> 
+        <div class="form-group row">
+            <label for="lastname" class="col-md-1 col-form-label">Lastname</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="lastname" formControlName="lastname" autocomplete="off">
+            </div>
+            <div class="col-md-7">
+                <span *ngIf="!addAdmin.get('lastname').valid && addAdmin.get('lastname').touched">
+                    <span *ngIf="addAdmin.get('lastname').errors['required']">Lastname must be entered</span>
+                    <span *ngIf="addAdmin.get('lastname').errors['minlength']">Lastname must be atleast 4 characters!</span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-md-1 col-form-label">Email</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="email" formControlName="email" autocomplete="off">
+            </div>
+            <div class="col-md-7">
+                <span *ngIf="!addAdmin.get('email').valid && addAdmin.get('email').touched">
+                    <span *ngIf="addAdmin.get('email').errors['email'] || addAdmin.get('email').errors['required']">
+                        Email must be entered!
+                    </span>
+                    <!-- <span class="p-2 text-red" *ngIf="registerForm.get('email').errors['emailIsInvalid']">
+                        Email is invalid!
+                    </span> -->
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="address" class="col-md-1 col-form-label">Address</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="address" formControlName="address" autocomplete="off">
+            </div>
+            <div class="col-md-7">
+                <span *ngIf="!addAdmin.get('address').valid && addAdmin.get('address').touched">
+                    Address must be entered!                
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="number" class="col-md-1 col-form-label">Number</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="number" formControlName="number" autocomplete="off">
+            </div>
+            <div class="col-md-7">
+                <span *ngIf="!addAdmin.get('number').valid && addAdmin.get('number').touched">
+                    <span *ngIf="addAdmin.get('number').errors['required']">Number must be entered!</span>
+                    <span *ngIf="addAdmin.get('number').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-1 col-form-label">Password</label>
+            <div class="col-md-3">
+                <p style="margin-top: 7px;">By default: 123123</p>
+            </div>
+        </div>
+        <div class="ml-5">
+            <button [disabled]="!addAdmin.valid" class="btn btn-success" type="submit">Add admin</button>
+        </div>
+    </form>
+</div>

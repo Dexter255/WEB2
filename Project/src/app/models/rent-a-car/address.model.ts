@@ -13,7 +13,7 @@ export class Address{
         this.zipCode = zipCode;
     }
 
-    getAddress(){
+    public toString = () : string => {
         return this.country + ", " + this.city + ", " + this.street + " " + this.number + ", " + this.zipCode;
     }
 }

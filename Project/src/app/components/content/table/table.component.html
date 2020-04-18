@@ -1,0 +1,16 @@
+<div class="row ml-3 mr-3 mt-3">
+    <button class="btn btn-success mb-3" (click)="onAddElement()">Add new element</button>
+    <table class="table table-dark">
+        <thead>
+            <tr class="text-center">
+                <th scope="col" *ngFor="let column of columns"> {{ column }}</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="text-center" *ngFor="let dataEl of dataArray; let i = index" app-table-row [data]="dataEl"
+                [properties]="properties" [id]="i" (deleteCommand)="onDelete($event)">
+            </tr>
+        </tbody>
+    </table>
+</div>

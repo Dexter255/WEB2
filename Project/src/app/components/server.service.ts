@@ -1,5 +1,4 @@
 import { korisnik } from '../models/korisnik/korisnik';
-import { OnInit } from '@angular/core';
 import { UserType } from '../models/korisnik/user-type.model';
 
 export class ServerService{
@@ -9,9 +8,11 @@ export class ServerService{
 
     constructor(){
         this.users = [];
+        // trenutno ulogovan user
         this.loggedIn = true;
         this.user = new korisnik('Mihajlo', 'Rohalj', 'mihajlorohalj97@gmail.com', 'Sremska Mitrovica, Ratarska 32', '0640551693',
-        '123123', UserType.User);
+        '123123', UserType.Admin);
+
         this.users.push(this.user);
     }
 

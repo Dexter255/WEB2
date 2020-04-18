@@ -1,6 +1,7 @@
 export enum UserType{
     Admin = 0,
-    Admin_RentACar,
+    Admin_RentACarCompanies,
     Admin_Airlines,
-    User
+    User,
+    None
 }

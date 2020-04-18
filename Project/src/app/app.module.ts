@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module' 
+import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ContentComponent } from './components/content/content.component';
@@ -24,6 +24,18 @@ import { RegisterComponent } from './components/content/register/register.compon
 import { ListaPrijateljaComponent } from './components/content/profil-korisnika/lista-prijatelja/lista-prijatelja.component';
 import { PrijateljComponent } from './components/content/profil-korisnika/lista-prijatelja/prijatelj/prijatelj.component';
 import { ServerService } from './components/server.service';
+import { AdminPanelComponent } from './components/content/admin-panel/admin-panel.component';
+import { AdminHeaderComponent } from './components/content/admin-panel/admin-header/admin-header.component';
+import { AdminContentComponent } from './components/content/admin-panel/admin-content/admin-content.component';
+import { TableComponent } from './components/content/table/table.component';
+import { TableRowComponent } from './components/content/table/table-row/table-row.component';
+import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/add-rac-company/add-rac-company.component';
+import { AddAirlineComponent } from './components/content/admin-panel/admin-content/add-airline/add-airline.component';
+import { AddAdminComponent } from './components/content/admin-panel/admin-content/add-admin/add-admin.component';
+import { AdminsService } from './components/content/admin-panel/admin-content/admins.service';
+import { RacCompaniesService } from './components/content/admin-panel/admin-content/rac-companies.service';
+import { AirlinesService } from './components/content/admin-panel/admin-content/airlines.service';
+import { RentACarService } from './components/content/rent-a-car/rent-a-car.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +43,7 @@ import { ServerService } from './components/server.service';
     HeaderComponent,
     ContentComponent,
     ProfilKorisnikaComponent,
-	PrijateljComponent,
+    PrijateljComponent,
     ListaPrijateljaComponent,
     HomeComponent,
     RentACarComponent,
@@ -47,6 +59,14 @@ import { ServerService } from './components/server.service';
     LoginComponent,
     ErrorPageComponent,
     RegisterComponent,
+    AdminPanelComponent,
+    AdminHeaderComponent,
+    AdminContentComponent,
+    TableComponent,
+    TableRowComponent,
+    AddRacCompanyComponent,
+    AddAirlineComponent,
+    AddAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +74,7 @@ import { ServerService } from './components/server.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ServerService],
+  providers: [ServerService, RacCompaniesService, AirlinesService, AdminsService, RentACarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

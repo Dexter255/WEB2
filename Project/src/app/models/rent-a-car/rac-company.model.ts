@@ -15,6 +15,7 @@ export class RentACarCompany{
         this.companyName = companyName;
         this.address = address;
         this.description = description;
+        this.rating = 0;
         this.services = services;
         //this.vehicles = vehicles;
         this.branches = branches;

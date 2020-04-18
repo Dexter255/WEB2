@@ -2,65 +2,67 @@
     <form class="w-25 p-3" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <h3 class="text-center p-3">Sign up</h3>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Name" formControlName="name" id="name">
-            <span class="p-2 text-red" *ngIf="!registerForm.get('name').valid && registerForm.get('name').touched">
-                Name must be entered!
+            <input class="form-control" type="text" placeholder="Name" formControlName="name" id="name" autocomplete="off">
+            <span *ngIf="!registerForm.get('name').valid && registerForm.get('name').touched">
+                <span class="p-2" *ngIf="registerForm.get('name').errors['required']"> Name must be entered!</span>
+                <span class="p-2" *ngIf="registerForm.get('name').errors['minlength']"> Name must be atleast 4 character!</span>
             </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Lastname" formControlName="lastname" id="lastname">
-            <span class="p-2 text-red" *ngIf="!registerForm.get('lastname').valid && registerForm.get('lastname').touched">
-                Lastname must be entered!
+            <input class="form-control" type="text" placeholder="Lastname" formControlName="lastname" id="lastname" autocomplete="off">
+            <span *ngIf="!registerForm.get('lastname').valid && registerForm.get('lastname').touched">
+                <span class="p-2" *ngIf="registerForm.get('lastname').errors['required']"> Lastname must be entered!</span>
+                <span class="p-2" *ngIf="registerForm.get('lastname').errors['minlength']"> Lastname must be atleast 4 character!</span>
             </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="email" placeholder="Email address" formControlName="email" id="email">
+            <input class="form-control" type="email" placeholder="Email address" formControlName="email" id="email" autocomplete="off">
             <span *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
-                <span class="p-2 text-red" *ngIf="registerForm.get('email').errors['email'] || registerForm.get('email').errors['required']">
+                <span class="p-2" *ngIf="registerForm.get('email').errors['email'] || registerForm.get('email').errors['required']">
                     Email must be entered!
                 </span>
-                <span class="p-2 text-red" *ngIf="registerForm.get('email').errors['emailIsInvalid']">
+                <span class="p-2" *ngIf="registerForm.get('email').errors['emailIsInvalid']">
                     Email is invalid!
                 </span>
             </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="City" formControlName="city" id="city">
+            <input class="form-control" type="text" placeholder="City" formControlName="city" id="city" autocomplete="off">
             <span *ngIf="!registerForm.get('city').valid && registerForm.get('city').touched">
-                <span class="p-2 text-red" *ngIf="registerForm.get('city').errors['required']">
+                <span class="p-2" *ngIf="registerForm.get('city').errors['required']">
                     City must be entered!
                 </span>
             </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Number" formControlName="number" id="number">
+            <input class="form-control" type="text" placeholder="Number" formControlName="number" id="number" autocomplete="off">
             <span *ngIf="!registerForm.get('number').valid && registerForm.get('number').touched">
-                <span class="p-2 text-red" *ngIf="registerForm.get('number').errors['required']">
+                <span class="p-2" *ngIf="registerForm.get('number').errors['required']">
                     Number must be entered!
                 </span>
-                <span class="p-2 text-red" *ngIf="registerForm.get('number').errors['pattern']">
+                <span class="p-2" *ngIf="registerForm.get('number').errors['pattern']">
                     Only numbers from 0-9 are allowed!
                 </span>
             </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" placeholder="Password" formControlName="password" id="password">
+            <input class="form-control" type="password" placeholder="Password" formControlName="password" id="password" autocomplete="off">
             <span *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
-                <span class="p-2 text-red" *ngIf="registerForm.get('password').errors['required']">
+                <span class="p-2" *ngIf="registerForm.get('password').errors['required']">
                     Password must be entered!
                 </span>
-                <span class="p-2 text-red" *ngIf="registerForm.get('password').errors['minlength']">
+                <span class="p-2 " *ngIf="registerForm.get('password').errors['minlength']">
                     Password must be atleast 6 character!
                 </span>
             </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" placeholder="Confirm password" formControlName="passwordConfirmed" id="passwordConfirmed">
+            <input class="form-control" type="password" placeholder="Confirm password" formControlName="passwordConfirmed" id="passwordConfirmed" autocomplete="off">
             <span *ngIf="!registerForm.get('passwordConfirmed').valid && registerForm.get('passwordConfirmed').touched">
-                <span class="p-2 text-red" *ngIf="registerForm.get('passwordConfirmed').errors['required']">
+                <span class="p-2" *ngIf="registerForm.get('passwordConfirmed').errors['required']">
                     Passwords must be entered!
                 </span>
-                <!-- <span class="p-2 text-red" *ngIf="registerForm.get('passwordConfirmed').errors['passwordNotMatch']">
+                <!-- <span class="p-2" *ngIf="registerForm.get('passwordConfirmed').errors['passwordNotMatch']">
                     Passwords must be the same!
                 </span> -->
             </span>

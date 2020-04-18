@@ -68,7 +68,7 @@
             <label> Belongs to: </label>
         </div>
         <div class="col-md-9">
-            <label> {{ vehicle.belongsToCompany.companyName }}, {{ vehicle.belongsToCompany.address.getAddress() }} </label>
+            <label> {{ vehicle.belongsToCompany.companyName }}, {{ vehicle.belongsToCompany.address }} </label>
             <a class="btn btn-info ml-4" [routerLink]="[vehicle.belongsToCompany.companyName]">Details</a>
         </div>
     </div>

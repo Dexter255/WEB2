@@ -2,18 +2,18 @@
     <form class="w-25 p-3" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <h3 class="text-center p-3">Sign in</h3>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Email address" formControlName="email" id="email">
-            <span class="p-2 text-red" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">
+            <input class="form-control" type="text" placeholder="Email address" formControlName="email" id="email" autocomplete="off">
+            <span class="p-2" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">
                 Email must be entered!
             </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" placeholder="Password" formControlName="password" id="password">
-            <span class="p-2 text-red" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+            <input class="form-control" type="password" placeholder="Password" formControlName="password" id="password" autocomplete="off">
+            <span class="p-2" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
                 Password must be entered!
             </span>
         </div>
-        <span class="p-2 text-red" *ngIf="error === true">
+        <span class="p-2" *ngIf="error === true">
             Incorrect email or password!
         </span>
         <div class="text-center">

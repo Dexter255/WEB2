@@ -10,6 +10,7 @@
             <a routerLink="rent-a-car" routerLinkActive="active" class="nav-item nav-link">Rent a car</a>
         </div>
         <div class="navbar-nav ml-auto" *ngIf="serverService.isUserLoggedIn() else notLoggedIn">
+            <a routerLink="admin-panel" routerLinkActive="active" class="nav-item nav-link mr-3" *ngIf="serverService.getUserType() !== 'User'">Admin panel</a>
             <div class="dropdown show mr-3">
                 <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Profile
