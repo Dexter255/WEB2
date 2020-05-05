@@ -1,7 +1,3 @@
-.col-md-7{
-    margin-top: 7px;
-}
-
 input.ng-invalid.ng-touched{
     border: 2px solid red;
 }

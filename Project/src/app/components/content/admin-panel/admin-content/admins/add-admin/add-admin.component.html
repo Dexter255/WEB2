@@ -1,5 +1,5 @@
 <div class="container mt-3 ml-5">
-    <h3>Add admin</h3>
+    <h3>{{ header }}</h3>
     <form [formGroup]="addAdmin" (ngSubmit)="onSubmit()">
        <div class="form-group row">
             <label for="name" class="col-md-1 col-form-label">Name</label>
@@ -64,14 +64,14 @@
                 </span>
             </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <label class="col-md-1 col-form-label">Password</label>
             <div class="col-md-3">
                 <p style="margin-top: 7px;">By default: 123123</p>
             </div>
-        </div>
+        </div> -->
         <div class="ml-5">
-            <button [disabled]="!addAdmin.valid" class="btn btn-success" type="submit">Add admin</button>
+            <button class="btn btn-success" [disabled]="!addAdmin.valid" type="submit"> {{ header }} </button>
         </div>
     </form>
 </div>

@@ -1,0 +1,10 @@
+<td> {{ admin.ime }}</td>
+<td> {{ admin.prezime }}</td>
+<td> {{ admin.email }}</td>
+<td>
+    <span>
+        <a [routerLink]="['details', id]" class="btn btn-info mr-2">Details</a>
+        <a [routerLink]="['edit', id]" class="btn btn-secondary mr-2">Edit</a>
+        <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+    </span>
+</td>

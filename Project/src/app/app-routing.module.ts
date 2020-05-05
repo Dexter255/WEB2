@@ -12,11 +12,10 @@ import { LoginComponent } from './components/content/login/login.component';
 import { RegisterComponent } from './components/content/register/register.component';
 import { ProfilKorisnikaComponent } from './components/content/profil-korisnika/profil-korisnika.component';
 import { AdminPanelComponent } from './components/content/admin-panel/admin-panel.component';
-import { TableComponent } from './components/content/table/table.component';
-import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/add-rac-company/add-rac-company.component';
-import { AddAdminComponent } from './components/content/admin-panel/admin-content/add-admin/add-admin.component';
-import { AddAirlineComponent } from './components/content/admin-panel/admin-content/add-airline/add-airline.component';
-
+import { AdminsComponent } from './components/content/admin-panel/admin-content/admins/admins.component';
+import { AdminListComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin-list.component';
+import { AddAdminComponent } from './components/content/admin-panel/admin-content/admins/add-admin/add-admin.component';
+import { AdminDetailsComponent } from './components/content/admin-panel/admin-content/admins/admin-details/admin-details.component';
 
 const routes: Routes = [
     { path: "", component: HomeComponent},
@@ -32,14 +31,18 @@ const routes: Routes = [
     { path: "register", component: RegisterComponent },
     { path: "userProfile", component: ProfilKorisnikaComponent },
     { path: "admin-panel", component: AdminPanelComponent, children: [
-      { path: "rac-companies", component: TableComponent },
-      { path: "rac-companies-admins", component: TableComponent },
-      { path: "airlines", component: TableComponent },
-      { path: "airlines-admins", component: TableComponent },
-      { path: "add-rac-company", component: AddRacCompanyComponent },
-      { path: "add-rac-companies-admin", component: AddAdminComponent },
-      { path: "add-airline", component: AddAirlineComponent },
-      { path: "add-airlines-admin", component: AddAdminComponent }
+      { path: "rac-companies-admins", component: AdminsComponent, children: [
+        { path: "", component: AdminListComponent },
+        { path: "add", component: AddAdminComponent },
+        { path: "edit/:id", component: AddAdminComponent},
+        { path: "details/:id", component: AdminDetailsComponent }
+      ] },
+      { path: "airlines-admins", component: AdminsComponent, children: [
+        { path: "", component: AdminListComponent },
+        { path: "add", component: AddAdminComponent },
+        { path: "edit/:id", component: AddAdminComponent },
+        { path: "details/:id", component: AdminDetailsComponent }
+      ] }
     ] },
     { path: "**", component: ErrorPageComponent }
 ];

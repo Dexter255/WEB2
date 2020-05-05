@@ -26,8 +26,13 @@ export class AdminsService{
         this.racCompaniesAdmins.push(user4);
     }
 
+    // rent a car companies
     getRentACarCompaniesAdmins(){
         return this.racCompaniesAdmins;
+    }
+
+    getRentACarCompaniesAdmin(index: number){
+        return this.racCompaniesAdmins[index];
     }
 
     deleteRentACarCompanyAdmin(index: number){
@@ -38,9 +43,18 @@ export class AdminsService{
         this.racCompaniesAdmins.push(user);
     }
 
+    updateRentACarCompanyAdmin(index: number, user: korisnik){
+        this.racCompaniesAdmins[index] = user;
+    }
 
+
+    // airlines
     getAirlinesAdmins(){
         return this.airlinesAdmins;
+    }
+
+    getAirlinesAdmin(index: number){
+        return this.airlinesAdmins[index];
     }
 
     deleteAirlineAdmin(index: number){
@@ -51,12 +65,7 @@ export class AdminsService{
         this.airlinesAdmins.push(user);
     }
 
-    // getRentACarAdmin(index: number){
-    //     return this.rentACarAdmins[index];
-    // }
-
-    // getAirlinesAdmin(index: number){
-    //     return this.airlinesAdmins[index];
-    // }
-
+    updateAirlinesAdmin(index: number, user: korisnik){
+        this.airlinesAdmins[index] = user;
+    }
 }

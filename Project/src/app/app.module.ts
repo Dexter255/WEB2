@@ -27,15 +27,15 @@ import { ServerService } from './components/server.service';
 import { AdminPanelComponent } from './components/content/admin-panel/admin-panel.component';
 import { AdminHeaderComponent } from './components/content/admin-panel/admin-header/admin-header.component';
 import { AdminContentComponent } from './components/content/admin-panel/admin-content/admin-content.component';
-import { TableComponent } from './components/content/table/table.component';
-import { TableRowComponent } from './components/content/table/table-row/table-row.component';
-import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/add-rac-company/add-rac-company.component';
-import { AddAirlineComponent } from './components/content/admin-panel/admin-content/add-airline/add-airline.component';
-import { AddAdminComponent } from './components/content/admin-panel/admin-content/add-admin/add-admin.component';
-import { AdminsService } from './components/content/admin-panel/admin-content/admins.service';
 import { RacCompaniesService } from './components/content/admin-panel/admin-content/rac-companies.service';
 import { AirlinesService } from './components/content/admin-panel/admin-content/airlines.service';
 import { RentACarService } from './components/content/rent-a-car/rent-a-car.service';
+import { AdminsComponent } from './components/content/admin-panel/admin-content/admins/admins.component';
+import { AdminListComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin-list.component';
+import { AddAdminComponent } from './components/content/admin-panel/admin-content/admins/add-admin/add-admin.component';
+import { AdminComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin/admin.component';
+import { AdminsService } from './components/content/admin-panel/admin-content/admins/admins.service';
+import { AdminDetailsComponent } from './components/content/admin-panel/admin-content/admins/admin-details/admin-details.component';
 
 @NgModule({
   declarations: [
@@ -62,11 +62,11 @@ import { RentACarService } from './components/content/rent-a-car/rent-a-car.serv
     AdminPanelComponent,
     AdminHeaderComponent,
     AdminContentComponent,
-    TableComponent,
-    TableRowComponent,
-    AddRacCompanyComponent,
-    AddAirlineComponent,
-    AddAdminComponent
+    AdminsComponent,
+    AdminListComponent,
+    AddAdminComponent,
+    AdminComponent,
+    AdminDetailsComponent
   ],
   imports: [
     BrowserModule,
