@@ -27,8 +27,6 @@ import { ServerService } from './components/server.service';
 import { AdminPanelComponent } from './components/content/admin-panel/admin-panel.component';
 import { AdminHeaderComponent } from './components/content/admin-panel/admin-header/admin-header.component';
 import { AdminContentComponent } from './components/content/admin-panel/admin-content/admin-content.component';
-import { RacCompaniesService } from './components/content/admin-panel/admin-content/rac-companies.service';
-import { AirlinesService } from './components/content/admin-panel/admin-content/airlines.service';
 import { RentACarService } from './components/content/rent-a-car/rent-a-car.service';
 import { AdminsComponent } from './components/content/admin-panel/admin-content/admins/admins.component';
 import { AdminListComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin-list.component';
@@ -36,6 +34,18 @@ import { AddAdminComponent } from './components/content/admin-panel/admin-conten
 import { AdminComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin/admin.component';
 import { AdminsService } from './components/content/admin-panel/admin-content/admins/admins.service';
 import { AdminDetailsComponent } from './components/content/admin-panel/admin-content/admins/admin-details/admin-details.component';
+import { AirlinesComponent } from './components/content/admin-panel/admin-content/airlines/airlines.component';
+import { AirlineListComponent } from './components/content/admin-panel/admin-content/airlines/airline-list/airline-list.component';
+import { AirlineComponent } from './components/content/admin-panel/admin-content/airlines/airline-list/airline/airline.component';
+import { AirlinesService } from './components/content/admin-panel/admin-content/airlines/airlines.service';
+import { AddAirlineComponent } from './components/content/admin-panel/admin-content/airlines/add-airline/add-airline.component';
+import { AirlineDetailsComponent } from './components/content/admin-panel/admin-content/airlines/airline-details/airline-details.component';
+import { RacCompaniesComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-companies.component';
+import { RacCompaniesService } from './components/content/admin-panel/admin-content/rac-companies/rac-companies.service';
+import { RacCompanyListComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-list/rac-company-list.component';
+import { RacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-list/rac-company/rac-company.component';
+import { RacCompanyDetailsComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-details/rac-company-details.component';
+import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/add-rac-company/add-rac-company.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +76,17 @@ import { AdminDetailsComponent } from './components/content/admin-panel/admin-co
     AdminListComponent,
     AddAdminComponent,
     AdminComponent,
-    AdminDetailsComponent
+    AdminDetailsComponent,
+    AirlinesComponent,
+    AirlineListComponent,
+    AirlineComponent,
+    AddAirlineComponent,
+    AirlineDetailsComponent,
+    RacCompaniesComponent,
+    RacCompanyListComponent,
+    RacCompanyComponent,
+    RacCompanyDetailsComponent,
+    AddRacCompanyComponent
   ],
   imports: [
     BrowserModule,

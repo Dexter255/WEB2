@@ -9,15 +9,16 @@ import { RentACarService } from '../rent-a-car.service';
   styleUrls: ['./rent-a-car-company-details.component.css']
 })
 export class RentACarCompanyDetailsComponent implements OnInit {
-  racService: RentACarCompany;
+  racCompany: RentACarCompany;
 
-  constructor(private rentACarService: RentACarService, private route: ActivatedRoute) { }
+  constructor(private rentACarService: RentACarService, 
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     let id;
     this.route.params.subscribe( (params: Params) => {
       id = params['id'];
-      this.racService =  this.rentACarService.getVehicle(id).belongsToCompany;
+      this.racCompany =  this.rentACarService.getVehicle(id).belongsToCompany;
     })
   }
 

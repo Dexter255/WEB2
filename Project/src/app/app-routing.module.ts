@@ -16,6 +16,14 @@ import { AdminsComponent } from './components/content/admin-panel/admin-content/
 import { AdminListComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin-list.component';
 import { AddAdminComponent } from './components/content/admin-panel/admin-content/admins/add-admin/add-admin.component';
 import { AdminDetailsComponent } from './components/content/admin-panel/admin-content/admins/admin-details/admin-details.component';
+import { AirlinesComponent } from './components/content/admin-panel/admin-content/airlines/airlines.component';
+import { AirlineListComponent } from './components/content/admin-panel/admin-content/airlines/airline-list/airline-list.component';
+import { AddAirlineComponent } from './components/content/admin-panel/admin-content/airlines/add-airline/add-airline.component';
+import { AirlineDetailsComponent } from './components/content/admin-panel/admin-content/airlines/airline-details/airline-details.component';
+import { RacCompaniesComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-companies.component';
+import { RacCompanyListComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-list/rac-company-list.component';
+import { RacCompanyDetailsComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-details/rac-company-details.component';
+import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/add-rac-company/add-rac-company.component';
 
 const routes: Routes = [
     { path: "", component: HomeComponent},
@@ -42,7 +50,19 @@ const routes: Routes = [
         { path: "add", component: AddAdminComponent },
         { path: "edit/:id", component: AddAdminComponent },
         { path: "details/:id", component: AdminDetailsComponent }
-      ] }
+      ] },
+      { path: "airlines", component: AirlinesComponent, children: [
+        { path: "", component: AirlineListComponent },
+        { path: "add", component: AddAirlineComponent },
+        { path: "edit/:id", component: AddAirlineComponent },
+        { path: "details/:id", component: AirlineDetailsComponent }
+      ] },
+      { path: "rac-companies", component: RacCompaniesComponent, children: [
+        { path: "", component: RacCompanyListComponent },
+        { path: "add", component: AddRacCompanyComponent },
+        { path: "edit/:id", component: AddRacCompanyComponent },
+        { path: "details/:id", component: RacCompanyDetailsComponent }
+      ]}
     ] },
     { path: "**", component: ErrorPageComponent }
 ];

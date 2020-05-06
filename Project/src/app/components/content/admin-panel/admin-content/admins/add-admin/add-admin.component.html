@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addAdmin.get('name').valid && addAdmin.get('name').touched">
-                    <span *ngIf="addAdmin.get('name').errors['required']">Name must be entered</span>
+                    <span *ngIf="addAdmin.get('name').errors['required']">Name must be entered!</span>
                     <span *ngIf="addAdmin.get('name').errors['minlength']">Name must be atleast 4 characters!</span>
                 </span>
             </div>
@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addAdmin.get('lastname').valid && addAdmin.get('lastname').touched">
-                    <span *ngIf="addAdmin.get('lastname').errors['required']">Lastname must be entered</span>
+                    <span *ngIf="addAdmin.get('lastname').errors['required']">Lastname must be entered!</span>
                     <span *ngIf="addAdmin.get('lastname').errors['minlength']">Lastname must be atleast 4 characters!</span>
                 </span>
             </div>

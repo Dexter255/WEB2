@@ -1,0 +1,42 @@
+<div class="container mt-3 ml-5">
+    <h3>{{ header }}</h3>
+    <form [formGroup]="addAirline" (ngSubmit)="onSubmit()">
+       <div class="form-group row">
+            <label for="companyName" class="col-md-2 col-form-label">Company name</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="companyName" formControlName="companyName" autocomplete="off">
+            </div>
+            <div class="col-md-7">
+                <span *ngIf="!addAirline.get('companyName').valid && addAirline.get('companyName').touched">
+                    <span *ngIf="addAirline.get('companyName').errors['required']">Company name must be entered!</span>
+                    <span *ngIf="addAirline.get('companyName').errors['minlength']">Company name must be atleast 4 characters!</span>
+                </span>
+            </div>
+        </div> 
+        <div class="form-group row">
+            <label for="address" class="col-md-2 col-form-label">Address</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="address" formControlName="address" autocomplete="off">
+            </div>
+            <div class="col-md-7">
+                <span *ngIf="!addAirline.get('address').valid && addAirline.get('address').touched">
+                    <span *ngIf="addAirline.get('address').errors['required']">Address must be entered!</span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-md-2 col-form-label">Description</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="description" formControlName="description" autocomplete="off">
+            </div>
+            <div class="col-md-7">
+                <span *ngIf="!addAirline.get('description').valid && addAirline.get('description').touched">
+                    <span *ngIf="addAirline.get('description').errors['required']">Description must be entered!</span>
+                </span>
+            </div>
+        </div>
+        <div class="ml-5">
+            <button class="btn btn-success" [disabled]="!addAirline.valid" type="submit"> {{ header }} </button>
+        </div>
+    </form>
+</div>

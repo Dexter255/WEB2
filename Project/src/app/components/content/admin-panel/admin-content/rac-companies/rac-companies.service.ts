@@ -34,6 +34,14 @@ export class RacCompaniesService{
         return this.racCompanies[index];
     }
 
+    addRacCompany(racCompany: RentACarCompany){
+        this.racCompanies.push(racCompany);
+    }
+    
+    updateRacCompany(index: number, racCompany: RentACarCompany){
+        this.racCompanies[index] = racCompany;
+    }
+    
     deleteRacCompany(index: number){
         this.racCompanies.splice(index, 1);
     }
