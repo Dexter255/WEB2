@@ -7,7 +7,7 @@ export class Service{
         this.price = price;
     }
 
-    getService(){
-        return this.description + " - " + this.price;
+    public toString = () : string => {
+        return this.description + ", " + this.price + "€";
     }
 }

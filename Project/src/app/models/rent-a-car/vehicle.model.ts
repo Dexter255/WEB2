@@ -31,4 +31,8 @@ export class Vehicle {
     getType(){
         return Type[this.type];
     }
+
+    public toString = () : string => {
+        return this.brand + " " + this.model + ", " + this.getType();
+    }
 }

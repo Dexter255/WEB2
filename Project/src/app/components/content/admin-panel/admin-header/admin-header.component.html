@@ -4,11 +4,17 @@
     </button>
     
     <div class="collapse navbar-collapse" id="navbarCollapseAdmin">
-        <div class="navbar-nav">
+        <div class="navbar-nav" *ngIf="serverService.getUserType() === 'Admin'">
             <a routerLink="rac-companies" routerLinkActive="active" class="nav-item nav-link">Rent a car companies</a>
             <a routerLink="airlines" routerLinkActive="active" class="nav-item nav-link">Airlines</a>
             <a routerLink="rac-companies-admins" routerLinkActive="active" class="nav-item nav-link">Admins for rent a car companies</a>
             <a routerLink="airlines-admins" routerLinkActive="active" class="nav-item nav-link">Admins for airlines</a>
+        </div>
+        <div class="navbar-nav" *ngIf="serverService.getUserType() === 'Admin_RentACarCompanies'">
+            <a routerLink="rac-companies" routerLinkActive="active" class="nav-item nav-link">Rent a car companies</a>
+        </div>
+        <div class="navbar-nav" *ngIf="serverService.getUserType() === 'Admin_Airlines'">
+            <a routerLink="airlines" routerLinkActive="active" class="nav-item nav-link">Airlines</a>
         </div>
     </div>
 </nav>

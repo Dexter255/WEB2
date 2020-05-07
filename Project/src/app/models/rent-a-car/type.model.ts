@@ -5,5 +5,5 @@ export enum Type{
     Hatchback,
     Coupe,
     Miniven,
-    SUV,
+    SUV
 }

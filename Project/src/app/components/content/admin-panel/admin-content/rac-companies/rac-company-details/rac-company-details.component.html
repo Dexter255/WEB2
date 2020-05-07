@@ -27,20 +27,40 @@
         <div class="col-md-3">
             <label> Services: </label>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" *ngIf="racCompany.services.length !== 0 else servicesEmpty">
             <div class="row ml-2" *ngFor="let service of racCompany.services">
-                <label> {{ service.getService() }} </label>
+                <label> {{ service }} </label>
             </div>
         </div>
+        <ng-template #servicesEmpty>
+            <div class="col-md-9">
+                <div class="row ml-2">
+                    <p>There is no services available!</p>
+                </div>
+            </div>
+        </ng-template>
     </div>
     <div class="row">
         <div class="col-md-3">
             <label> Branches: </label>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" *ngIf="racCompany.branches.length !== 0 else branchesEmpty">
             <div class="row ml-2" *ngFor="let branch of racCompany.branches">
                 <label> {{ branch }} </label>
             </div>
         </div>
+        <ng-template #branchesEmpty>
+            <div class="col-md-9">
+                <div class="row ml-2">
+                    <p>There is no branches available!</p>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label> Vehicles: </label>
+        </div>
+        <a [routerLink]="['../../', id, 'vehicles']" class="btn btn-info ml-3">See vehicles</a>
     </div>
 </div>

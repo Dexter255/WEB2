@@ -2,24 +2,27 @@
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav">
-            <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item nav-link">Home</a>
+            <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                class="nav-item nav-link">Home</a>
             <a routerLink="flights" routerLinkActive="active" class="nav-item nav-link">Flights</a>
             <a routerLink="rent-a-car" routerLinkActive="active" class="nav-item nav-link">Rent a car</a>
         </div>
         <div class="navbar-nav ml-auto" *ngIf="serverService.isUserLoggedIn() else notLoggedIn">
-            <a routerLink="admin-panel" routerLinkActive="active" class="nav-item nav-link mr-3" *ngIf="serverService.getUserType() !== 'User'">Admin panel</a>
+            <a routerLink="admin-panel" routerLinkActive="active" class="nav-item nav-link mr-3"
+                *ngIf="serverService.getUserType() !== 'User'">Admin panel</a>
             <div class="dropdown show mr-3">
-                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Profile
+                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Profile
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" routerLink="userProfile">Edit profile</a>
-                  <button class="dropdown-item" (click)="onLogout()">Logout</button>
+                    <a class="dropdown-item" routerLink="userProfile">Edit profile</a>
+                    <button class="dropdown-item" (click)="onLogout()">Logout</button>
                 </div>
-              </div>
+            </div>
         </div>
         <ng-template #notLoggedIn>
             <div class="navbar-nav ml-auto">

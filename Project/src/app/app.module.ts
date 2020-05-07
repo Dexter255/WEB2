@@ -46,6 +46,11 @@ import { RacCompanyListComponent } from './components/content/admin-panel/admin-
 import { RacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-list/rac-company/rac-company.component';
 import { RacCompanyDetailsComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-details/rac-company-details.component';
 import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/add-rac-company/add-rac-company.component';
+import { VehiclesComponent } from './components/content/admin-panel/admin-content/vehicles/vehicles.component';
+import { AdminVehicleListComponent } from './components/content/admin-panel/admin-content/vehicles/admin-vehicle-list/admin-vehicle-list.component';
+import { AdminVehicleComponent } from './components/content/admin-panel/admin-content/vehicles/admin-vehicle-list/admin-vehicle/admin-vehicle.component';
+import { AddVehicleComponent } from './components/content/admin-panel/admin-content/vehicles/add-vehicle/add-vehicle.component';
+import { AdminVehicleDetailsComponent } from './components/content/admin-panel/admin-content/vehicles/admin-vehicle-details/admin-vehicle-details.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +91,12 @@ import { AddRacCompanyComponent } from './components/content/admin-panel/admin-c
     RacCompanyListComponent,
     RacCompanyComponent,
     RacCompanyDetailsComponent,
-    AddRacCompanyComponent
+    AddRacCompanyComponent,
+    VehiclesComponent,
+    AdminVehicleListComponent,
+    AdminVehicleComponent,
+    AddVehicleComponent,
+    AdminVehicleDetailsComponent
   ],
   imports: [
     BrowserModule,

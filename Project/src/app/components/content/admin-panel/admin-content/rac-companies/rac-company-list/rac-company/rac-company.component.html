@@ -2,10 +2,11 @@
 <td> {{ racCompany.address }} </td>
 <td> {{ racCompany.description }} </td>
 <td> {{ racCompany.rating }} </td>
+<td> <a [routerLink]="[id, 'vehicles']" class="btn btn-info">See vehicles</a> </td>
 <td>
     <span>
         <a [routerLink]="['details', id]" class="btn btn-info mr-2">Details</a>
         <a [routerLink]="['edit', id]" class="btn btn-secondary mr-2">Edit</a>
-        <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+        <button [disabled]="serverService.getUserType() !== 'Admin'" class="btn btn-danger" (click)="onDelete()">Delete</button>
     </span>
 </td>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
 import { Service } from 'src/app/models/rent-a-car/service.model';
-import { Address } from 'src/app/models/rent-a-car/address.model';
 import { RacCompaniesService } from '../rac-companies.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
@@ -36,7 +35,7 @@ export class AddRacCompanyComponent implements OnInit {
       case 'edit':
         this.route.params.subscribe((params: Params) => {
           this.edit = true;
-          this.header = "Edit airline";
+          this.header = "Edit rent a car company";
           this.id = +params['id'];
 
           let racCompany = this.racCompaniesService.getRacCompany(this.id);
@@ -48,16 +47,13 @@ export class AddRacCompanyComponent implements OnInit {
             'services': new FormArray([]),
             'branches': new FormArray([])
           });
-
-          let services: Service[] = [];
-          let branches: Address[] = [];
-
+          
           racCompany.services.forEach(element => {
             this.onAddService(element.description, element.price.toString());
           });
 
           racCompany.branches.forEach(element => {
-            this.onAddBranch(element.toString());
+            this.onAddBranch(element);
           });
           
         });
@@ -73,6 +69,10 @@ export class AddRacCompanyComponent implements OnInit {
     
     (<FormArray>this.addRacCompany.get('services')).push(s);
   }
+  
+  onDeleteService(index: number){
+    (<FormArray>this.addRacCompany.get('services')).removeAt(index);
+  }
 
   onAddBranch(address: string = null){
     let branch = new FormControl(address, [Validators.required, Validators.minLength(4)]);
@@ -80,22 +80,24 @@ export class AddRacCompanyComponent implements OnInit {
     (<FormArray>this.addRacCompany.get('branches')).push(branch);
   }
 
+  onDeleteBranch(index: number){
+    (<FormArray>this.addRacCompany.get('branches')).removeAt(index);
+  }
+
   onSubmit(){
     let services: Service[] = [];
-    let branches: Address[] = [];
-    let address: Address;
+    let branches: string[] = [];
 
     this.addRacCompany.get('services').value.forEach(element => {
-      services.push(new Service(element.service, element.price));
+      services.push(new Service(element.description, +element.price));
     });
 
     this.addRacCompany.get('branches').value.forEach(element => {
-      branches.push(new Address(element, '', '', null, null));
+      branches.push(element);
     });
 
-    address = new Address(this.addRacCompany.get('address').value, '', '', null, null);
     let racCompany = new RentACarCompany(this.addRacCompany.get('companyName').value,
-                                          address,
+                                          this.addRacCompany.get('address').value,
                                           this.addRacCompany.get('description').value,
                                           services,
                                           branches);
