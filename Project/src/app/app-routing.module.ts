@@ -22,9 +22,9 @@ import { RacCompanyListComponent } from './components/content/admin-panel/admin-
 import { RacCompanyDetailsComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-details/rac-company-details.component';
 import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/add-rac-company/add-rac-company.component';
 import { VehiclesComponent } from './components/content/admin-panel/admin-content/vehicles/vehicles.component';
-import { AdminVehicleListComponent } from './components/content/admin-panel/admin-content/vehicles/admin-vehicle-list/admin-vehicle-list.component';
 import { AddVehicleComponent } from './components/content/admin-panel/admin-content/vehicles/add-vehicle/add-vehicle.component';
-import { AdminVehicleDetailsComponent } from './components/content/admin-panel/admin-content/vehicles/admin-vehicle-details/admin-vehicle-details.component';
+import { VehicleListComponent } from './components/content/admin-panel/admin-content/vehicles/vehicle-list/vehicle-list.component';
+import { VehicleDetailsComponent } from './components/content/admin-panel/admin-content/vehicles/vehicle-details/vehicle-details.component';
 
 const routes: Routes = [
     { path: "", component: HomeComponent},
@@ -60,9 +60,9 @@ const routes: Routes = [
         { path: "edit/:id", component: AddRacCompanyComponent },
         { path: "details/:id", component: RacCompanyDetailsComponent },
         { path: ":id/vehicles", component: VehiclesComponent, children: [
-          { path: "", component: AdminVehicleListComponent },
+          { path: "", component: VehicleListComponent },
           { path: "add", component: AddVehicleComponent },
-          { path: "details/:id", component: AdminVehicleDetailsComponent },
+          { path: "details/:id", component: VehicleDetailsComponent },
           { path: "edit/:id", component: AddVehicleComponent }
         ] }
       ]}

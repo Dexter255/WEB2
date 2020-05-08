@@ -11,7 +11,7 @@ export class ServerService{
         // trenutno ulogovan user
         this.loggedIn = true;
         this.user = new korisnik('Mihajlo', 'Rohalj', 'mihajlorohalj97@gmail.com', 'Sremska Mitrovica, Ratarska 32', '0640551693',
-        '123123', UserType.Admin_RentACarCompanies);
+        '123123', UserType.Admin);
 
         this.users.push(this.user);
     }

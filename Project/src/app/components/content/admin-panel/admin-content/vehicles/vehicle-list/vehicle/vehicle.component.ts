@@ -4,11 +4,11 @@ import { ServerService } from 'src/app/components/server.service';
 import { RacCompaniesService } from '../../../rac-companies/rac-companies.service';
 
 @Component({
-  selector: '[app-admin-vehicle]',
-  templateUrl: './admin-vehicle.component.html',
-  styleUrls: ['./admin-vehicle.component.css']
+  selector: '[app-vehicle]',
+  templateUrl: './vehicle.component.html',
+  styleUrls: ['./vehicle.component.css']
 })
-export class AdminVehicleComponent implements OnInit {
+export class VehicleComponent implements OnInit {
   @Input() vehicle: Vehicle;
   @Input() id: number;
 
@@ -21,4 +21,5 @@ export class AdminVehicleComponent implements OnInit {
   onDelete(){
     this.racCompaniesService.deleteVehicle(this.vehicle.belongsToCompany.companyName, this.id);
   }
+
 }
