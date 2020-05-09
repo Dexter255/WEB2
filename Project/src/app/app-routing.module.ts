@@ -1,73 +1,79 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/content/home/home.component';
-import { FlightsComponent } from './components/content/flights/flights.component';
-import { FlightDetailsComponent } from './components/content/flights/flight-details/flight-details.component';
-import { AirlineCompanyDetailsComponent } from './components/content/flights/airline-company-details/airline-company-details.component';
-import { ErrorPageComponent } from './components/content/error-page/error-page.component';
-import { LoginComponent } from './components/content/login/login.component';
-import { RegisterComponent } from './components/content/register/register.component';
-import { ProfilKorisnikaComponent } from './components/content/profil-korisnika/profil-korisnika.component';
-import { AdminPanelComponent } from './components/content/admin-panel/admin-panel.component';
-import { AdminsComponent } from './components/content/admin-panel/admin-content/admins/admins.component';
-import { AdminListComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin-list.component';
-import { AddAdminComponent } from './components/content/admin-panel/admin-content/admins/add-admin/add-admin.component';
-import { AdminDetailsComponent } from './components/content/admin-panel/admin-content/admins/admin-details/admin-details.component';
-import { AirlinesComponent } from './components/content/admin-panel/admin-content/airlines/airlines.component';
-import { AirlineListComponent } from './components/content/admin-panel/admin-content/airlines/airline-list/airline-list.component';
-import { AddAirlineComponent } from './components/content/admin-panel/admin-content/airlines/add-airline/add-airline.component';
-import { AirlineDetailsComponent } from './components/content/admin-panel/admin-content/airlines/airline-details/airline-details.component';
-import { RacCompaniesComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-companies.component';
-import { RacCompanyListComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-list/rac-company-list.component';
-import { RacCompanyDetailsComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-details/rac-company-details.component';
-import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/add-rac-company/add-rac-company.component';
-import { VehiclesComponent } from './components/content/admin-panel/admin-content/vehicles/vehicles.component';
-import { AddVehicleComponent } from './components/content/admin-panel/admin-content/vehicles/add-vehicle/add-vehicle.component';
-import { VehicleListComponent } from './components/content/admin-panel/admin-content/vehicles/vehicle-list/vehicle-list.component';
-import { VehicleDetailsComponent } from './components/content/admin-panel/admin-content/vehicles/vehicle-details/vehicle-details.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { RentACarCompaniesComponent } from './components/rent-a-car-companies/rent-a-car-companies.component';
+import { RentACarCompanyDetailsComponent } from './components/rent-a-car-companies/rent-a-car-company-details/rent-a-car-company-details.component';
+import { ProfilKorisnikaComponent } from './components/profil-korisnika/profil-korisnika.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { RacCompanyResolver } from './resolvers/rac-company-resolver.service';
+import { AirlinesComponent } from './components/airlines/airlines.component';
+import { AirlineDetailsComponent } from './components/airlines/airline-details/airline-details.component';
+import { AirlineResolver } from './resolvers/airline-resolver.service';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AdminsComponent } from './components/admin-panel/admins/admins.component';
+import { AdminListComponent } from './components/admin-panel/admins/admin-list/admin-list.component';
+import { AdminDetailsComponent } from './components/admin-panel/admins/admin-details/admin-details.component';
+import { AddAdminComponent } from './components/admin-panel/admins/add-admin/add-admin.component';
+import { AdminResolver } from './resolvers/admin-resolver.service';
+import { ApAirlinesComponent } from './components/admin-panel/ap-airlines/ap-airlines.component';
+import { ApAirlineListComponent } from './components/admin-panel/ap-airlines/ap-airline-list/ap-airline-list.component';
+import { ApAddAirlineComponent } from './components/admin-panel/ap-airlines/ap-add-airline/ap-add-airline.component';
+import { RacCompaniesComponent } from './components/admin-panel/rac-companies/rac-companies.component';
+import { RacCompanyListComponent } from './components/admin-panel/rac-companies/rac-company-list/rac-company-list.component';
+import { AddRacCompanyComponent } from './components/admin-panel/rac-companies/add-rac-company/add-rac-company.component';
+import { VehiclesComponent } from './components/admin-panel/rac-companies/vehicles/vehicles.component';
+import { VehicleListComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-list/vehicle-list.component';
+import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-details/vehicle-details.component';
+import { VehicleResolver } from './resolvers/vehicle-resolver.service';
+import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
 
 const routes: Routes = [
-    { path: "", component: HomeComponent},
-    { path: "flights", component: FlightsComponent, children: [
-      { path: ":id", component: FlightDetailsComponent },
-      { path: ":id/:airline-companyName", component: AirlineCompanyDetailsComponent }
+  { path: "", component: HomeComponent },
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegisterComponent },
+  { path: "userProfile", component: ProfilKorisnikaComponent },
+  { path: "rac-companies", component: RentACarCompaniesComponent, children: [
+    { path: "details/:id", component: RentACarCompanyDetailsComponent, resolve: { post: RacCompanyResolver } }
+  ]},
+  { path: "airlines", component: AirlinesComponent, children: [
+    { path: "details/:id", component: AirlineDetailsComponent, resolve: {post: AirlineResolver } }
+  ] },
+  { path: "admin-panel", component: AdminPanelComponent, children: [
+    { path: "airline-admins", component: AdminsComponent, children: [
+      { path: "", component: AdminListComponent },
+      { path: "details/:id", component: AdminDetailsComponent, resolve: {post: AdminResolver } },
+      { path: "add", component: AddAdminComponent },
+      { path: "edit/:id", component: AddAdminComponent, resolve: {post: AdminResolver } }
     ] },
-    { path: "login", component: LoginComponent },
-    { path: "register", component: RegisterComponent },
-    { path: "userProfile", component: ProfilKorisnikaComponent },
-    { path: "admin-panel", component: AdminPanelComponent, children: [
-      { path: "rac-companies-admins", component: AdminsComponent, children: [
-        { path: "", component: AdminListComponent },
-        { path: "add", component: AddAdminComponent },
-        { path: "edit/:id", component: AddAdminComponent},
-        { path: "details/:id", component: AdminDetailsComponent }
-      ] },
-      { path: "airlines-admins", component: AdminsComponent, children: [
-        { path: "", component: AdminListComponent },
-        { path: "add", component: AddAdminComponent },
-        { path: "edit/:id", component: AddAdminComponent },
-        { path: "details/:id", component: AdminDetailsComponent }
-      ] },
-      { path: "airlines", component: AirlinesComponent, children: [
-        { path: "", component: AirlineListComponent },
-        { path: "add", component: AddAirlineComponent },
-        { path: "edit/:id", component: AddAirlineComponent },
-        { path: "details/:id", component: AirlineDetailsComponent }
-      ] },
-      { path: "rac-companies", component: RacCompaniesComponent, children: [
-        { path: "", component: RacCompanyListComponent },
-        { path: "add", component: AddRacCompanyComponent },
-        { path: "edit/:id", component: AddRacCompanyComponent },
-        { path: "details/:id", component: RacCompanyDetailsComponent },
-        { path: ":id/vehicles", component: VehiclesComponent, children: [
-          { path: "", component: VehicleListComponent },
-          { path: "add", component: AddVehicleComponent },
-          { path: "details/:id", component: VehicleDetailsComponent },
-          { path: "edit/:id", component: AddVehicleComponent }
-        ] }
-      ]}
+    { path: "rac-company-admins", component: AdminsComponent, children: [
+      { path: "", component: AdminListComponent },
+      { path: "details/:id", component: AdminDetailsComponent, resolve: {post: AdminResolver } },
+      { path: "add", component: AddAdminComponent },
+      { path: "edit/:id", component: AddAdminComponent, resolve: {post: AdminResolver } }
+    ]},
+    { path: "airlines", component: ApAirlinesComponent, children: [
+      { path: "", component: ApAirlineListComponent },
+      { path: "details/:id", component: AirlineDetailsComponent },
+      { path: "add", component: ApAddAirlineComponent },
+      { path: "edit/:id", component: ApAddAirlineComponent }
     ] },
-    { path: "**", component: ErrorPageComponent }
+    { path: "rac-companies", component: RacCompaniesComponent, children: [
+      { path: "", component: RacCompanyListComponent },
+      { path: "details/:id", component: RentACarCompanyDetailsComponent, resolve: { post: RacCompanyResolver } },
+      { path: "add", component: AddRacCompanyComponent },
+      { path: "edit/:id", component: AddRacCompanyComponent, resolve: { post: RacCompanyResolver } },
+      { path: ":id/vehicles", component: VehiclesComponent, resolve: {post: RacCompanyResolver }, children: [
+        { path: "", component: VehicleListComponent },
+        { path: "details/:id", component: VehicleDetailsComponent, resolve: {post: VehicleResolver} },
+        { path: "add", component: AddVehicleComponent },
+        { path: "edit/:id", component: AddVehicleComponent, resolve: {post: VehicleResolver}}
+      ] }
+    ] }
+  ] },
+  { path: "error", component: ErrorPageComponent},
+  { path: "**", redirectTo: 'error' }
 ];
 
 @NgModule({

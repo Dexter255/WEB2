@@ -1,0 +1,16 @@
+<div class="row ml-3">
+    <div class="col-md-4">
+        <div class="list-group" *ngIf="racCompanies.length !== 0 else empty">
+            <a type="button" class="list-group-item list-group-item-action" 
+            *ngFor="let racCompany of racCompanies" [routerLink]="['details', racCompany.id]" routerLinkActive="active"> 
+                {{ racCompany.companyName}}, {{ racCompany.description }}
+            </a>
+        </div>
+        <ng-template #empty>
+            <p class="text-info">There is no companies available!</p>
+        </ng-template>
+    </div>
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+</div>

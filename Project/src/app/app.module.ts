@@ -4,88 +4,66 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { ContentComponent } from './components/content/content.component';
-import { ProfilKorisnikaComponent } from './components/content/profil-korisnika/profil-korisnika.component';
-import { HomeComponent } from './components/content/home/home.component';
-import { FlightsComponent } from './components/content/flights/flights.component';
-import { FlightListComponent } from './components/content/flights/flight-list/flight-list.component';
-import { FlightDetailsComponent } from './components/content/flights/flight-details/flight-details.component';
-import { FlightComponent } from './components/content/flights/flight-list/flight/flight.component';
-import { AirlineCompanyDetailsComponent } from './components/content/flights/airline-company-details/airline-company-details.component';
-import { LoginComponent } from './components/content/login/login.component';
-import { ErrorPageComponent } from './components/content/error-page/error-page.component';
-import { RegisterComponent } from './components/content/register/register.component';
-import { ListaPrijateljaComponent } from './components/content/profil-korisnika/lista-prijatelja/lista-prijatelja.component';
-import { PrijateljComponent } from './components/content/profil-korisnika/lista-prijatelja/prijatelj/prijatelj.component';
 import { ServerService } from './components/server.service';
-import { AdminPanelComponent } from './components/content/admin-panel/admin-panel.component';
-import { AdminHeaderComponent } from './components/content/admin-panel/admin-header/admin-header.component';
-import { AdminContentComponent } from './components/content/admin-panel/admin-content/admin-content.component';
-import { AdminsComponent } from './components/content/admin-panel/admin-content/admins/admins.component';
-import { AdminListComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin-list.component';
-import { AddAdminComponent } from './components/content/admin-panel/admin-content/admins/add-admin/add-admin.component';
-import { AdminComponent } from './components/content/admin-panel/admin-content/admins/admin-list/admin/admin.component';
-import { AdminsService } from './components/content/admin-panel/admin-content/admins/admins.service';
-import { AdminDetailsComponent } from './components/content/admin-panel/admin-content/admins/admin-details/admin-details.component';
-import { AirlinesComponent } from './components/content/admin-panel/admin-content/airlines/airlines.component';
-import { AirlineListComponent } from './components/content/admin-panel/admin-content/airlines/airline-list/airline-list.component';
-import { AirlineComponent } from './components/content/admin-panel/admin-content/airlines/airline-list/airline/airline.component';
-import { AirlinesService } from './components/content/admin-panel/admin-content/airlines/airlines.service';
-import { AddAirlineComponent } from './components/content/admin-panel/admin-content/airlines/add-airline/add-airline.component';
-import { AirlineDetailsComponent } from './components/content/admin-panel/admin-content/airlines/airline-details/airline-details.component';
-import { RacCompaniesComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-companies.component';
-import { RacCompaniesService } from './components/content/admin-panel/admin-content/rac-companies/rac-companies.service';
-import { RacCompanyListComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-list/rac-company-list.component';
-import { RacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-list/rac-company/rac-company.component';
-import { RacCompanyDetailsComponent } from './components/content/admin-panel/admin-content/rac-companies/rac-company-details/rac-company-details.component';
-import { AddRacCompanyComponent } from './components/content/admin-panel/admin-content/rac-companies/add-rac-company/add-rac-company.component';
-import { VehiclesComponent } from './components/content/admin-panel/admin-content/vehicles/vehicles.component';
-import { AddVehicleComponent } from './components/content/admin-panel/admin-content/vehicles/add-vehicle/add-vehicle.component';
-import { VehicleListComponent } from './components/content/admin-panel/admin-content/vehicles/vehicle-list/vehicle-list.component';
-import { VehicleComponent } from './components/content/admin-panel/admin-content/vehicles/vehicle-list/vehicle/vehicle.component';
-import { VehicleDetailsComponent } from './components/content/admin-panel/admin-content/vehicles/vehicle-details/vehicle-details.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { RentACarCompaniesComponent } from './components/rent-a-car-companies/rent-a-car-companies.component';
+import { RacCompanyService } from './components/rac-company.service';
+import { RentACarCompanyDetailsComponent } from './components/rent-a-car-companies/rent-a-car-company-details/rent-a-car-company-details.component';
+import { ProfilKorisnikaComponent } from './components/profil-korisnika/profil-korisnika.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { RacCompanyResolver } from './resolvers/rac-company-resolver.service';
+import { AirlinesComponent } from './components/airlines/airlines.component';
+import { AirlineService } from './components/airline.service';
+import { AirlineDetailsComponent } from './components/airlines/airline-details/airline-details.component';
+import { AirlineResolver } from './resolvers/airline-resolver.service';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AdminsComponent } from './components/admin-panel/admins/admins.component';
+import { AdminListComponent } from './components/admin-panel/admins/admin-list/admin-list.component';
+import { AdminService } from './components/admin.service';
+import { AdminDetailsComponent } from './components/admin-panel/admins/admin-details/admin-details.component';
+import { AddAdminComponent } from './components/admin-panel/admins/add-admin/add-admin.component';
+import { AdminResolver } from './resolvers/admin-resolver.service';
+import { ApAirlinesComponent } from './components/admin-panel/ap-airlines/ap-airlines.component';
+import { ApAirlineListComponent } from './components/admin-panel/ap-airlines/ap-airline-list/ap-airline-list.component';
+import { ApAddAirlineComponent } from './components/admin-panel/ap-airlines/ap-add-airline/ap-add-airline.component';
+import { RacCompaniesComponent } from './components/admin-panel/rac-companies/rac-companies.component';
+import { RacCompanyListComponent } from './components/admin-panel/rac-companies/rac-company-list/rac-company-list.component';
+import { AddRacCompanyComponent } from './components/admin-panel/rac-companies/add-rac-company/add-rac-company.component';
+import { VehiclesComponent } from './components/admin-panel/rac-companies/vehicles/vehicles.component';
+import { VehicleListComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-list/vehicle-list.component';
+import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-details/vehicle-details.component';
+import { VehicleResolver } from './resolvers/vehicle-resolver.service';
+import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    ContentComponent,
-    ProfilKorisnikaComponent,
-    PrijateljComponent,
-    ListaPrijateljaComponent,
-    HomeComponent,
-    FlightsComponent,
-    FlightListComponent,
-    FlightDetailsComponent,
-    FlightComponent,
-    AirlineCompanyDetailsComponent,
     LoginComponent,
-    ErrorPageComponent,
     RegisterComponent,
+    HomeComponent,
+    RentACarCompaniesComponent,
+    RentACarCompanyDetailsComponent,
+    ProfilKorisnikaComponent,
+    ErrorPageComponent,
+    AirlinesComponent,
+    AirlineDetailsComponent,
     AdminPanelComponent,
-    AdminHeaderComponent,
-    AdminContentComponent,
     AdminsComponent,
     AdminListComponent,
-    AddAdminComponent,
-    AdminComponent,
     AdminDetailsComponent,
-    AirlinesComponent,
-    AirlineListComponent,
-    AirlineComponent,
-    AddAirlineComponent,
-    AirlineDetailsComponent,
+    AddAdminComponent,
+    ApAirlinesComponent,
+    ApAirlineListComponent,
+    ApAddAirlineComponent,
     RacCompaniesComponent,
     RacCompanyListComponent,
-    RacCompanyComponent,
-    RacCompanyDetailsComponent,
     AddRacCompanyComponent,
     VehiclesComponent,
-    AddVehicleComponent,
     VehicleListComponent,
-    VehicleComponent,
-    VehicleDetailsComponent
+    VehicleDetailsComponent,
+    AddVehicleComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +71,14 @@ import { VehicleDetailsComponent } from './components/content/admin-panel/admin-
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ServerService, RacCompaniesService, AirlinesService, AdminsService],
+  providers: [RacCompanyResolver, 
+    AirlineResolver, 
+    AdminResolver, 
+    VehicleResolver, 
+    ServerService, 
+    RacCompanyService, 
+    AirlineService, 
+    AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

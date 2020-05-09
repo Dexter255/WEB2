@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark ml-3 mr-3">
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapseAdmin">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarCollapseAdmin">
+        <div class="navbar-nav" *ngIf="serverService.getUserType() === 'Admin'">
+            <a routerLink="rac-companies" routerLinkActive="active" class="nav-item nav-link">Rent a car companies</a>
+            <a routerLink="airlines" routerLinkActive="active" class="nav-item nav-link">Airlines</a>
+            <a routerLink="rac-company-admins" routerLinkActive="active" class="nav-item nav-link">Rent a car company admins</a>
+            <a routerLink="airline-admins" routerLinkActive="active" class="nav-item nav-link">Airline admins</a>
+        </div>
+        <div class="navbar-nav" *ngIf="serverService.getUserType() === 'Admin_RentACarCompanies'">
+            <a routerLink="rac-companies" routerLinkActive="active" class="nav-item nav-link">Rent a car companies</a>
+        </div>
+        <div class="navbar-nav" *ngIf="serverService.getUserType() === 'Admin_Airlines'">
+            <a routerLink="airlines" routerLinkActive="active" class="nav-item nav-link">Airlines</a>
+        </div>
+    </div>
+</nav>
+<hr>
+<router-outlet></router-outlet>

@@ -2,6 +2,8 @@ import { UserType } from './user-type.model';
 
 export class korisnik
 {
+    id: number;
+    private static nextId: number = 0;
     ime: string;
     prezime: string;
     email: string;
@@ -11,6 +13,7 @@ export class korisnik
     type: UserType;
 
     constructor(ime: string, prezime: string, email: string, adresa: string, telefon: string, password: string, type: UserType){
+        this.id = korisnik.nextId++;
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;

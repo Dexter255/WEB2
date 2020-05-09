@@ -1,0 +1,16 @@
+<div class="row ml-3">
+    <div class="col-md-4">
+        <div class="list-group" *ngIf="airlines.length !== 0 else empty">
+            <a type="button" class="list-group-item list-group-item-action" 
+            *ngFor="let airline of airlines; let i = index" [routerLink]="['details', i]" routerLinkActive="active"> 
+                {{ airline.companyName}}, {{ airline.description}}
+            </a>
+        </div>
+        <ng-template #empty>
+            <p class="text-info">There is no airlines available!</p>
+        </ng-template>
+    </div>
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -2,6 +2,8 @@ import { Type } from './type.model';
 import { RentACarCompany } from './rac-company.model';
 
 export class Vehicle {
+    public id: number;
+    private static nextId: number = 0;
     public brand: string;
     public model: string;
     public type: Type;
@@ -16,6 +18,7 @@ export class Vehicle {
 
     constructor(brand: string, model: string, type: Type, cubicCapacity: number, horsePower: number, yearOfProduction: number,
         kilometer: number, numberOfSeats: number, belongsToCompany: RentACarCompany) {
+        this.id = Vehicle.nextId++;
         this.brand = brand;
         this.model = model;
         this.type = type;
