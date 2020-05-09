@@ -71,4 +71,9 @@
             <label> {{ vehicle.rating }} </label>
         </div>
     </div>
+    <div class="row" *ngIf="serverService.getUserType() === 'User'">
+        <div class="col-md-12">
+            <button class="btn btn-success">Reserve - PREPRAVITI</button>
+        </div>
+    </div>
 </div>

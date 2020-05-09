@@ -23,9 +23,9 @@ export class RacCompanyService{
         let racCompany3 = new RentACarCompany("RACKompanija3", address, "Opis RACKompanije3", services, branches);
               
         racCompany1.addVehicle("AUDI", "A4", Type.Caravan, 1900, 140, 2012, 130000, 5);
-        racCompany1.addVehicle("BMW", "M5", Type.Saloon, 2000, 130, 2010, 150000, 4);
+        racCompany1.addVehicle("Audi", "RS4", Type.Caravan, 3000, 420, 2019, 10000, 5);
         racCompany2.addVehicle("Opel", "Corsa", Type.Hatchback, 1700, 70, 2002, 205000, 3);
-        racCompany3.addVehicle("Audi", "RS4", Type.Caravan, 3000, 420, 2019, 10000, 5);
+        racCompany3.addVehicle("BMW", "M5", Type.Saloon, 2000, 130, 2010, 150000, 4);
         
         this.racCompanies.push(racCompany1);
         this.racCompanies.push(racCompany2);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RacCompanyService } from '../../rac-company.service';
 
 @Component({
@@ -10,14 +10,20 @@ import { RacCompanyService } from '../../rac-company.service';
 })
 export class RentACarCompanyDetailsComponent implements OnInit {
   racCompany: RentACarCompany;
+  id: number;
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     private racCompanyServices: RacCompanyService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      let id = +params['id'];
-      this.racCompany = this.racCompanyServices.getRacCompany(id);
+      this.id = +params['id'];
+      this.racCompany = this.racCompanyServices.getRacCompany(this.id);
     });
+  }
+
+  onSeeVehicles(){
+    this.router.navigate(['../../', this.id, 'vehicles'], {relativeTo: this.route});
   }
 }

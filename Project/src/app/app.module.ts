@@ -36,6 +36,7 @@ import { VehicleListComponent } from './components/admin-panel/rac-companies/veh
 import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-details/vehicle-details.component';
 import { VehicleResolver } from './resolvers/vehicle-resolver.service';
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
+import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehi
     VehiclesComponent,
     VehicleListComponent,
     VehicleDetailsComponent,
-    AddVehicleComponent
+    AddVehicleComponent,
+    VehicleListNicerComponent
   ],
   imports: [
     BrowserModule,

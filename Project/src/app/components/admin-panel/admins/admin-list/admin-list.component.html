@@ -1,5 +1,5 @@
 <div class="row ml-3 mr-3 mt-3">
-    <a routerLink="add" class="btn btn-success mb-2">Add admin</a>
+    <button class="btn btn-success mb-2" (click)="onAddAdmin()">Add admin</button>
     <table class="table table-dark" *ngIf="admins.length !== 0 else empty">
         <thead>
             <tr class="text-center">
@@ -16,9 +16,9 @@
                 <td> {{ admin.email }}</td>
                 <td>
                     <span>
-                        <a [routerLink]="['details', admin.id]" class="btn btn-info mr-2">Details</a>
-                        <a [routerLink]="['edit', admin.id]" class="btn btn-secondary mr-2">Edit</a>
-                        <button class="btn btn-danger" (click)="onDelete(admin.id)">Delete</button>
+                        <button class="btn btn-info mr-2" (click)="onDetailsAdmin(admin.id)">Details</button>
+                        <button class="btn btn-secondary mr-2" (click)="onEditAdmin(admin.id)">Edit</button>
+                        <button class="btn btn-danger" (click)="onDeleteAdmin(admin.id)">Delete</button>
                     </span>
                 </td>
             </tr>

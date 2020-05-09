@@ -11,22 +11,35 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class RacCompanyListComponent implements OnInit {
   racCompanies: RentACarCompany[];
+  notAllowed: boolean;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private racCompanyService: RacCompanyService,
-    public serverService: ServerService) { }
+    private serverService: ServerService) { }
 
   ngOnInit(): void {
     this.racCompanies = this.racCompanyService.getRacCompanies();
+    this.notAllowed = this.serverService.getUserType() !== 'Admin' ? true : false;
   }
 
   onAddRacCompany(){
     this.router.navigate(['add'], {relativeTo: this.route});
   }
   
-  onDelete(id: number){
+  onDeleteRacCompany(id: number){
     this.racCompanyService.deleteRacCompany(id);
   }
   
+  onEditRacCompany(companyId: number){
+    this.router.navigate(['edit', companyId], {relativeTo: this.route});
+  }
+
+  onDetailsRacCompany(companyId: number){
+    this.router.navigate(['details', companyId], {relativeTo: this.route});
+  }
+
+  onSeeVehicles(companyId: number){
+    this.router.navigate([companyId, 'vehicles'], {relativeTo: this.route});
+  }
 }

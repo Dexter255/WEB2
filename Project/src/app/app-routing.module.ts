@@ -28,6 +28,7 @@ import { VehicleListComponent } from './components/admin-panel/rac-companies/veh
 import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-details/vehicle-details.component';
 import { VehicleResolver } from './resolvers/vehicle-resolver.service';
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
+import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -35,7 +36,9 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "userProfile", component: ProfilKorisnikaComponent },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
-    { path: "details/:id", component: RentACarCompanyDetailsComponent, resolve: { post: RacCompanyResolver } }
+    { path: "details/:id", component: RentACarCompanyDetailsComponent, resolve: { post: RacCompanyResolver } },
+    { path: ":id/vehicles", component: VehicleListNicerComponent, resolve: {post: RacCompanyResolver } },
+    { path: ":id/vehicles/details/:id", component: VehicleDetailsComponent, resolve: {post: VehicleResolver} }
   ]},
   { path: "airlines", component: AirlinesComponent, children: [
     { path: "details/:id", component: AirlineDetailsComponent, resolve: {post: AirlineResolver } }

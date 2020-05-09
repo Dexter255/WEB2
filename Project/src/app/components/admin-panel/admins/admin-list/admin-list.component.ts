@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { korisnik } from 'src/app/models/korisnik/korisnik';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/components/admin.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class AdminListComponent implements OnInit {
   admins: korisnik[];
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     private adminService: AdminService) { }
 
   ngOnInit(): void {
@@ -26,10 +27,21 @@ export class AdminListComponent implements OnInit {
     }
   }
 
-  onDelete(id: number) {
+  onDeleteAdmin(id: number) {
     this.adminService.deleteAdmin(id);
     let index = this.admins.indexOf(this.admins.find(x => x.id === id));
     this.admins.splice(index, 1);
   }
 
+  onAddAdmin(){
+    this.router.navigate(['add'], {relativeTo: this.route});
+  }
+  
+  onEditAdmin(id: number){
+    this.router.navigate(['edit', id], {relativeTo: this.route});
+  }
+
+  onDetailsAdmin(id: number){
+    this.router.navigate(['details', id], {relativeTo: this.route});
+  }
 }

@@ -5,19 +5,18 @@ import { RacCompanyService } from '../components/rac-company.service';
 
 @Injectable()
 export class VehicleResolver implements Resolve<Post> {
-    
-    constructor(private router: Router,
-        private route: ActivatedRoute,
-        private racCompanyService: RacCompanyService) {}
-  
-    async resolve(route: ActivatedRouteSnapshot): Promise<Post> {
-      await new Promise(resolve => setTimeout(resolve, 0));
-      
-      if (this.racCompanyService.checkVehicleId(+route.params['id'])) {
-        return {id: route.params['id']};
-      } else {
-        this.router.navigateByUrl('error', {skipLocationChange: true});
-      }
+
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private racCompanyService: RacCompanyService) { }
+
+  async resolve(route: ActivatedRouteSnapshot): Promise<Post> {
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    if (this.racCompanyService.checkVehicleId(+route.params['id'])) {
+      return { id: route.params['id'] };
+    } else {
+      this.router.navigateByUrl('error', { skipLocationChange: true });
     }
   }
-  
+}

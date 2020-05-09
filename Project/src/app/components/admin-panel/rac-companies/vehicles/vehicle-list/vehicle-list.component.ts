@@ -12,16 +12,20 @@ import { ServerService } from 'src/app/components/server.service';
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
   companyId: number;
+  notAllowed: boolean;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private racCompanyService: RacCompanyService,
-    public serverService: ServerService) { }
+    private serverService: ServerService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.companyId = +params['id'];
       this.vehicles = this.racCompanyService.getVehicles(this.companyId);  // prepraviti
+      
+      this.notAllowed = this.serverService.getUserType() !== 'Admin_RentACarCompanies' ? true : false;
+      
     });
   }
 
@@ -33,7 +37,11 @@ export class VehicleListComponent implements OnInit {
     this.router.navigate(['edit', vehicleId], {relativeTo: this.route});
   }
   
-  onDelete(vehicleId: number){
+  onDeleteVehicle(vehicleId: number){
     this.racCompanyService.deleteVehicle(this.companyId, vehicleId);
+  }
+
+  onDetailsVehicle(vehicleId: number){
+    this.router.navigate(['details', vehicleId], {relativeTo: this.route});
   }
 }

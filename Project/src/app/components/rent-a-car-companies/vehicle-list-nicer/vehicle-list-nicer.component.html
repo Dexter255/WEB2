@@ -1,0 +1,9 @@
+<div class="list-group" *ngIf="vehicles.length !== 0 else empty">
+    <a type="button" class="list-group-item list-group-item-action" *ngFor="let vehicle of vehicles"
+        [routerLink]="['details', vehicle.id]" routerLinkActive="active">
+        {{ vehicle.brand}} {{ vehicle.model }}, {{ vehicle.getType() }}
+    </a>
+</div>
+<ng-template #empty>
+    <p class="text-info">There is no companies available!</p>
+</ng-template>
