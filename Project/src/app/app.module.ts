@@ -37,6 +37,8 @@ import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/
 import { VehicleResolver } from './resolvers/vehicle-resolver.service';
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
 import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
+import { RentACarCompanySearchComponent } from './components/rent-a-car-companies/rent-a-car-company-search/rent-a-car-company-search.component';
+import { VehicleSearchComponent } from './components/rent-a-car-companies/vehicle-search/vehicle-search.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { VehicleListNicerComponent } from './components/rent-a-car-companies/veh
     VehicleListComponent,
     VehicleDetailsComponent,
     AddVehicleComponent,
-    VehicleListNicerComponent
+    VehicleListNicerComponent,
+    RentACarCompanySearchComponent,
+    VehicleSearchComponent
   ],
   imports: [
     BrowserModule,

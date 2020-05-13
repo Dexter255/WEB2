@@ -10,7 +10,7 @@ import { RacCompanyService } from '../../rac-company.service';
 })
 export class RentACarCompanyDetailsComponent implements OnInit {
   racCompany: RentACarCompany;
-  id: number;
+  companyId: number;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -18,12 +18,12 @@ export class RentACarCompanyDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
-      this.racCompany = this.racCompanyServices.getRacCompany(this.id);
+      this.companyId = +params['id'];
+      this.racCompany = this.racCompanyServices.getRacCompany(this.companyId);
     });
   }
 
   onSeeVehicles(){
-    this.router.navigate(['../../', this.id, 'vehicles'], {relativeTo: this.route});
+    this.router.navigate(['../../', this.companyId, 'vehicles'], {relativeTo: this.route});
   }
 }

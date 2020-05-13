@@ -28,9 +28,9 @@
             <label> Services: </label>
         </div>
         <div class="col-md-9" *ngIf="racCompany.services.length !== 0 else servicesEmpty">
-            <div class="row ml-2" *ngFor="let service of racCompany.services">
-                <label> {{ service }} </label>
-            </div>
+            <ul class="row ml-2" *ngFor="let service of racCompany.services">
+                <li> {{ service }} </li>
+            </ul>
         </div>
         <ng-template #servicesEmpty>
             <div class="col-md-9">
@@ -45,9 +45,9 @@
             <label> Branches: </label>
         </div>
         <div class="col-md-9" *ngIf="racCompany.branches.length !== 0 else branchesEmpty">
-            <div class="row ml-2" *ngFor="let branch of racCompany.branches">
-                <label> {{ branch }} </label>
-            </div>
+            <ul class="row ml-2" *ngFor="let branch of racCompany.branches">
+                <li> {{ branch }} </li>
+            </ul>
         </div>
         <ng-template #branchesEmpty>
             <div class="col-md-9">

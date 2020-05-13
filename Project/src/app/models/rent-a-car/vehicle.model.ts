@@ -13,11 +13,13 @@ export class Vehicle {
     public kilometer: number;
     public numberOfSeats: number;
     public rating: number;
+    public freeDates: Date[];
     // dodato
     public belongsToCompany: RentACarCompany;
+    public reserved: boolean;
 
     constructor(brand: string, model: string, type: Type, cubicCapacity: number, horsePower: number, yearOfProduction: number,
-        kilometer: number, numberOfSeats: number, belongsToCompany: RentACarCompany) {
+        kilometer: number, numberOfSeats: number, belongsToCompany: RentACarCompany, freeDates: Date[] = null) {
         this.id = Vehicle.nextId++;
         this.brand = brand;
         this.model = model;
@@ -27,8 +29,10 @@ export class Vehicle {
         this.yearOfProduction = yearOfProduction;
         this.kilometer = kilometer;
         this.numberOfSeats = numberOfSeats;
-        this.belongsToCompany = belongsToCompany;
         this.rating = 0;
+        this.freeDates = freeDates;
+        this.belongsToCompany = belongsToCompany;
+        this.reserved = false;
     }
 
     getType(){

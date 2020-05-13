@@ -37,8 +37,9 @@ const routes: Routes = [
   { path: "userProfile", component: ProfilKorisnikaComponent },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent, resolve: { post: RacCompanyResolver } },
-    { path: ":id/vehicles", component: VehicleListNicerComponent, resolve: {post: RacCompanyResolver } },
-    { path: ":id/vehicles/details/:id", component: VehicleDetailsComponent, resolve: {post: VehicleResolver} }
+    { path: ":id/vehicles", component: VehicleListNicerComponent, resolve: {post: RacCompanyResolver }, children: [
+      { path: "details/:id", component: VehicleDetailsComponent, resolve: {post: VehicleResolver} }
+    ]},
   ]},
   { path: "airlines", component: AirlinesComponent, children: [
     { path: "details/:id", component: AirlineDetailsComponent, resolve: {post: AirlineResolver } }

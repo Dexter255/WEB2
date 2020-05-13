@@ -11,6 +11,7 @@ import { ServerService } from 'src/app/components/server.service';
 })
 export class VehicleDetailsComponent implements OnInit {
   vehicle: Vehicle;
+  companyId: number;
 
   constructor(private route: ActivatedRoute,
     private racCompanyService: RacCompanyService,
@@ -21,13 +22,17 @@ export class VehicleDetailsComponent implements OnInit {
       let vehicleId = +params['id'];
       
       let path = this.route.snapshot['_routerState'].url.split('/');
-      let companyId;
+      this.companyId;
       if(path[1] === 'admin-panel')
-        companyId = +this.route.snapshot['_routerState'].url.split('/')[3];
+      this.companyId = +this.route.snapshot['_routerState'].url.split('/')[3];
       else if(path[1] === 'rac-companies')
-        companyId = +this.route.snapshot['_routerState'].url.split('/')[2];
+      this.companyId = +this.route.snapshot['_routerState'].url.split('/')[2];
   
-      this.vehicle = this.racCompanyService.getVehicle(companyId, vehicleId);
+      this.vehicle = this.racCompanyService.getVehicle(this.companyId, vehicleId);
     });
+  }
+
+  onReserve(){
+    this.racCompanyService.reserveVehicle(this.companyId, this.vehicle.id);
   }
 }

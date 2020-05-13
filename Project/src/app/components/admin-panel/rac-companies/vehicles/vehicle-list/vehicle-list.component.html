@@ -1,6 +1,6 @@
 <div class="row ml-3 mr-3 mt-3">
-    <button [disabled]="notAllowed" [ngClass]="{'not-allowed': notAllowed}"
-        class="btn btn-success mb-2" (click)="onAddVehicle()">
+    <button [disabled]="notAllowed" [ngClass]="{'not-allowed': notAllowed}" class="btn btn-success mb-2"
+        (click)="onAddVehicle()" [title]="notAllowed ? 'Not allowed' : ''">
         Add vehicle
     </button>
     <table class="table table-dark" *ngIf="vehicles.length !== 0 else empty">
@@ -11,6 +11,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">Cubic capacity</th>
                 <th scope="col">Horse power</th>
+                <th scope="col">Rating</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -21,13 +22,16 @@
                 <td> {{ vehicle.getType() }} </td>
                 <td> {{ vehicle.cubicCapacity }} </td>
                 <td> {{ vehicle.horsePower }} </td>
+                <td> {{ vehicle.rating }} </td>
                 <td>
                     <span>
                         <button class="btn btn-info mr-2" (click)="onDetailsVehicle(vehicle.id)">Details</button>
-                        <button [disabled]="notAllowed" [ngClass]="{'not-allowed': notAllowed}"
-                            class="btn btn-secondary mr-2" (click)="onEditVehicle(vehicle.id)">Edit</button>
-                        <button [disabled]="notAllowed" [ngClass]="{'not-allowed': notAllowed}"
-                            class="btn btn-danger" (click)="onDeleteVehicle(vehicle.id)">Delete</button>
+                        <button [disabled]="notAllowed || vehicle.reserved" [ngClass]="{'not-allowed': notAllowed || vehicle.reserved}"
+                            class="btn btn-secondary mr-2" (click)="onEditVehicle(vehicle.id)"
+                            [title]="notAllowed ? 'Not allowed' : ''">Edit</button>
+                        <button [disabled]="notAllowed || vehicle.reserved" [ngClass]="{'not-allowed': notAllowed}"
+                            class="btn btn-danger" (click)="onDeleteVehicle(vehicle.id)"
+                            [title]="notAllowed ? 'Not allowed' : ''">Delete</button>
                     </span>
                 </td>
             </tr>

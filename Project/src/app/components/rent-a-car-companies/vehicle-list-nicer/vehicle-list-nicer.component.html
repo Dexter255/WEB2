@@ -1,9 +1,19 @@
-<div class="list-group" *ngIf="vehicles.length !== 0 else empty">
-    <a type="button" class="list-group-item list-group-item-action" *ngFor="let vehicle of vehicles"
-        [routerLink]="['details', vehicle.id]" routerLinkActive="active">
-        {{ vehicle.brand}} {{ vehicle.model }}, {{ vehicle.getType() }}
-    </a>
+<h6>Search vehicles by:</h6>
+<app-vehicle-search (search)="onSearch()" (reset)="onReset()"></app-vehicle-search>
+<hr style="border-color: cadetblue;">
+<div class="row">
+    <div class="col-md-4">
+        <div class="list-group" *ngIf="vehicles.length !== 0 else empty">
+            <a type="button" class="list-group-item list-group-item-action" *ngFor="let vehicle of vehicles"
+                [routerLink]="['details', vehicle.id]" routerLinkActive="active">
+                {{ vehicle.brand}} {{ vehicle.model }}, {{ vehicle.getType() }}
+            </a>
+        </div>
+        <ng-template #empty>
+            <p class="text-info">There is no companies available!</p>
+        </ng-template>
+    </div>
+    <div class="col-md-8">
+        <router-outlet></router-outlet>
+    </div>
 </div>
-<ng-template #empty>
-    <p class="text-info">There is no companies available!</p>
-</ng-template>

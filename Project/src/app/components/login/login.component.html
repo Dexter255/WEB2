@@ -17,7 +17,7 @@
             Incorrect email or password!
         </span>
         <div class="text-center">
-            <button class="btn btn-primary" type="submit">Sign in</button>
+            <button class="btn btn-primary" [disabled]="!loginForm.valid" type="submit">Sign in</button>
         </div>
         <div style="color: black" class="p-3">
             Don't have an account?

@@ -6,11 +6,6 @@
             <div class="col-md-3">
                 <input type="text" class="form-control" id="brand" formControlName="brand" autocomplete="off">
             </div>
-            <!-- <div class="col-md-3">
-                <select class="form-control browser-default custom-select" id="brand" formControlName="brand" autocomplete="off">
-                    <option *ngFor="let brand of brands" [value]="brand">{{brand}}</option>
-                </select>
-            </div> -->
             <div class="col-md-7">
                 <span *ngIf="!addVehicle.get('brand').valid && addVehicle.get('brand').touched">
                     <span *ngIf="addVehicle.get('brand').errors['required']">Brand must be entered!</span>
@@ -103,9 +98,50 @@
                     <span *ngIf="addVehicle.get('kilometer').errors['pattern']">Only numbers from 0-9 are allowed!</span>
                 </span>
             </div>
-        </div> 
+        </div>
+        <div class="form-group row" *ngIf="!edit">
+            <label for="freeFrom" class="col-md-2 col-form-label">Free from</label>
+            <div class="col-md-3">
+                <input type="date" class="form-control" id="freeFrom" formControlName="freeFrom" autocomplete="off">
+                <span *ngIf="!addVehicle.get('freeFrom').valid && addVehicle.get('freeFrom').touched">
+                    <span *ngIf="addVehicle.get('freeFrom').errors['required']">Date must be entered!</span>
+                    <span *ngIf="addVehicle.get('freeFrom').errors['notValid']">Cannot be greater!</span>
+                    <span *ngIf="addVehicle.get('freeFrom').errors['currentDate']">Cannot be smaller than current date!</span>
+                </span>
+            </div>
+            <label for="freeTo" class="col-md-2 col-form-label">To</label>
+            <div class="col-md-3">
+                <input type="date" class="form-control" id="freeTo" formControlName="freeTo" autocomplete="off">
+                <span *ngIf="!addVehicle.get('freeTo').valid && addVehicle.get('freeTo').touched">
+                    <span *ngIf="addVehicle.get('freeTo').errors['required']">Date must be entered!</span>
+                    <span *ngIf="addVehicle.get('freeTo').errors['notValid']">Cannot be smaller! </span>
+                    <span *ngIf="addVehicle.get('freeTo').errors['currentDate']">Cannot be smaller than current date!</span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group row" *ngIf="edit">
+            <label for="freeDates" class="col-md-2 col-form-label">Free dates</label>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success" (click)="onAddDate()">Add date</button>
+            </div>
+            <div class="col-md-8" formArrayName="freeDates">
+                <div class="form-group" *ngFor="let freeDate of addVehicle.get('freeDates')['controls']; let i = index">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input title="Date" type="date" class="form-control" [formControlName]="i" autocomplete="off">
+                            <span *ngIf="!this.addVehicle.get('freeDates')['controls'][i].valid && this.addVehicle.get('freeDates')['controls'][i].touched">
+                                Date must be entered!                    
+                            </span>
+                        </div>
+                        <div>
+                            <button class="btn btn-danger" type="button" (click)="onDeleteDate(i)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="ml-5">
-            <button class="btn btn-success" type="submit"> {{ header }} </button>
+            <button class="btn btn-success" [disabled]="!addVehicle.valid" type="submit"> {{ header }} </button>
         </div>
     </form>
 </div>

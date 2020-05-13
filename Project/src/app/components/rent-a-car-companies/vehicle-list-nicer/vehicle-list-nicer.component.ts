@@ -17,8 +17,15 @@ export class VehicleListNicerComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       let companyId = +params['id'];
-      this.vehicles = this.racCompanyService.getVehicles(companyId);
+      this.vehicles = this.racCompanyService.getVehiclesSearch(companyId);
     });
   }
 
+  onSearch(){
+
+  }
+  
+  onReset(){
+    
+  }
 }

@@ -39,7 +39,7 @@ export class AddRacCompanyComponent implements OnInit {
           this.id = +params['id'];
 
           let racCompany = this.racCompanyService.getRacCompany(this.id);
-                    
+
           this.addRacCompany = new FormGroup({
             'companyName': new FormControl(racCompany.companyName, [Validators.required, Validators.minLength(4)]),
             'address': new FormControl(racCompany.address, [Validators.required, Validators.minLength(4)]),
@@ -47,7 +47,7 @@ export class AddRacCompanyComponent implements OnInit {
             'services': new FormArray([]),
             'branches': new FormArray([])
           });
-          
+
           racCompany.services.forEach(element => {
             this.onAddService(element.description, element.price.toString());
           });
@@ -55,36 +55,36 @@ export class AddRacCompanyComponent implements OnInit {
           racCompany.branches.forEach(element => {
             this.onAddBranch(element);
           });
-          
+
         });
         break;
     }
   }
 
-  onAddService(service: string = null, price: string = null){
+  onAddService(service: string = null, price: string = null) {
     let s = new FormGroup({
       'description': new FormControl(service, [Validators.required, Validators.minLength(4)]),
       'price': new FormControl(price, [Validators.required, Validators.pattern('^[0-9]*$')])
     });
-    
+
     (<FormArray>this.addRacCompany.get('services')).push(s);
   }
-  
-  onDeleteService(index: number){
+
+  onDeleteService(index: number) {
     (<FormArray>this.addRacCompany.get('services')).removeAt(index);
   }
 
-  onAddBranch(address: string = null){
+  onAddBranch(address: string = null) {
     let branch = new FormControl(address, [Validators.required, Validators.minLength(4)]);
 
     (<FormArray>this.addRacCompany.get('branches')).push(branch);
   }
 
-  onDeleteBranch(index: number){
+  onDeleteBranch(index: number) {
     (<FormArray>this.addRacCompany.get('branches')).removeAt(index);
   }
 
-  onSubmit(){
+  onSubmit() {
     let services: Service[] = [];
     let branches: string[] = [];
 
@@ -97,12 +97,12 @@ export class AddRacCompanyComponent implements OnInit {
     });
 
     let racCompany = new RentACarCompany(this.addRacCompany.get('companyName').value,
-                                          this.addRacCompany.get('address').value,
-                                          this.addRacCompany.get('description').value,
-                                          services,
-                                          branches);
+      this.addRacCompany.get('address').value,
+      this.addRacCompany.get('description').value,
+      services,
+      branches);
 
-    if(this.edit){
+    if (this.edit) {
       this.racCompanyService.updateRacCompany(this.id,
         this.addRacCompany.get('companyName').value,
         this.addRacCompany.get('address').value,
@@ -111,7 +111,7 @@ export class AddRacCompanyComponent implements OnInit {
         branches);
       this.router.navigate(['../../'], { relativeTo: this.route });
     }
-    else{
+    else {
       this.racCompanyService.addRacCompany(
         this.addRacCompany.get('companyName').value,
         this.addRacCompany.get('address').value,
