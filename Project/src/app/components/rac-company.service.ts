@@ -3,12 +3,16 @@ import { Service } from '../models/rent-a-car/service.model';
 import { Type } from '../models/rent-a-car/type.model';
 import { RentACarCompanySearch } from '../models/rent-a-car/rac-company-search.model';
 import { Vehicle } from '../models/rent-a-car/vehicle.model';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
 
+@Injectable()
 export class RacCompanyService {
     private racCompanies: RentACarCompany[];
     private racCompaniesSearch: RentACarCompanySearch[];
+    private readonly BaseURI = 'https://localhost:44305/api';
 
-    constructor() {
+    constructor(private http: HttpClient) {
         this.racCompanies = [];
 
         let address1 = "Serbia, Sremska Mitrovica, Ratarska 32, 22000";
@@ -58,6 +62,10 @@ export class RacCompanyService {
     }
     
     getRacCompanies() {
+        // return this.http.get(this.BaseURI + '/RentACarCompany')
+        //     .toPromise()
+        //     .then(res => this.racCompanies = res as RentACarCompany[]);
+        
         return this.racCompanies;
     }
     
