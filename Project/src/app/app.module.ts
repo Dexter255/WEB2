@@ -40,6 +40,7 @@ import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehi
 import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
 import { RentACarCompanySearchComponent } from './components/rent-a-car-companies/rent-a-car-company-search/rent-a-car-company-search.component';
 import { VehicleSearchComponent } from './components/rent-a-car-companies/vehicle-search/vehicle-search.component';
+import { VehicleService } from './components/vehicle.service';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { VehicleSearchComponent } from './components/rent-a-car-companies/vehicl
     AdminResolver, 
     VehicleResolver, 
     ServerService, 
-    RacCompanyService, 
+    RacCompanyService,
+    VehicleService,
     AirlineService, 
     AdminService],
   bootstrap: [AppComponent]

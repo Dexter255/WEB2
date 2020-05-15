@@ -1,10 +1,10 @@
-<div class="container" style="background-color: white;">
+<div class="container" style="background-color: white;" *ngIf="racCompany">
     <div class="row">
         <div class="col-md-3">
             <label> Company name: </label>
         </div>
         <div class="col-md-9">
-            <label> {{ racCompany.companyName }} </label>
+            <label> {{ racCompany.CompanyName }} </label>
         </div>
     </div>
     <div class="row">
@@ -12,7 +12,7 @@
             <label> Address: </label>
         </div>
         <div class="col-md-9">
-            <label> {{ racCompany.address }} </label>
+            <label> {{ racCompany.Address }} </label>
         </div>
     </div>
     <div class="row">
@@ -20,16 +20,16 @@
             <label> Description: </label>
         </div>
         <div class="col-md-9">
-            <label> {{ racCompany.description }} </label>
+            <label> {{ racCompany.Description }} </label>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
             <label> Services: </label>
         </div>
-        <div class="col-md-9" *ngIf="racCompany.services.length !== 0 else servicesEmpty">
-            <ul class="row ml-2" *ngFor="let service of racCompany.services">
-                <li> {{ service }} </li>
+        <div class="col-md-9" *ngIf="racCompany.Services.length !== 0 else servicesEmpty">
+            <ul class="row ml-2" *ngFor="let service of racCompany.Services">
+                <li> {{ service.Description }}, {{ service.Price }} </li>
             </ul>
         </div>
         <ng-template #servicesEmpty>
@@ -44,9 +44,9 @@
         <div class="col-md-3">
             <label> Branches: </label>
         </div>
-        <div class="col-md-9" *ngIf="racCompany.branches.length !== 0 else branchesEmpty">
-            <ul class="row ml-2" *ngFor="let branch of racCompany.branches">
-                <li> {{ branch }} </li>
+        <div class="col-md-9" *ngIf="racCompany.Branches.length !== 0 else branchesEmpty">
+            <ul class="row ml-2" *ngFor="let branch of racCompany.Branches">
+                <li> {{ branch.Address }} </li>
             </ul>
         </div>
         <ng-template #branchesEmpty>
@@ -61,6 +61,6 @@
         <div class="col-md-3">
             <label> Vehicles: </label>
         </div>
-        <button class="btn btn-info ml-3" (click)="onSeeVehicles()">See vehicles</button>
+        <button class="btn btn-info ml-3" (click)="onSeeVehicles(racCompany.Id)">See vehicles</button>
     </div>
 </div>

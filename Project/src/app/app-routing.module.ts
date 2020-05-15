@@ -30,13 +30,14 @@ import { VehicleResolver } from './resolvers/vehicle-resolver.service';
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
 import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
 
+// , resolve: { post: RacCompanyResolver }
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "userProfile", component: ProfilKorisnikaComponent },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
-    { path: "details/:id", component: RentACarCompanyDetailsComponent, resolve: { post: RacCompanyResolver } },
+    { path: "details/:id", component: RentACarCompanyDetailsComponent },
     { path: ":id/vehicles", component: VehicleListNicerComponent, resolve: {post: RacCompanyResolver }, children: [
       { path: "details/:id", component: VehicleDetailsComponent, resolve: {post: VehicleResolver} }
     ]},
@@ -65,10 +66,10 @@ const routes: Routes = [
     ] },
     { path: "rac-companies", component: RacCompaniesComponent, children: [
       { path: "", component: RacCompanyListComponent },
-      { path: "details/:id", component: RentACarCompanyDetailsComponent, resolve: { post: RacCompanyResolver } },
+      { path: "details/:id", component: RentACarCompanyDetailsComponent },
       { path: "add", component: AddRacCompanyComponent },
-      { path: "edit/:id", component: AddRacCompanyComponent, resolve: { post: RacCompanyResolver } },
-      { path: ":id/vehicles", component: VehiclesComponent, resolve: {post: RacCompanyResolver }, children: [
+      { path: "edit/:id", component: AddRacCompanyComponent },
+      { path: ":id/vehicles", component: VehiclesComponent, children: [
         { path: "", component: VehicleListComponent },
         { path: "details/:id", component: VehicleDetailsComponent, resolve: {post: VehicleResolver} },
         { path: "add", component: AddVehicleComponent },

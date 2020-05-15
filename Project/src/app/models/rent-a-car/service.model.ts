@@ -1,13 +1,15 @@
 export class Service{
-    public description: string;
-    public price: number;
+    public Id: number;
+    public Description: string;
+    public Price: number;
 
-    constructor(description: string, price: number){
-        this.description = description;
-        this.price = price;
+    constructor(id: number, description: string, price: number){
+        this.Id = id;
+        this.Description = description;
+        this.Price = price;
     }
 
     public toString = () : string => {
-        return this.description + ", " + this.price + "€";
+        return this.Description + ", " + this.Price + "€";
     }
 }

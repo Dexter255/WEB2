@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 
 namespace ProjectService.Models.RentACar
 {
-    [Table("Dates")]
-    public class Date
+    [Table("FreeDates")]
+    public class FreeDate
     {
         #region Fields
         [Key]
         public int Id { get; set; }
 
         [Required]
-        public DateTime FreeDate { get; set; }
+        public DateTime Date { get; set; }
         #endregion
 
         #region Constructors
-        public Date()
+        public FreeDate()
         {
 
         }
 
-        public Date(int id, DateTime freeDate)
+        public FreeDate(int id, DateTime date)
         {
             Id = id;
-            FreeDate = freeDate;
+            Date = date;
         }
         #endregion
     }

@@ -1,4 +1,4 @@
-export enum Type{
+export enum VehicleType{
     Cabriolet = 0,
     Caravan,
     Saloon,

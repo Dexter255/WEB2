@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { RentACarCompanySearch } from 'src/app/models/rent-a-car/rac-company-search.model';
 
 @Component({
   selector: 'app-rent-a-car-company-search',
@@ -9,7 +8,7 @@ import { RentACarCompanySearch } from 'src/app/models/rent-a-car/rac-company-sea
 })
 export class RentACarCompanySearchComponent implements OnInit {
   searchRacCompany: FormGroup;
-  @Output() search = new EventEmitter<RentACarCompanySearch>();
+  @Output() search = new EventEmitter<void>();
   @Output() reset = new EventEmitter<void>();
 
   constructor() { }
@@ -30,7 +29,7 @@ export class RentACarCompanySearchComponent implements OnInit {
     let toDate = this.searchRacCompany.get('toDate').value;
 
     if(companyName !== null || address !== null || fromDate !== null || toDate !== null)
-      this.search.emit(new RentACarCompanySearch(0, companyName, address, fromDate, toDate, []));
+      this.search.emit();
   }
 
   onReset(){

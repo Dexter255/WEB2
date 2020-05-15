@@ -12,10 +12,11 @@ export class VehicleResolver implements Resolve<Post> {
   async resolve(route: ActivatedRouteSnapshot): Promise<Post> {
     await new Promise(resolve => setTimeout(resolve, 0));
     
-    if (this.racCompanyService.checkVehicleId(+route.parent.params['id'], +route.params['id'])) {
-      return { id: route.params['id'] };
-    } else {
-      this.router.navigateByUrl('error', { skipLocationChange: true });
-    }
+    // if (this.racCompanyService.checkVehicleId(+route.parent.params['id'], +route.params['id'])) {
+    //   return { id: route.params['id'] };
+    // } else {
+    //   this.router.navigateByUrl('error', { skipLocationChange: true });
+    // }
+    return { id: route.params['id'] };
   }
 }

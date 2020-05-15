@@ -32,6 +32,7 @@ namespace ProjectService.Models.RentACar
         [Required]
         public List<Service> Services { get; set; }
 
+        [Required]
         public List<Vehicle> Vehicles { get; set; }
 
         [Required]
@@ -45,7 +46,7 @@ namespace ProjectService.Models.RentACar
         }
 
         public RentACarCompany(int id, string companyName, string address, string description, 
-            List<Service> services, /*List<Vehicle> vehicles, */List<Branch> branches)
+            List<Service> services, List<Vehicle> vehicles, List<Branch> branches)
         {
             Id = id;
             CompanyName = companyName;
@@ -53,7 +54,7 @@ namespace ProjectService.Models.RentACar
             Description = description;
             Rating = 0;
             Services = services;
-            Vehicles = new List<Vehicle>();
+            Vehicles = vehicles;
             Branches = branches;
         }
         #endregion

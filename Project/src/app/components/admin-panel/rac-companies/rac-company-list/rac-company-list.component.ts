@@ -15,11 +15,20 @@ export class RacCompanyListComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private racCompanyService: RacCompanyService,
+    public racCompanyService: RacCompanyService,
     private serverService: ServerService) { }
 
   ngOnInit(): void {
-    this.racCompanies = this.racCompanyService.getRacCompanies();
+    //this.racCompanies = this.racCompanyService.getRacCompanies();
+    this.racCompanies = [];
+    this.racCompanyService.getRacCompanies().subscribe(
+      res => {
+        this.racCompanies = res as RentACarCompany[];
+      },
+      err => {
+        console.log(err);
+      }
+    );
     this.notAllowed = this.serverService.getUserType() !== 'Admin' ? true : false;
   }
 
@@ -27,8 +36,15 @@ export class RacCompanyListComponent implements OnInit {
     this.router.navigate(['add'], {relativeTo: this.route});
   }
   
-  onDeleteRacCompany(id: number){
-    this.racCompanyService.deleteRacCompany(id);
+  onDeleteRacCompany(companyId: number){
+    this.racCompanyService.deleteRacCompany(companyId).subscribe(
+      res => {
+        // DATI OBAVESTENJE
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
   
   onEditRacCompany(companyId: number){

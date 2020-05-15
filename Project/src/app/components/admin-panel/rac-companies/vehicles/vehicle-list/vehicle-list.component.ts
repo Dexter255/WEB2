@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Vehicle } from 'src/app/models/rent-a-car/vehicle.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { RacCompanyService } from 'src/app/components/rac-company.service';
 import { ServerService } from 'src/app/components/server.service';
+import { VehicleService } from 'src/app/components/vehicle.service';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -11,21 +11,28 @@ import { ServerService } from 'src/app/components/server.service';
 })
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
-  companyId: number;
   notAllowed: boolean;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private racCompanyService: RacCompanyService,
+    private vehicleService: VehicleService,
     private serverService: ServerService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.companyId = +params['id'];
-      this.vehicles = this.racCompanyService.getVehicles(this.companyId);  // prepraviti
+      let companyId = +params['id'];
+      
+      this.vehicles = [];
+      this.vehicleService.getVehicles(companyId).subscribe(
+        res => {
+          this.vehicles = res as Vehicle[];
+        },
+        err => {
+          console.log(err);
+        }
+      )
       
       this.notAllowed = this.serverService.getUserType() !== 'Admin_RentACarCompanies' ? true : false;
-      
     });
   }
 
@@ -38,7 +45,7 @@ export class VehicleListComponent implements OnInit {
   }
   
   onDeleteVehicle(vehicleId: number){
-    this.racCompanyService.deleteVehicle(this.companyId, vehicleId);
+    //this.racCompanyService.deleteVehicle(this.companyId, vehicleId);
   }
 
   onDetailsVehicle(vehicleId: number){

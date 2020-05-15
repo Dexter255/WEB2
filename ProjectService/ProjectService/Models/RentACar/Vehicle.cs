@@ -44,7 +44,7 @@ namespace ProjectService.Models.RentACar
         public int Rating { get; set; }
 
         [Required]
-        public List<Date> FreeDates { get; set; }
+        public List<FreeDate> FreeDates { get; set; }
 
         [Required]
         public RentACarCompany BelongToCompany { get; set; }
@@ -60,7 +60,7 @@ namespace ProjectService.Models.RentACar
         }
 
         public Vehicle(int id, string brand, string model, VehicleType type, int cubicCapacity, int horsePower, 
-            int yearOfProduction, int kilometers, List<Date> freeDates, RentACarCompany belongToCompany)
+            int yearOfProduction, int kilometers, RentACarCompany belongToCompany, List<FreeDate> freeDates)
         {
             Id = id;
             Brand = brand;

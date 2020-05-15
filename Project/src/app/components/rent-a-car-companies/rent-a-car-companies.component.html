@@ -1,7 +1,7 @@
 <div class="row ml-3">
     <h6 class="ml-3">Search rent a car company by:</h6>
     <div class="col-md-12">
-        <app-rent-a-car-company-search (search)="onSearch($event)" (reset)="onReset()"></app-rent-a-car-company-search>
+        <app-rent-a-car-company-search (search)="onSearch()" (reset)="onReset()"></app-rent-a-car-company-search>
     </div>
 </div>
 <div class="ml-3 mr-3">
@@ -11,8 +11,8 @@
     <div class="col-md-3">
         <div class="list-group" *ngIf="racCompanies.length !== 0 else empty">
             <a type="button" class="list-group-item list-group-item-action" 
-            *ngFor="let racCompany of racCompanies" [routerLink]="['details', racCompany.id]" routerLinkActive="active"> 
-                {{ racCompany.companyName}}
+            *ngFor="let racCompany of racCompanies" [routerLink]="['details', racCompany.Id]" routerLinkActive="active"> 
+                {{ racCompany.CompanyName}}
             </a>
         </div>
         <ng-template #empty>

@@ -1,7 +1,9 @@
-<div class="container mt-3 ml-5">
+<div class="container mt-3 ml-5" *ngIf="show">
     <h3>{{ header }}</h3>
     <form [formGroup]="addVehicle" (ngSubmit)="onSubmit()">
-       <div class="form-group row">
+        <input type="hidden" formControlName="companyId">
+        <input type="hidden" formControlName="vehicleId">
+        <div class="form-group row">
             <label for="brand" class="col-md-2 col-form-label">Brand</label>
             <div class="col-md-3">
                 <input type="text" class="form-control" id="brand" formControlName="brand" autocomplete="off">
@@ -12,7 +14,7 @@
                     <span *ngIf="addVehicle.get('brand').errors['minlength']">Brand must be atleast 2 characters!</span>
                 </span>
             </div>
-        </div> 
+        </div>
         <div class="form-group row">
             <label for="model" class="col-md-2 col-form-label">Model</label>
             <div class="col-md-3">
@@ -24,11 +26,12 @@
                     <span *ngIf="addVehicle.get('model').errors['minlength']">Model must be atleast 2 characters!</span>
                 </span>
             </div>
-        </div> 
+        </div>
         <div class="form-group row">
             <label for="type" class="col-md-2 col-form-label">Chassis</label>
             <div class="col-md-3">
-                <select class="form-control browser-default custom-select" id="type" formControlName="type" autocomplete="off">
+                <select class="form-control browser-default custom-select" id="type" formControlName="type"
+                    autocomplete="off">
                     <option *ngFor="let type of types" [value]="type">{{type}}</option>
                 </select>
             </div>
@@ -41,7 +44,8 @@
         <div class="form-group row">
             <label for="seat" class="col-md-2 col-form-label">Number of seats</label>
             <div class="col-md-3">
-                <select class="form-control browser-default custom-select" id="seat" formControlName="seat" autocomplete="off">
+                <select class="form-control browser-default custom-select" id="seat" formControlName="seat"
+                    autocomplete="off">
                     <option *ngFor="let seat of seats" [value]="seat">{{seat}}</option>
                 </select>
             </div>
@@ -54,15 +58,18 @@
         <div class="form-group row">
             <label for="cubicCapacity" class="col-md-2 col-form-label">Cubic capacity</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="cubicCapacity" formControlName="cubicCapacity" autocomplete="off">
+                <input type="text" class="form-control" id="cubicCapacity" formControlName="cubicCapacity"
+                    autocomplete="off">
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addVehicle.get('cubicCapacity').valid && addVehicle.get('cubicCapacity').touched">
-                    <span *ngIf="addVehicle.get('cubicCapacity').errors['required']">Cubic capacity must be entered!</span>
-                    <span *ngIf="addVehicle.get('cubicCapacity').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                    <span *ngIf="addVehicle.get('cubicCapacity').errors['required']">Cubic capacity must be
+                        entered!</span>
+                    <span *ngIf="addVehicle.get('cubicCapacity').errors['pattern']">Only numbers from 0-9 are
+                        allowed!</span>
                 </span>
             </div>
-        </div> 
+        </div>
         <div class="form-group row">
             <label for="horsePower" class="col-md-2 col-form-label">Horse power</label>
             <div class="col-md-3">
@@ -71,22 +78,26 @@
             <div class="col-md-7">
                 <span *ngIf="!addVehicle.get('horsePower').valid && addVehicle.get('horsePower').touched">
                     <span *ngIf="addVehicle.get('horsePower').errors['required']">Horse power must be entered!</span>
-                    <span *ngIf="addVehicle.get('horsePower').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                    <span *ngIf="addVehicle.get('horsePower').errors['pattern']">Only numbers from 0-9 are
+                        allowed!</span>
                 </span>
             </div>
-        </div> 
+        </div>
         <div class="form-group row">
             <label for="yearOfProduction" class="col-md-2 col-form-label">Year of production</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="yearOfProduction" formControlName="yearOfProduction" autocomplete="off">
+                <input type="text" class="form-control" id="yearOfProduction" formControlName="yearOfProduction"
+                    autocomplete="off">
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addVehicle.get('yearOfProduction').valid && addVehicle.get('yearOfProduction').touched">
-                    <span *ngIf="addVehicle.get('yearOfProduction').errors['required']">Year of production must be entered!</span>
-                    <span *ngIf="addVehicle.get('yearOfProduction').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                    <span *ngIf="addVehicle.get('yearOfProduction').errors['required']">Year of production must be
+                        entered!</span>
+                    <span *ngIf="addVehicle.get('yearOfProduction').errors['pattern']">Only numbers from 0-9 are
+                        allowed!</span>
                 </span>
             </div>
-        </div> 
+        </div>
         <div class="form-group row">
             <label for="kilometer" class="col-md-2 col-form-label">Kilometers</label>
             <div class="col-md-3">
@@ -95,18 +106,20 @@
             <div class="col-md-7">
                 <span *ngIf="!addVehicle.get('kilometer').valid && addVehicle.get('kilometer').touched">
                     <span *ngIf="addVehicle.get('kilometer').errors['required']">Kilometers must be entered!</span>
-                    <span *ngIf="addVehicle.get('kilometer').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                    <span *ngIf="addVehicle.get('kilometer').errors['pattern']">Only numbers from 0-9 are
+                        allowed!</span>
                 </span>
             </div>
         </div>
-        <div class="form-group row" *ngIf="!edit">
+        <div class="form-group row" *ngIf="addVehicle.get('vehicleId').value === 0">
             <label for="freeFrom" class="col-md-2 col-form-label">Free from</label>
             <div class="col-md-3">
                 <input type="date" class="form-control" id="freeFrom" formControlName="freeFrom" autocomplete="off">
                 <span *ngIf="!addVehicle.get('freeFrom').valid && addVehicle.get('freeFrom').touched">
                     <span *ngIf="addVehicle.get('freeFrom').errors['required']">Date must be entered!</span>
                     <span *ngIf="addVehicle.get('freeFrom').errors['notValid']">Cannot be greater!</span>
-                    <span *ngIf="addVehicle.get('freeFrom').errors['currentDate']">Cannot be smaller than current date!</span>
+                    <span *ngIf="addVehicle.get('freeFrom').errors['currentDate']">Cannot be smaller than current
+                        date!</span>
                 </span>
             </div>
             <label for="freeTo" class="col-md-2 col-form-label">To</label>
@@ -115,11 +128,12 @@
                 <span *ngIf="!addVehicle.get('freeTo').valid && addVehicle.get('freeTo').touched">
                     <span *ngIf="addVehicle.get('freeTo').errors['required']">Date must be entered!</span>
                     <span *ngIf="addVehicle.get('freeTo').errors['notValid']">Cannot be smaller! </span>
-                    <span *ngIf="addVehicle.get('freeTo').errors['currentDate']">Cannot be smaller than current date!</span>
+                    <span *ngIf="addVehicle.get('freeTo').errors['currentDate']">Cannot be smaller than current
+                        date!</span>
                 </span>
             </div>
         </div>
-        <div class="form-group row" *ngIf="edit">
+        <div class="form-group row" *ngIf="addVehicle.get('vehicleId').value !== 0">
             <label for="freeDates" class="col-md-2 col-form-label">Free dates</label>
             <div class="col-md-2">
                 <button type="button" class="btn btn-success" (click)="onAddDate()">Add date</button>
@@ -128,9 +142,11 @@
                 <div class="form-group" *ngFor="let freeDate of addVehicle.get('freeDates')['controls']; let i = index">
                     <div class="row">
                         <div class="col-md-4">
-                            <input title="Date" type="date" class="form-control" [formControlName]="i" autocomplete="off">
-                            <span *ngIf="!this.addVehicle.get('freeDates')['controls'][i].valid && this.addVehicle.get('freeDates')['controls'][i].touched">
-                                Date must be entered!                    
+                            <input title="Date" type="date" class="form-control" [formControlName]="i"
+                                autocomplete="off">
+                            <span
+                                *ngIf="!this.addVehicle.get('freeDates')['controls'][i].valid && this.addVehicle.get('freeDates')['controls'][i].touched">
+                                Date must be entered!
                             </span>
                         </div>
                         <div>

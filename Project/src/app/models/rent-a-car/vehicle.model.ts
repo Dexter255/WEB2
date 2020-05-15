@@ -1,45 +1,45 @@
-import { Type } from './type.model';
 import { RentACarCompany } from './rac-company.model';
+import { VehicleType } from './vehicle-type.model';
+import { FreeDate } from './free-date.model';
 
 export class Vehicle {
-    public id: number;
-    private static nextId: number = 0;
-    public brand: string;
-    public model: string;
-    public type: Type;
-    public cubicCapacity: number;
-    public horsePower: number;
-    public yearOfProduction: number;
-    public kilometer: number;
-    public numberOfSeats: number;
-    public rating: number;
-    public freeDates: Date[];
+    public Id: number;
+    public Brand: string;
+    public Model: string;
+    public Type: VehicleType;
+    public CubicCapacity: number;
+    public HorsePower: number;
+    public YearOfProduction: number;
+    public Kilometers: number;
+    public NumberOfSeats: number;
+    public Rating: number;
+    public FreeDates: FreeDate[];
     // dodato
-    public belongsToCompany: RentACarCompany;
-    public reserved: boolean;
+    public BelongToCompany: RentACarCompany;
+    public Reserved: boolean;
 
-    constructor(brand: string, model: string, type: Type, cubicCapacity: number, horsePower: number, yearOfProduction: number,
-        kilometer: number, numberOfSeats: number, belongsToCompany: RentACarCompany, freeDates: Date[] = null) {
-        this.id = Vehicle.nextId++;
-        this.brand = brand;
-        this.model = model;
-        this.type = type;
-        this.cubicCapacity = cubicCapacity;
-        this.horsePower = horsePower;
-        this.yearOfProduction = yearOfProduction;
-        this.kilometer = kilometer;
-        this.numberOfSeats = numberOfSeats;
-        this.rating = 0;
-        this.freeDates = freeDates;
-        this.belongsToCompany = belongsToCompany;
-        this.reserved = false;
+    constructor(id: number, brand: string, model: string, type: VehicleType, cubicCapacity: number, horsePower: number, yearOfProduction: number,
+        kilometers: number, numberOfSeats: number, belongsToCompany: RentACarCompany, freeDates: FreeDate[]) {
+        this.Id = id;
+        this.Brand = brand;
+        this.Model = model;
+        this.Type = type;
+        this.CubicCapacity = cubicCapacity;
+        this.HorsePower = horsePower;
+        this.YearOfProduction = yearOfProduction;
+        this.Kilometers = kilometers;
+        this.NumberOfSeats = numberOfSeats;
+        this.Rating = 0;
+        this.FreeDates = freeDates;
+        this.BelongToCompany = belongsToCompany;
+        this.Reserved = false;
     }
 
     getType(){
-        return Type[this.type];
+        return VehicleType[this.Type];
     }
 
     public toString = () : string => {
-        return this.brand + " " + this.model + ", " + this.getType();
+        return this.Brand + " " + this.Model + ", " + this.getType();
     }
 }

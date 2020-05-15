@@ -4,7 +4,7 @@
             <label> Brand </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.brand }} </label>
+            <label> {{ vehicle.Brand }} </label>
         </div>
     </div>
     <div class="row">
@@ -12,7 +12,7 @@
             <label> Model: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.model }} </label>
+            <label> {{ vehicle.Model }} </label>
         </div>
     </div>
     <div class="row">
@@ -28,7 +28,7 @@
             <label> Cubic capacity: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.cubicCapacity }} </label>
+            <label> {{ vehicle.CubicCapacity }} </label>
         </div>
     </div>
     <div class="row">
@@ -36,7 +36,7 @@
             <label> Power (HP): </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.horsePower }} </label>
+            <label> {{ vehicle.HorsePower }} </label>
         </div>
     </div>
     <div class="row">
@@ -44,7 +44,7 @@
             <label> Year of production: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.yearOfProduction }} </label>
+            <label> {{ vehicle.YearOfProduction }} </label>
         </div>
     </div>
     <div class="row">
@@ -52,7 +52,7 @@
             <label> Kilometer: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.kilometer }} </label>
+            <label> {{ vehicle.Kilometers }} </label>
         </div>
     </div>
     <div class="row">
@@ -60,7 +60,7 @@
             <label> Number of seats: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.numberOfSeats }} </label>
+            <label> {{ vehicle.NumberOfSeats }} </label>
         </div>
     </div>
     <div class="row">
@@ -68,14 +68,14 @@
             <label> Rating: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.rating }} </label>
+            <label> {{ vehicle.Rating }} </label>
         </div>
     </div>
-    <div class="row" *ngIf="serverService.getUserType() === 'User'">
+    <!-- <div class="row" *ngIf="serverService.getUserType() === 'User'">
         <div class="col-md-12">
             <button class="btn btn-success" [disabled]="vehicle.reserved"
                 [title]="vehicle.reserved ? 'Already reserved' : ''"
                 (click)="onReserve()">Reserve - PREPRAVITI</button>
         </div>
-    </div>
+    </div> -->
 </div>

@@ -1,5 +1,3 @@
-import { Type } from '../rent-a-car/type.model';
-
 export class Flight
 {
     public  startFlightDateAndTime: string;

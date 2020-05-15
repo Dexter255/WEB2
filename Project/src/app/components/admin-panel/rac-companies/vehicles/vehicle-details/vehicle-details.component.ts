@@ -3,6 +3,7 @@ import { Vehicle } from 'src/app/models/rent-a-car/vehicle.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RacCompanyService } from 'src/app/components/rac-company.service';
 import { ServerService } from 'src/app/components/server.service';
+import { VehicleService } from 'src/app/components/vehicle.service';
 
 @Component({
   selector: 'app-vehicle-details',
@@ -11,10 +12,9 @@ import { ServerService } from 'src/app/components/server.service';
 })
 export class VehicleDetailsComponent implements OnInit {
   vehicle: Vehicle;
-  companyId: number;
 
   constructor(private route: ActivatedRoute,
-    private racCompanyService: RacCompanyService,
+    private vehicleService: VehicleService,
     public serverService: ServerService) { }
   
   ngOnInit(): void {
@@ -22,17 +22,25 @@ export class VehicleDetailsComponent implements OnInit {
       let vehicleId = +params['id'];
       
       let path = this.route.snapshot['_routerState'].url.split('/');
-      this.companyId;
+      let companyId;
+      
       if(path[1] === 'admin-panel')
-      this.companyId = +this.route.snapshot['_routerState'].url.split('/')[3];
+        companyId = +this.route.snapshot['_routerState'].url.split('/')[3];
       else if(path[1] === 'rac-companies')
-      this.companyId = +this.route.snapshot['_routerState'].url.split('/')[2];
+        companyId = +this.route.snapshot['_routerState'].url.split('/')[2];
   
-      this.vehicle = this.racCompanyService.getVehicle(this.companyId, vehicleId);
+      this.vehicleService.getVehicle(companyId, vehicleId).subscribe(
+        res => {
+          this.vehicle = res as Vehicle;
+        },
+        err => {
+          console.log(err);
+        }
+      );
     });
   }
 
   onReserve(){
-    this.racCompanyService.reserveVehicle(this.companyId, this.vehicle.id);
+    //this.racCompanyService.reserveVehicle(this.companyId, this.vehicle.id);
   }
 }

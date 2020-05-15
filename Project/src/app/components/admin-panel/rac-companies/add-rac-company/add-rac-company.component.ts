@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RacCompanyService } from 'src/app/components/rac-company.service';
 import { Service } from 'src/app/models/rent-a-car/service.model';
 import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
+import { Branch } from 'src/app/models/rent-a-car/branch.model';
 
 @Component({
   selector: 'app-add-rac-company',
@@ -12,9 +13,8 @@ import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
 })
 export class AddRacCompanyComponent implements OnInit {
   addRacCompany: FormGroup;
-  edit: boolean = false;
   header: string = 'Add rent a car company';
-  id: number;
+  show: boolean = false;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -24,50 +24,61 @@ export class AddRacCompanyComponent implements OnInit {
     switch (this.route.snapshot['_routerState'].url.split('/')[3]) {
       case 'add':
         this.addRacCompany = new FormGroup({
+          'id': new FormControl(0),
           'companyName': new FormControl(null, [Validators.required, Validators.minLength(4)]),
           'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
           'description': new FormControl(null, [Validators.required, Validators.minLength(4)]),
           'services': new FormArray([]),
           'branches': new FormArray([])
         });
+        this.show = true;
         break;
 
       case 'edit':
         this.route.params.subscribe((params: Params) => {
-          this.edit = true;
           this.header = "Edit rent a car company";
-          this.id = +params['id'];
+          let companyId = +params['id'];
 
-          let racCompany = this.racCompanyService.getRacCompany(this.id);
+          // let racCompany = this.racCompanyService.getRacCompany(this.id);
+          let racCompany;
+          this.racCompanyService.getRacCompany(companyId).subscribe(
+            res => {
+              racCompany = res as RentACarCompany;
 
-          this.addRacCompany = new FormGroup({
-            'companyName': new FormControl(racCompany.companyName, [Validators.required, Validators.minLength(4)]),
-            'address': new FormControl(racCompany.address, [Validators.required, Validators.minLength(4)]),
-            'description': new FormControl(racCompany.description, [Validators.required, Validators.minLength(4)]),
-            'services': new FormArray([]),
-            'branches': new FormArray([])
-          });
-
-          racCompany.services.forEach(element => {
-            this.onAddService(element.description, element.price.toString());
-          });
-
-          racCompany.branches.forEach(element => {
-            this.onAddBranch(element);
-          });
-
+              this.addRacCompany = new FormGroup({
+                'id': new FormControl(companyId),
+                'companyName': new FormControl(racCompany.CompanyName, [Validators.required, Validators.minLength(4)]),
+                'address': new FormControl(racCompany.Address, [Validators.required, Validators.minLength(4)]),
+                'description': new FormControl(racCompany.Description, [Validators.required, Validators.minLength(4)]),
+                'services': new FormArray([]),
+                'branches': new FormArray([])
+              });
+    
+              racCompany.Services.forEach(element => {
+                this.onAddService(element.Description, element.Price.toString());
+              });
+    
+              racCompany.Branches.forEach(element => {
+                this.onAddBranch(element.Address);
+              });
+              this.show = true;
+            },
+            err => {
+              console.log(err);
+            }
+          );
         });
         break;
     }
   }
 
   onAddService(service: string = null, price: string = null) {
-    let s = new FormGroup({
+    let formGroup = new FormGroup({
       'description': new FormControl(service, [Validators.required, Validators.minLength(4)]),
       'price': new FormControl(price, [Validators.required, Validators.pattern('^[0-9]*$')])
     });
 
-    (<FormArray>this.addRacCompany.get('services')).push(s);
+    (<FormArray>this.addRacCompany.get('services')).push(formGroup);
   }
 
   onDeleteService(index: number) {
@@ -75,9 +86,9 @@ export class AddRacCompanyComponent implements OnInit {
   }
 
   onAddBranch(address: string = null) {
-    let branch = new FormControl(address, [Validators.required, Validators.minLength(4)]);
+    let formControl = new FormControl(address, [Validators.required, Validators.minLength(4)]);
 
-    (<FormArray>this.addRacCompany.get('branches')).push(branch);
+    (<FormArray>this.addRacCompany.get('branches')).push(formControl);
   }
 
   onDeleteBranch(index: number) {
@@ -86,38 +97,47 @@ export class AddRacCompanyComponent implements OnInit {
 
   onSubmit() {
     let services: Service[] = [];
-    let branches: string[] = [];
+    let branches: Branch[] = [];
 
     this.addRacCompany.get('services').value.forEach(element => {
-      services.push(new Service(element.description, +element.price));
+      services.push(new Service(0, element.description, +element.price));
     });
 
     this.addRacCompany.get('branches').value.forEach(element => {
-      branches.push(element);
+      branches.push(new Branch(0, element));
     });
-
-    let racCompany = new RentACarCompany(this.addRacCompany.get('companyName').value,
+    
+    let racCompany = new RentACarCompany(
+      this.addRacCompany.get('id').value,
+      this.addRacCompany.get('companyName').value,
       this.addRacCompany.get('address').value,
       this.addRacCompany.get('description').value,
       services,
       branches);
 
-    if (this.edit) {
-      this.racCompanyService.updateRacCompany(this.id,
-        this.addRacCompany.get('companyName').value,
-        this.addRacCompany.get('address').value,
-        this.addRacCompany.get('description').value,
-        services,
-        branches);
+    if (this.addRacCompany.get('id').value !== 0) {
+        
+      this.racCompanyService.updateRentACarCompany(racCompany).subscribe(
+        res => {
+          // console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+
       this.router.navigate(['../../'], { relativeTo: this.route });
     }
     else {
-      this.racCompanyService.addRacCompany(
-        this.addRacCompany.get('companyName').value,
-        this.addRacCompany.get('address').value,
-        this.addRacCompany.get('description').value,
-        services,
-        branches);
+      this.racCompanyService.addRacCompany(racCompany).subscribe(
+        res => {
+          // console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+
       this.router.navigate(['../'], { relativeTo: this.route });
     }
   }

@@ -14,7 +14,12 @@ namespace ProjectService.Models
 
         }
 
+        #region RentACarCompany
         public DbSet<RentACarCompany> RentACarCompanies { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<Branch> Branches { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<FreeDate> FreeDates { get; set; }
+        #endregion
     }
 }
