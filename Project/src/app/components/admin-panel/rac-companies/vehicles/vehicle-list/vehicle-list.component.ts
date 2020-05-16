@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Vehicle } from 'src/app/models/rent-a-car/vehicle.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ServerService } from 'src/app/components/server.service';
-import { VehicleService } from 'src/app/components/vehicle.service';
+import { RacCompanyService } from 'src/app/components/rac-company.service';
+import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -12,20 +13,21 @@ import { VehicleService } from 'src/app/components/vehicle.service';
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
   notAllowed: boolean;
+  companyId: number
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private vehicleService: VehicleService,
+    private racCompanyService: RacCompanyService,
     private serverService: ServerService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      let companyId = +params['id'];
+      this.companyId = +params['id'];
       
       this.vehicles = [];
-      this.vehicleService.getVehicles(companyId).subscribe(
+      this.racCompanyService.getRacCompany(this.companyId).subscribe(
         res => {
-          this.vehicles = res as Vehicle[];
+          this.vehicles = (res as RentACarCompany).Vehicles;
         },
         err => {
           console.log(err);
@@ -45,6 +47,21 @@ export class VehicleListComponent implements OnInit {
   }
   
   onDeleteVehicle(vehicleId: number){
+    this.racCompanyService.deleteVehicle(vehicleId).subscribe(
+      res => {
+        this.racCompanyService.getRacCompany(this.companyId).subscribe(
+          res => {
+            this.vehicles = (res as RentACarCompany).Vehicles;
+          },
+          err => {
+            console.log(err);
+          }
+        )
+      },
+      err => {
+        console.log(err);
+      }
+    )
     //this.racCompanyService.deleteVehicle(this.companyId, vehicleId);
   }
 

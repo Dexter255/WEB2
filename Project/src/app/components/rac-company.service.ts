@@ -1,6 +1,7 @@
 import { RentACarCompany } from '../models/rent-a-car/rac-company.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { Vehicle } from '../models/rent-a-car/vehicle.model';
 
 @Injectable()
 export class RacCompanyService {
@@ -40,5 +41,18 @@ export class RacCompanyService {
 
     deleteRacCompany(companyId: number) {
         return this.http.delete(this.BaseURI + '/RentACarCompany/' + companyId);
+    }
+
+    // vehicles
+    getVehicle(companyId: number, vehicleId: number){
+        return this.http.get(this.BaseURI + '/RentACarCompany/' + companyId + '/' + vehicleId);
+    }
+
+    updateVehicle(vehicle: Vehicle){
+        return this.http.put(this.BaseURI + '/Vehicle/' + vehicle.Id, vehicle);
+    }
+    
+    deleteVehicle(vehicleId: number){
+        return this.http.delete(this.BaseURI + '/Vehicle/' + vehicleId);
     }
 }

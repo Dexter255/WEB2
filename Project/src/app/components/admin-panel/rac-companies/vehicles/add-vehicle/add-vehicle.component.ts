@@ -54,12 +54,12 @@ export class AddVehicleComponent implements OnInit {
 
       case 'edit':
         this.route.params.subscribe((params: Params) => {
-          this.header = "Edit admin";
+          this.header = "Edit vehicle";
           this.vehicleId = +params['id'];
-          this.companyId = +this.route.snapshot['_routerState'].url.split('/')[3];
+          this.companyId = +this.route.parent.snapshot.params['id'];
 
           let vehicle;
-          this.vehicleService.getVehicle(this.companyId, this.vehicleId).subscribe(
+          this.racCompanyService.getVehicle(this.companyId, this.vehicleId).subscribe(
             res => {
               vehicle = res as Vehicle;
 
@@ -68,7 +68,7 @@ export class AddVehicleComponent implements OnInit {
                 'vehicleId': new FormControl(this.vehicleId),
                 'brand': new FormControl(vehicle.Brand, [Validators.required, Validators.minLength(2)]),
                 'model': new FormControl(vehicle.Model, [Validators.required, Validators.minLength(2)]),
-                'type': new FormControl(vehicle.getType(), Validators.required),
+                'type': new FormControl(VehicleType[vehicle.Type], Validators.required),
                 'cubicCapacity': new FormControl(vehicle.CubicCapacity.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
                 'horsePower': new FormControl(vehicle.HorsePower.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
                 'yearOfProduction': new FormControl(vehicle.YearOfProduction.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
@@ -78,7 +78,7 @@ export class AddVehicleComponent implements OnInit {
               });
 
               vehicle.FreeDates.forEach(element => {
-                let date = this.formatDate(element.Date);
+                let date = this.formatDate(element.Date.split('T')[0]);
                 this.onAddDate(date);
               });
               this.show = true;
@@ -138,11 +138,15 @@ export class AddVehicleComponent implements OnInit {
     return null;
   }
 
-  formatDate(date: Date): string {
-    let month: string = date.getMonth() < 10 ? '0' + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString();
+  formatDate(dateString: string): string {
+    var temp = dateString.split('-');
+    var date = new Date(+temp[0], +temp[1], +temp[2]);
+
+    let month: string = date.getMonth() < 10 ? '0' + date.getMonth().toString() : date.getMonth().toString();
     let day: string = date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate().toString();
 
-    return date.getFullYear() + '-' + month + '-' + day;
+    let a = date.getFullYear() + '-' + month + '-' + day;
+    return a;
   }
 
   onAddDate(freeDate: string = null) {
@@ -180,19 +184,16 @@ export class AddVehicleComponent implements OnInit {
             this.addVehicle.get('yearOfProduction').value,
             this.addVehicle.get('kilometer').value,
             this.addVehicle.get('seat').value,
-            racCompany,
             freeDates);
 
-          this.vehicleService.updateVehicle(vehicle).subscribe(
+          this.racCompanyService.updateVehicle(vehicle).subscribe(
             res => {
-              // DATI OBAVESTENJE
+              this.router.navigate(['../../'], { relativeTo: this.route });
             },
             err => {
               console.log(err);
             }
           );
-
-          this.router.navigate(['../../'], { relativeTo: this.route });
         }
         else {
           let freeDates: FreeDate[] = [];
@@ -200,6 +201,8 @@ export class AddVehicleComponent implements OnInit {
           let freeFromDate = new Date(this.addVehicle.get('freeFrom').value);
           let freeToDate = new Date(this.addVehicle.get('freeTo').value);
 
+          freeFromDate.setDate(freeFromDate.getDate() + 1);
+          freeToDate.setDate(freeToDate.getDate() + 1);
           while (freeFromDate <= freeToDate) {
             freeDates.push(new FreeDate(0, new Date(freeFromDate.toDateString())));
             freeFromDate.setDate(freeFromDate.getDate() + 1);
@@ -215,33 +218,21 @@ export class AddVehicleComponent implements OnInit {
             this.addVehicle.get('yearOfProduction').value,
             this.addVehicle.get('kilometer').value,
             this.addVehicle.get('seat').value,
-            racCompany,
             freeDates);
 
           racCompany.Vehicles.push(vehicle);
           this.racCompanyService.updateRentACarCompany(racCompany).subscribe(
             res => {
-              console.log(res);
+              this.router.navigate(['../'], { relativeTo: this.route });
             },
             err => {
               console.log(err);
             }
           )
-          // this.vehicleService.addVehicle(vehicle).subscribe(
-          //   res => {
-          //     //DATI OBAVESTENJE
-          //   },
-          //   err => {
-          //     console.log(err);
-          //   }
-          // );
-
-          this.router.navigate(['../'], { relativeTo: this.route });
         }
-
       },
       err => {
-
+        console.log(err);
       }
     )
   }

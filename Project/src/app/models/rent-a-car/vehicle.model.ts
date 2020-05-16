@@ -15,11 +15,10 @@ export class Vehicle {
     public Rating: number;
     public FreeDates: FreeDate[];
     // dodato
-    public BelongToCompany: RentACarCompany;
     public Reserved: boolean;
 
     constructor(id: number, brand: string, model: string, type: VehicleType, cubicCapacity: number, horsePower: number, yearOfProduction: number,
-        kilometers: number, numberOfSeats: number, belongsToCompany: RentACarCompany, freeDates: FreeDate[]) {
+        kilometers: number, numberOfSeats: number, freeDates: FreeDate[]) {
         this.Id = id;
         this.Brand = brand;
         this.Model = model;
@@ -31,7 +30,6 @@ export class Vehicle {
         this.NumberOfSeats = numberOfSeats;
         this.Rating = 0;
         this.FreeDates = freeDates;
-        this.BelongToCompany = belongsToCompany;
         this.Reserved = false;
     }
 

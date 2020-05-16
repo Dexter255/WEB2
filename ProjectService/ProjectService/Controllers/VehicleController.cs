@@ -21,22 +21,12 @@ namespace ProjectService.Controllers
             _context = context;
         }
 
-        // GET: api/Vehicle/2
-        [HttpGet("{companyId}")]
-        public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles(int companyId)
-        {
-            var rentACarCompany = await _context.RentACarCompanies
-                .Include(company => company.Vehicles)
-                    .ThenInclude(vehicle => vehicle.FreeDates)
-                .FirstOrDefaultAsync(x => x.Id == companyId);
-
-            if (rentACarCompany == null)
-            {
-                return NotFound();
-            }
-
-            return rentACarCompany.Vehicles.ToList();
-        }
+        //// GET: api/Vehicle
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles()
+        //{
+        //    return await _context.Vehicles.ToListAsync();
+        //}
 
         //// GET: api/Vehicle/5
         //[HttpGet("{id}")]
@@ -61,7 +51,33 @@ namespace ProjectService.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(vehicle).State = EntityState.Modified;
+            var vehicleDB = await _context.Vehicles
+               .Include(v => v.FreeDates)
+               .FirstOrDefaultAsync(x => x.Id == id);
+
+            // update properties on the parent
+            _context.Entry(vehicleDB).CurrentValues.SetValues(vehicle);
+
+            #region FreeDates
+            // remove or update child collection items
+            var freeDates = vehicleDB.FreeDates.ToList();
+            foreach (var freeDate in freeDates)
+            {
+                var fd = vehicle.FreeDates.SingleOrDefault(x => x.Id == freeDate.Id);
+                if (fd != null)
+                    _context.Entry(freeDate).CurrentValues.SetValues(fd);
+                else
+                    _context.FreeDates.Remove(freeDate);
+            }
+            // add the new items
+            foreach (var freeDate in vehicle.FreeDates)
+            {
+                if (freeDates.All(i => i.Id != freeDate.Id))
+                {
+                    vehicleDB.FreeDates.Add(freeDate);
+                }
+            }
+            #endregion
 
             try
             {
@@ -82,25 +98,31 @@ namespace ProjectService.Controllers
             return NoContent();
         }
 
-        // POST: api/Vehicle
-        [HttpPost]
-        public async Task<ActionResult<Vehicle>> PostVehicle(Vehicle vehicle)
-        {
-            _context.Vehicles.Add(vehicle);
-            await _context.SaveChangesAsync();
+        //// POST: api/Vehicle
+        //[HttpPost]
+        //public async Task<ActionResult<Vehicle>> PostVehicle(Vehicle vehicle)
+        //{
+        //    _context.Vehicles.Add(vehicle);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVehicle", new { id = vehicle.Id }, vehicle);
-        }
+        //    return CreatedAtAction("GetVehicle", new { id = vehicle.Id }, vehicle);
+        //}
 
         // DELETE: api/Vehicle/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Vehicle>> DeleteVehicle(int id)
         {
-            var vehicle = await _context.Vehicles.FindAsync(id);
+            var vehicle = await _context.Vehicles
+                .Include(v => v.FreeDates)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             if (vehicle == null)
             {
                 return NotFound();
             }
+
+            foreach (var freeDate in vehicle.FreeDates)
+                _context.FreeDates.Remove(freeDate);
 
             _context.Vehicles.Remove(vehicle);
             await _context.SaveChangesAsync();

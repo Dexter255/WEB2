@@ -1,4 +1,4 @@
-<div class="container" style="background-color: white;">
+<div class="container" style="background-color: white;" *ngIf="vehicle">
     <div class="row">
         <div class="col-md-4">
             <label> Brand </label>
@@ -20,7 +20,7 @@
             <label> Type: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ vehicle.getType() }} </label>
+            <label> {{ vehicle.Type }} </label>
         </div>
     </div>
     <div class="row">

@@ -120,25 +120,24 @@ export class AddRacCompanyComponent implements OnInit {
       this.racCompanyService.updateRentACarCompany(racCompany).subscribe(
         res => {
           // console.log(res);
+          this.router.navigate(['../../'], { relativeTo: this.route });
         },
         err => {
           console.log(err);
         }
       )
 
-      this.router.navigate(['../../'], { relativeTo: this.route });
     }
     else {
       this.racCompanyService.addRacCompany(racCompany).subscribe(
         res => {
           // console.log(res);
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         err => {
           console.log(err);
         }
       )
-
-      this.router.navigate(['../'], { relativeTo: this.route });
     }
   }
 }

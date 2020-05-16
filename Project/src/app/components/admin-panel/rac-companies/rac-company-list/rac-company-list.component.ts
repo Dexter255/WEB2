@@ -39,7 +39,14 @@ export class RacCompanyListComponent implements OnInit {
   onDeleteRacCompany(companyId: number){
     this.racCompanyService.deleteRacCompany(companyId).subscribe(
       res => {
-        // DATI OBAVESTENJE
+        this.racCompanyService.getRacCompanies().subscribe(
+          res => {
+            this.racCompanies = res as RentACarCompany[];
+          },
+          err => {
+            console.log(err);
+          }
+        );
       },
       err => {
         console.log(err);

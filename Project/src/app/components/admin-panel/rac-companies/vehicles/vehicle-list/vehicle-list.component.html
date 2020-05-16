@@ -17,20 +17,20 @@
         </thead>
         <tbody>
             <tr class="text-center" *ngFor="let vehicle of vehicles">
-                <td> {{ vehicle.brand }} </td>
-                <td> {{ vehicle.model }} </td>
-                <td> {{ vehicle.getType() }} </td>
-                <td> {{ vehicle.cubicCapacity }} </td>
-                <td> {{ vehicle.horsePower }} </td>
-                <td> {{ vehicle.rating }} </td>
+                <td> {{ vehicle.Brand }} </td>
+                <td> {{ vehicle.Model }} </td>
+                <td> {{ vehicle.Type }} </td>
+                <td> {{ vehicle.CubicCapacity }} </td>
+                <td> {{ vehicle.HorsePower }} </td>
+                <td> {{ vehicle.Rating }} </td>
                 <td>
                     <span>
-                        <button class="btn btn-info mr-2" (click)="onDetailsVehicle(vehicle.id)">Details</button>
-                        <button [disabled]="notAllowed || vehicle.reserved" [ngClass]="{'not-allowed': notAllowed || vehicle.reserved}"
-                            class="btn btn-secondary mr-2" (click)="onEditVehicle(vehicle.id)"
+                        <button class="btn btn-info mr-2" (click)="onDetailsVehicle(vehicle.Id)">Details</button>
+                        <button [disabled]="notAllowed || vehicle.Reserved" [ngClass]="{'not-allowed': notAllowed || vehicle.Reserved}"
+                            class="btn btn-secondary mr-2" (click)="onEditVehicle(vehicle.Id)"
                             [title]="notAllowed ? 'Not allowed' : ''">Edit</button>
-                        <button [disabled]="notAllowed || vehicle.reserved" [ngClass]="{'not-allowed': notAllowed}"
-                            class="btn btn-danger" (click)="onDeleteVehicle(vehicle.id)"
+                        <button [disabled]="notAllowed || vehicle.Reserved" [ngClass]="{'not-allowed': notAllowed}"
+                            class="btn btn-danger" (click)="onDeleteVehicle(vehicle.Id)"
                             [title]="notAllowed ? 'Not allowed' : ''">Delete</button>
                     </span>
                 </td>
