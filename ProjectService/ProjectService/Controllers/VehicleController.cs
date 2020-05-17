@@ -21,26 +21,37 @@ namespace ProjectService.Controllers
             _context = context;
         }
 
-        //// GET: api/Vehicle
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles()
-        //{
-        //    return await _context.Vehicles.ToListAsync();
-        //}
+        // GET: api/Vehicle
+        [HttpGet("{mode}/{companyid}")]
+        public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles(string mode, int companyid)
+        {
+            var rentACarCompany = await _context.RentACarCompanies
+                .Include(company => company.Vehicles)
+                .FirstOrDefaultAsync(x => x.Id == companyid);
 
-        //// GET: api/Vehicle/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Vehicle>> GetVehicle(int id)
-        //{
-        //    var vehicle = await _context.Vehicles.FindAsync(id);
+            if (rentACarCompany == null)
+            {
+                return NotFound();
+            }
 
-        //    if (vehicle == null)
-        //    {
-        //        return NotFound();
-        //    }
+            return rentACarCompany.Vehicles.ToList();
+        }
 
-        //    return vehicle;
-        //}
+        // GET: api/Vehicle/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Vehicle>> GetVehicle(int id)
+        {
+            var vehicle = await _context.Vehicles
+                .Include(v => v.FreeDates)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            return vehicle;
+        }
 
         // PUT: api/Vehicle/5
         [HttpPut("{id}")]
@@ -97,16 +108,6 @@ namespace ProjectService.Controllers
 
             return NoContent();
         }
-
-        //// POST: api/Vehicle
-        //[HttpPost]
-        //public async Task<ActionResult<Vehicle>> PostVehicle(Vehicle vehicle)
-        //{
-        //    _context.Vehicles.Add(vehicle);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetVehicle", new { id = vehicle.Id }, vehicle);
-        //}
 
         // DELETE: api/Vehicle/5
         [HttpDelete("{id}")]

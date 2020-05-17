@@ -3,7 +3,7 @@
         (click)="onAddVehicle()" [title]="notAllowed ? 'Not allowed' : ''">
         Add vehicle
     </button>
-    <table class="table table-dark" *ngIf="vehicles.length !== 0 else empty">
+    <table class="table table-dark" *ngIf="vehicleService.vehicles.length !== 0 else empty">
         <thead>
             <tr class="text-center">
                 <th scope="col">Brand</th>
@@ -16,10 +16,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *ngFor="let vehicle of vehicles">
+            <tr class="text-center" *ngFor="let vehicle of vehicleService.vehicles">
                 <td> {{ vehicle.Brand }} </td>
                 <td> {{ vehicle.Model }} </td>
-                <td> {{ vehicle.Type }} </td>
+                <td> {{ getType(vehicle.Type) }} </td>
                 <td> {{ vehicle.CubicCapacity }} </td>
                 <td> {{ vehicle.HorsePower }} </td>
                 <td> {{ vehicle.Rating }} </td>

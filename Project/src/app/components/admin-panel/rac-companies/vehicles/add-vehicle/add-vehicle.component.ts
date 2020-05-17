@@ -22,8 +22,6 @@ export class AddVehicleComponent implements OnInit {
   seats: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
   header: string = 'Add vehicle';
-  vehicleId: number;
-  companyId: number;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -33,10 +31,10 @@ export class AddVehicleComponent implements OnInit {
   ngOnInit(): void {
     switch (this.route.snapshot['_routerState'].url.split('/')[5]) {
       case 'add':
-        this.companyId = +this.route.snapshot['_routerState'].url.split('/')[3];
+        let companyId = +this.route.parent.snapshot.params['id'];
 
         this.addVehicle = new FormGroup({
-          'companyId': new FormControl(this.companyId),
+          'companyId': new FormControl(companyId),
           'vehicleId': new FormControl(0),
           'brand': new FormControl(null, [Validators.required, Validators.minLength(2)]),
           'model': new FormControl(null, [Validators.required, Validators.minLength(2)]),
@@ -55,17 +53,17 @@ export class AddVehicleComponent implements OnInit {
       case 'edit':
         this.route.params.subscribe((params: Params) => {
           this.header = "Edit vehicle";
-          this.vehicleId = +params['id'];
-          this.companyId = +this.route.parent.snapshot.params['id'];
+          let vehicleId = +params['id'];
+          let companyId = +this.route.parent.snapshot.params['id'];
 
           let vehicle;
-          this.racCompanyService.getVehicle(this.companyId, this.vehicleId).subscribe(
+          this.vehicleService.getVehicle(vehicleId).subscribe(
             res => {
               vehicle = res as Vehicle;
 
               this.addVehicle = new FormGroup({
-                'companyId': new FormControl(this.companyId),
-                'vehicleId': new FormControl(this.vehicleId),
+                'companyId': new FormControl(companyId),
+                'vehicleId': new FormControl(vehicleId),
                 'brand': new FormControl(vehicle.Brand, [Validators.required, Validators.minLength(2)]),
                 'model': new FormControl(vehicle.Model, [Validators.required, Validators.minLength(2)]),
                 'type': new FormControl(VehicleType[vehicle.Type], Validators.required),
@@ -160,42 +158,39 @@ export class AddVehicleComponent implements OnInit {
   }
 
   onSubmit() {
-    this.racCompanyService.getRacCompany(this.addVehicle.get('companyId').value).subscribe(
-      res => {
-        let racCompany = res as RentACarCompany;
+    if (this.addVehicle.get('vehicleId').value !== 0) {
+      let freeDates: FreeDate[] = [];
 
+      this.addVehicle.get('freeDates').value.forEach(element => {
+        freeDates.push(new FreeDate(0, new Date(element)));
+      });
 
-        let type = this.addVehicle.get('type').value;
+      let vehicle = new Vehicle(
+        this.addVehicle.get('vehicleId').value,
+        this.addVehicle.get('brand').value,
+        this.addVehicle.get('model').value,
+        +VehicleType[this.addVehicle.get('type').value],
+        this.addVehicle.get('cubicCapacity').value,
+        this.addVehicle.get('horsePower').value,
+        this.addVehicle.get('yearOfProduction').value,
+        this.addVehicle.get('kilometer').value,
+        this.addVehicle.get('seat').value,
+        freeDates);
 
-        if (this.addVehicle.get('vehicleId').value !== 0) {
-          let freeDates: FreeDate[] = [];
-
-          this.addVehicle.get('freeDates').value.forEach(element => {
-            freeDates.push(new FreeDate(0, new Date(element)));
-          });
-
-          let vehicle = new Vehicle(
-            this.addVehicle.get('vehicleId').value,
-            this.addVehicle.get('brand').value,
-            this.addVehicle.get('model').value,
-            +VehicleType[type],
-            this.addVehicle.get('cubicCapacity').value,
-            this.addVehicle.get('horsePower').value,
-            this.addVehicle.get('yearOfProduction').value,
-            this.addVehicle.get('kilometer').value,
-            this.addVehicle.get('seat').value,
-            freeDates);
-
-          this.racCompanyService.updateVehicle(vehicle).subscribe(
-            res => {
-              this.router.navigate(['../../'], { relativeTo: this.route });
-            },
-            err => {
-              console.log(err);
-            }
-          );
+      this.vehicleService.updateVehicle(vehicle).subscribe(
+        res => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        },
+        err => {
+          console.log(err);
         }
-        else {
+      );
+    }
+    else {
+      this.racCompanyService.getRacCompany(this.addVehicle.get('companyId').value).subscribe(
+        res => {
+          let racCompany = res as RentACarCompany;
+
           let freeDates: FreeDate[] = [];
 
           let freeFromDate = new Date(this.addVehicle.get('freeFrom').value);
@@ -212,7 +207,7 @@ export class AddVehicleComponent implements OnInit {
             this.addVehicle.get('vehicleId').value,
             this.addVehicle.get('brand').value,
             this.addVehicle.get('model').value,
-            +VehicleType[type],
+            +VehicleType[this.addVehicle.get('type').value],
             this.addVehicle.get('cubicCapacity').value,
             this.addVehicle.get('horsePower').value,
             this.addVehicle.get('yearOfProduction').value,
@@ -221,7 +216,7 @@ export class AddVehicleComponent implements OnInit {
             freeDates);
 
           racCompany.Vehicles.push(vehicle);
-          this.racCompanyService.updateRentACarCompany(racCompany).subscribe(
+          this.racCompanyService.updateRacCompany(racCompany).subscribe(
             res => {
               this.router.navigate(['../'], { relativeTo: this.route });
             },
@@ -229,11 +224,11 @@ export class AddVehicleComponent implements OnInit {
               console.log(err);
             }
           )
+        },
+        err => {
+          console.log(err);
         }
-      },
-      err => {
-        console.log(err);
-      }
-    )
+      )
+    }
   }
 }

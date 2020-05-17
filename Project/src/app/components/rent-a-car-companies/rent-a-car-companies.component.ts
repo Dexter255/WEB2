@@ -9,23 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./rent-a-car-companies.component.css']
 })
 export class RentACarCompaniesComponent implements OnInit {
-  racCompanies: RentACarCompany[];
 
   constructor(private router: Router,
     public racCompanyService: RacCompanyService) { }
 
   ngOnInit(): void {
-    //this.racCompanyService.setRacCompaniesSearch();
-    //this.racCompanies = this.racCompanyService.getRacCompanies();
-    this.racCompanies = [];
-    this.racCompanyService.getRacCompanies().subscribe(
-      res => {
-        this.racCompanies = res as RentACarCompany[];
-      },
-      err => {
-        console.log(err);
-      }
-    )
+    this.racCompanyService.getRacCompanies();
   }
 
   onSearch(){

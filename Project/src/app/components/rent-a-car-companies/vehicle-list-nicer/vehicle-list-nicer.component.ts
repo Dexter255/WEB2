@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Vehicle } from 'src/app/models/rent-a-car/vehicle.model';
 import { RacCompanyService } from '../../rac-company.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
+import { VehicleType } from 'src/app/models/rent-a-car/vehicle-type.model';
+import { VehicleService } from '../../vehicle.service';
 
 @Component({
   selector: 'app-vehicle-list-nicer',
@@ -9,18 +12,21 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./vehicle-list-nicer.component.css']
 })
 export class VehicleListNicerComponent implements OnInit {
-  vehicles: Vehicle[];
 
   constructor(private route: ActivatedRoute,
-    private racCompanyService: RacCompanyService) { }
+    public vehicleService: VehicleService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       let companyId = +params['id'];
-      //this.vehicles = this.racCompanyService.getVehiclesSearch(companyId);
+      this.vehicleService.getVehicles(companyId);
     });
   }
 
+  getType(type: VehicleType): string {
+    return VehicleType[type];
+  }
+  
   onSearch(){
 
   }

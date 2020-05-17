@@ -1,5 +1,6 @@
 import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
+
 import { Post } from './post';
 import { RacCompanyService } from '../components/rac-company.service';
 
@@ -10,8 +11,6 @@ export class RacCompanyResolver implements Resolve<Post> {
         private racCompanyService: RacCompanyService) {}
   
     async resolve(route: ActivatedRouteSnapshot): Promise<Post> {
-      await new Promise(resolve => setTimeout(resolve, 0));
-
       if (this.racCompanyService.checkRacCompanyId(+route.params['id'])) {
         return {id: route.params['id']};
       } else {

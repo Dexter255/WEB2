@@ -10,7 +10,6 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./rac-company-list.component.css']
 })
 export class RacCompanyListComponent implements OnInit {
-  racCompanies: RentACarCompany[];
   notAllowed: boolean;
 
   constructor(private route: ActivatedRoute,
@@ -19,16 +18,7 @@ export class RacCompanyListComponent implements OnInit {
     private serverService: ServerService) { }
 
   ngOnInit(): void {
-    //this.racCompanies = this.racCompanyService.getRacCompanies();
-    this.racCompanies = [];
-    this.racCompanyService.getRacCompanies().subscribe(
-      res => {
-        this.racCompanies = res as RentACarCompany[];
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.racCompanyService.getRacCompanies();
     this.notAllowed = this.serverService.getUserType() !== 'Admin' ? true : false;
   }
 
@@ -39,14 +29,7 @@ export class RacCompanyListComponent implements OnInit {
   onDeleteRacCompany(companyId: number){
     this.racCompanyService.deleteRacCompany(companyId).subscribe(
       res => {
-        this.racCompanyService.getRacCompanies().subscribe(
-          res => {
-            this.racCompanies = res as RentACarCompany[];
-          },
-          err => {
-            console.log(err);
-          }
-        );
+        this.racCompanyService.getRacCompanies();
       },
       err => {
         console.log(err);

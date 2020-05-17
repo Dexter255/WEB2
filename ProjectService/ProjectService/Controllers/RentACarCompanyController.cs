@@ -47,25 +47,6 @@ namespace ProjectService.Controllers
             return rentACarCompany;
         }
 
-        // GET: api/RentACarCompany/5
-        [HttpGet("{companyId}/{vehicleId}")]
-        public async Task<ActionResult<Vehicle>> GetVehicle(int companyId, int vehicleId)
-        {
-            var rentACarCompany = await _context.RentACarCompanies
-                .Include(company => company.Branches)
-                .Include(company => company.Services)
-                .Include(company => company.Vehicles)
-                    .ThenInclude(vehicle => vehicle.FreeDates)
-                .FirstOrDefaultAsync(x => x.Id == companyId);
-
-            if (rentACarCompany == null)
-            {
-                return NotFound();
-            }
-
-            return rentACarCompany.Vehicles.FirstOrDefault(x => x.Id == vehicleId);
-        }
-
         // PUT: api/RentACarCompany/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRentACarCompany(int id, RentACarCompany rentACarCompany)
@@ -127,19 +108,18 @@ namespace ProjectService.Controllers
             }
             #endregion
 
-            // PREPRAVITI NA NACIN DA SE BRISE I FreeDates iz Vehicle
-            // MOZDA NECE TREBATI, POSTO JE SADA Vehicle ODVOJEN OD RentACarCompany-je, TAKO DA MOZE DA SE BRISE/MENJA PO SVOM KLJUCU
+            // Kada se vrsi azuriranje RentACarCompany-je, Vehicle se samo dodaje
             #region Vehicles
             // remove or update child collection items
+            //foreach (var vehicle in vehicles)
+            //{
+            //    var v = rentACarCompany.Vehicles.SingleOrDefault(x => x.Id == vehicle.Id);
+            //    if (v != null)
+            //        _context.Entry(vehicle).CurrentValues.SetValues(v);
+            //    else
+            //        _context.Remove(vehicle);
+            //}
             var vehicles = racCompany.Vehicles.ToList();
-            foreach (var vehicle in vehicles)
-            {
-                var v = rentACarCompany.Vehicles.SingleOrDefault(x => x.Id == vehicle.Id);
-                if (v != null)
-                    _context.Entry(vehicle).CurrentValues.SetValues(v);
-                else
-                    _context.Remove(vehicle);
-            }
             // add the new items
             foreach (var vehicle in rentACarCompany.Vehicles)
             {

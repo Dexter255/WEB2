@@ -14,17 +14,18 @@ export class RacCompanyService {
 
     // companies
     checkRacCompanyId(companyId: number) {
-        if(this.racCompanies.find(x => x.Id === companyId) === undefined)
-            return false;
+        // if(this.racCompanies.find(x => x.Id === companyId) === undefined)
+        //     return false;
 
         return true;
     }
     
     getRacCompanies() {
-        return this.http.get(this.BaseURI + '/RentACarCompany');
-            // .toPromise()
-            // .then(res => this.racCompanies = res as RentACarCompany[],
-            //     err => console.log(err));
+        return this.http.get(this.BaseURI + '/RentACarCompany')
+            .toPromise()
+            .then(
+                res => this.racCompanies = res as RentACarCompany[],
+                err => console.log(err));
     }
     
     getRacCompany(companyId: number) {
@@ -35,24 +36,11 @@ export class RacCompanyService {
         return this.http.post(this.BaseURI + '/RentACarCompany', racCompany);
     }
 
-    updateRentACarCompany(racCompany: RentACarCompany){
+    updateRacCompany(racCompany: RentACarCompany){
         return this.http.put(this.BaseURI + '/RentACarCompany/' + racCompany.Id, racCompany);
     }
 
     deleteRacCompany(companyId: number) {
         return this.http.delete(this.BaseURI + '/RentACarCompany/' + companyId);
-    }
-
-    // vehicles
-    getVehicle(companyId: number, vehicleId: number){
-        return this.http.get(this.BaseURI + '/RentACarCompany/' + companyId + '/' + vehicleId);
-    }
-
-    updateVehicle(vehicle: Vehicle){
-        return this.http.put(this.BaseURI + '/Vehicle/' + vehicle.Id, vehicle);
-    }
-    
-    deleteVehicle(vehicleId: number){
-        return this.http.delete(this.BaseURI + '/Vehicle/' + vehicleId);
     }
 }

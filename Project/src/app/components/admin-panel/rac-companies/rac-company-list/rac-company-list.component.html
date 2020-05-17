@@ -3,7 +3,7 @@
         (click)="onAddRacCompany()" [title]="notAllowed ? 'Not allowed' : ''">
         Add rent a car company
     </button>
-    <table class="table table-dark" *ngIf="racCompanies.length !== 0 else empty">
+    <table class="table table-dark" *ngIf="racCompanyService.racCompanies.length !== 0 else empty">
         <thead>
             <tr class="text-center">
                 <th scope="col">Company name</th>
@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *ngFor="let racCompany of racCompanies">
+            <tr class="text-center" *ngFor="let racCompany of racCompanyService.racCompanies">
                 <td> {{ racCompany.CompanyName }} </td>
                 <td> {{ racCompany.Address }} </td>
                 <td> {{ racCompany.Description }} </td>

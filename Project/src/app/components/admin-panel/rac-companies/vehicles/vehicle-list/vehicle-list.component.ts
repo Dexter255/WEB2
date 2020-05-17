@@ -4,6 +4,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ServerService } from 'src/app/components/server.service';
 import { RacCompanyService } from 'src/app/components/rac-company.service';
 import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
+import { VehicleService } from 'src/app/components/vehicle.service';
+import { VehicleType } from 'src/app/models/rent-a-car/vehicle-type.model';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -18,26 +20,23 @@ export class VehicleListComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private racCompanyService: RacCompanyService,
+    public vehicleService: VehicleService,
     private serverService: ServerService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.companyId = +params['id'];
       
-      this.vehicles = [];
-      this.racCompanyService.getRacCompany(this.companyId).subscribe(
-        res => {
-          this.vehicles = (res as RentACarCompany).Vehicles;
-        },
-        err => {
-          console.log(err);
-        }
-      )
+      this.vehicleService.getVehicles(this.companyId);
       
       this.notAllowed = this.serverService.getUserType() !== 'Admin_RentACarCompanies' ? true : false;
     });
   }
 
+  getType(type: VehicleType): string {
+    return VehicleType[type];
+  }
+  
   onAddVehicle(){
     this.router.navigate(['add'], {relativeTo: this.route});
   }
@@ -47,22 +46,14 @@ export class VehicleListComponent implements OnInit {
   }
   
   onDeleteVehicle(vehicleId: number){
-    this.racCompanyService.deleteVehicle(vehicleId).subscribe(
+    this.vehicleService.deleteVehicle(vehicleId).subscribe(
       res => {
-        this.racCompanyService.getRacCompany(this.companyId).subscribe(
-          res => {
-            this.vehicles = (res as RentACarCompany).Vehicles;
-          },
-          err => {
-            console.log(err);
-          }
-        )
+        this.vehicleService.getVehicles(this.companyId);
       },
       err => {
         console.log(err);
       }
     )
-    //this.racCompanyService.deleteVehicle(this.companyId, vehicleId);
   }
 
   onDetailsVehicle(vehicleId: number){

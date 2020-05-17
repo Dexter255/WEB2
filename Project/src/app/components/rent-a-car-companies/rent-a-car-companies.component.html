@@ -9,10 +9,10 @@
 </div>
 <div class="row ml-3 mt-3">
     <div class="col-md-3">
-        <div class="list-group" *ngIf="racCompanies.length !== 0 else empty">
+        <div class="list-group" *ngIf="racCompanyService.racCompanies.length !== 0 else empty">
             <a type="button" class="list-group-item list-group-item-action" 
-            *ngFor="let racCompany of racCompanies" [routerLink]="['details', racCompany.Id]" routerLinkActive="active"> 
-                {{ racCompany.CompanyName}}
+            *ngFor="let racCompany of racCompanyService.racCompanies" [routerLink]="['details', racCompany.Id]" routerLinkActive="active"> 
+                {{ racCompany.CompanyName }}
             </a>
         </div>
         <ng-template #empty>

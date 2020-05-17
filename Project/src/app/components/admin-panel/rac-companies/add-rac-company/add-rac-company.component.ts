@@ -5,6 +5,7 @@ import { RacCompanyService } from 'src/app/components/rac-company.service';
 import { Service } from 'src/app/models/rent-a-car/service.model';
 import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
 import { Branch } from 'src/app/models/rent-a-car/branch.model';
+import { Vehicle } from 'src/app/models/rent-a-car/vehicle.model';
 
 @Component({
   selector: 'app-add-rac-company',
@@ -15,6 +16,7 @@ export class AddRacCompanyComponent implements OnInit {
   addRacCompany: FormGroup;
   header: string = 'Add rent a car company';
   show: boolean = false;
+  vehicles: Vehicle[] = [];
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -39,11 +41,11 @@ export class AddRacCompanyComponent implements OnInit {
           this.header = "Edit rent a car company";
           let companyId = +params['id'];
 
-          // let racCompany = this.racCompanyService.getRacCompany(this.id);
           let racCompany;
           this.racCompanyService.getRacCompany(companyId).subscribe(
             res => {
               racCompany = res as RentACarCompany;
+              this.vehicles = racCompany.Vehicles;
 
               this.addRacCompany = new FormGroup({
                 'id': new FormControl(companyId),
@@ -113,25 +115,22 @@ export class AddRacCompanyComponent implements OnInit {
       this.addRacCompany.get('address').value,
       this.addRacCompany.get('description').value,
       services,
-      branches);
+      branches,
+      this.vehicles);
 
-    if (this.addRacCompany.get('id').value !== 0) {
-        
-      this.racCompanyService.updateRentACarCompany(racCompany).subscribe(
+    if (this.addRacCompany.get('id').value !== 0) { 
+      this.racCompanyService.updateRacCompany(racCompany).subscribe(
         res => {
-          // console.log(res);
           this.router.navigate(['../../'], { relativeTo: this.route });
         },
         err => {
           console.log(err);
         }
       )
-
     }
     else {
       this.racCompanyService.addRacCompany(racCompany).subscribe(
         res => {
-          // console.log(res);
           this.router.navigate(['../'], { relativeTo: this.route });
         },
         err => {
