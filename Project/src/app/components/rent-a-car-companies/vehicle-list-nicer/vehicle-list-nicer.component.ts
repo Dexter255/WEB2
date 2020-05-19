@@ -12,6 +12,7 @@ import { VehicleService } from '../../vehicle.service';
   styleUrls: ['./vehicle-list-nicer.component.css']
 })
 export class VehicleListNicerComponent implements OnInit {
+  isFetching = false;
 
   constructor(private route: ActivatedRoute,
     public vehicleService: VehicleService) { }
@@ -19,7 +20,18 @@ export class VehicleListNicerComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       let companyId = +params['id'];
-      this.vehicleService.getVehicles(companyId);
+
+      this.isFetching = true;
+      this.vehicleService.getVehicles(companyId).subscribe(
+        res => {
+          this.vehicleService.vehicles = res as Vehicle[];
+          this.isFetching = false;
+        },
+        err => {
+          console.log(err);
+          this.isFetching = false;
+        }
+      );
     });
   }
 

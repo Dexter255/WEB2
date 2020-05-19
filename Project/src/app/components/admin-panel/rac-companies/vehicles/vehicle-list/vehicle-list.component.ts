@@ -13,9 +13,9 @@ import { VehicleType } from 'src/app/models/rent-a-car/vehicle-type.model';
   styleUrls: ['./vehicle-list.component.css']
 })
 export class VehicleListComponent implements OnInit {
-  vehicles: Vehicle[];
   notAllowed: boolean;
   companyId: number
+  isFetching = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -26,8 +26,17 @@ export class VehicleListComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.companyId = +params['id'];
-      
-      this.vehicleService.getVehicles(this.companyId);
+
+      this.isFetching = true;
+      this.vehicleService.getVehicles(this.companyId).subscribe(
+        res => {
+          this.vehicleService.vehicles = res as Vehicle[];
+          this.isFetching = false;
+        },
+        err => {
+          this.isFetching = false;
+        }
+      );
       
       this.notAllowed = this.serverService.getUserType() !== 'Admin_RentACarCompanies' ? true : false;
     });
@@ -48,10 +57,17 @@ export class VehicleListComponent implements OnInit {
   onDeleteVehicle(vehicleId: number){
     this.vehicleService.deleteVehicle(vehicleId).subscribe(
       res => {
-        this.vehicleService.getVehicles(this.companyId);
+        this.isFetching = true;
+        this.vehicleService.getVehicles(this.companyId).subscribe(
+          res => {
+            this.vehicleService.vehicles = res as Vehicle[];
+            this.isFetching = false;
+          }
+        );
       },
       err => {
         console.log(err);
+        this.isFetching = false;
       }
     )
   }

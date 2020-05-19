@@ -4,7 +4,9 @@ import { Post } from './post';
 import { RacCompanyService } from '../components/rac-company.service';
 import { VehicleService } from '../components/vehicle.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class VehicleResolver implements Resolve<Post> {
 
   constructor(private router: Router,

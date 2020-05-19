@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectService.Models.RentACar;
+using ProjectService.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,10 @@ namespace ProjectService.Models
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<FreeDate> FreeDates { get; set; }
+        #endregion
+
+        #region Admin
+        public DbSet<User> Admins { get; set; }
         #endregion
     }
 }

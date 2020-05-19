@@ -33,11 +33,11 @@ export class Vehicle {
         this.Reserved = false;
     }
 
-    getType(){
-        return VehicleType[this.Type];
-    }
+    // getType(){
+    //     return VehicleType[this.Type];
+    // }
 
-    public toString = () : string => {
-        return this.Brand + " " + this.Model + ", " + this.getType();
-    }
+    // public toString = () : string => {
+    //     return this.Brand + " " + this.Model + ", " + this.getType();
+    // }
 }

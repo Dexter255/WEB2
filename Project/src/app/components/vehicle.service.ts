@@ -2,7 +2,9 @@ import { Vehicle } from '../models/rent-a-car/vehicle.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class VehicleService{
     vehicles: Vehicle[];
     private readonly BaseURI = 'https://localhost:44305/api';
@@ -19,12 +21,7 @@ export class VehicleService{
     }
 
     getVehicles(companyId: number){
-        return this.http.get(this.BaseURI + '/Vehicle/' + 'all/' + companyId)
-            .toPromise()
-            .then(
-                res => this.vehicles = res as Vehicle[],
-                err => console.log(err));
-
+        return this.http.get(this.BaseURI + '/Vehicle/' + 'all/' + companyId);
     }
     
     getVehicle(vehicleId: number){

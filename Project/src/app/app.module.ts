@@ -80,15 +80,7 @@ import { VehicleService } from './components/vehicle.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [RacCompanyResolver, 
-    AirlineResolver, 
-    AdminResolver, 
-    VehicleResolver, 
-    ServerService, 
-    RacCompanyService,
-    VehicleService,
-    AirlineService, 
-    AdminService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

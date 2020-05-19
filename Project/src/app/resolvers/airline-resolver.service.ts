@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Post } from './post';
 import { AirlineService } from '../components/airline.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AirlineResolver implements Resolve<Post> {
     
     constructor(private router: Router,

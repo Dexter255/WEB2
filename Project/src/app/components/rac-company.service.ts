@@ -2,8 +2,12 @@ import { RentACarCompany } from '../models/rent-a-car/rac-company.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Vehicle } from '../models/rent-a-car/vehicle.model';
+import { pipe } from 'rxjs';
+import { tap } from 'rxjs/operators'
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class RacCompanyService {
     public racCompanies: RentACarCompany[];
     private readonly BaseURI = 'https://localhost:44305/api';
@@ -22,10 +26,9 @@ export class RacCompanyService {
     
     getRacCompanies() {
         return this.http.get(this.BaseURI + '/RentACarCompany')
-            .toPromise()
-            .then(
-                res => this.racCompanies = res as RentACarCompany[],
-                err => console.log(err));
+        .pipe(
+            tap(res => this.racCompanies = res as RentACarCompany[])
+        );
     }
     
     getRacCompany(companyId: number) {

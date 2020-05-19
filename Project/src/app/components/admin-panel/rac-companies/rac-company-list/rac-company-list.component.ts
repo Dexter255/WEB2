@@ -11,14 +11,24 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class RacCompanyListComponent implements OnInit {
   notAllowed: boolean;
-
+  isFetching = false;
+  
   constructor(private route: ActivatedRoute,
     private router: Router,
     public racCompanyService: RacCompanyService,
     private serverService: ServerService) { }
 
   ngOnInit(): void {
-    this.racCompanyService.getRacCompanies();
+    this.isFetching = true;
+    this.racCompanyService.getRacCompanies().subscribe(
+      res => {
+        this.isFetching = false;
+      },
+      err => {
+        console.log(err);
+        this.isFetching = false;
+      }
+    );
     this.notAllowed = this.serverService.getUserType() !== 'Admin' ? true : false;
   }
 
@@ -27,9 +37,19 @@ export class RacCompanyListComponent implements OnInit {
   }
   
   onDeleteRacCompany(companyId: number){
+    this.isFetching = true;
     this.racCompanyService.deleteRacCompany(companyId).subscribe(
       res => {
-        this.racCompanyService.getRacCompanies();
+        this.racCompanyService.getRacCompanies().subscribe(
+          res => {
+            //this.racCompanyService.racCompanies = res as RentACarCompany[];
+            this.isFetching = false;
+          },
+          err => {
+            console.log(err);
+            this.isFetching = false;
+          }
+        );
       },
       err => {
         console.log(err);

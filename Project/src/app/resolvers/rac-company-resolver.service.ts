@@ -4,7 +4,9 @@ import { Injectable } from '@angular/core';
 import { Post } from './post';
 import { RacCompanyService } from '../components/rac-company.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RacCompanyResolver implements Resolve<Post> {
     
     constructor(private router: Router,

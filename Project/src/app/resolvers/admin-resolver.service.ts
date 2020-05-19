@@ -3,7 +3,9 @@ import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Post } from './post';
 import { AdminService } from '../components/admin.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AdminResolver implements Resolve<Post> {
     
     constructor(private router: Router,

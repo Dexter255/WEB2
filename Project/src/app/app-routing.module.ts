@@ -38,25 +38,25 @@ const routes: Routes = [
   { path: "userProfile", component: ProfilKorisnikaComponent },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent },
-    { path: ":id/vehicles", component: VehicleListNicerComponent, resolve: {post: RacCompanyResolver }, children: [
-      { path: "details/:id", component: VehicleDetailsComponent, resolve: {post: VehicleResolver} }
+    { path: ":id/vehicles", component: VehicleListNicerComponent, children: [
+      { path: "details/:id", component: VehicleDetailsComponent }
     ]},
   ]},
   { path: "airlines", component: AirlinesComponent, children: [
-    { path: "details/:id", component: AirlineDetailsComponent, resolve: {post: AirlineResolver } }
+    { path: "details/:id", component: AirlineDetailsComponent }
   ] },
   { path: "admin-panel", component: AdminPanelComponent, children: [
     { path: "airline-admins", component: AdminsComponent, children: [
       { path: "", component: AdminListComponent },
-      { path: "details/:id", component: AdminDetailsComponent, resolve: {post: AdminResolver } },
+      { path: "details/:id", component: AdminDetailsComponent },
       { path: "add", component: AddAdminComponent },
-      { path: "edit/:id", component: AddAdminComponent, resolve: {post: AdminResolver } }
+      { path: "edit/:id", component: AddAdminComponent }
     ] },
     { path: "rac-company-admins", component: AdminsComponent, children: [
       { path: "", component: AdminListComponent },
-      { path: "details/:id", component: AdminDetailsComponent, resolve: {post: AdminResolver } },
+      { path: "details/:id", component: AdminDetailsComponent },
       { path: "add", component: AddAdminComponent },
-      { path: "edit/:id", component: AddAdminComponent, resolve: {post: AdminResolver } }
+      { path: "edit/:id", component: AddAdminComponent }
     ]},
     { path: "airlines", component: ApAirlinesComponent, children: [
       { path: "", component: ApAirlineListComponent },
@@ -71,9 +71,9 @@ const routes: Routes = [
       { path: "edit/:id", component: AddRacCompanyComponent },
       { path: ":id/vehicles", component: VehiclesComponent, children: [
         { path: "", component: VehicleListComponent },
-        { path: "details/:id", component: VehicleDetailsComponent, resolve: {post: VehicleResolver} },
+        { path: "details/:id", component: VehicleDetailsComponent },
         { path: "add", component: AddVehicleComponent },
-        { path: "edit/:id", component: AddVehicleComponent, resolve: {post: VehicleResolver}}
+        { path: "edit/:id", component: AddVehicleComponent}
       ] }
     ] }
   ] },

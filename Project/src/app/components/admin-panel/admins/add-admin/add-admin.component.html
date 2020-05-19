@@ -1,10 +1,12 @@
-<div class="container mt-3 ml-5">
+<div class="container mt-3 ml-5" *ngIf="show">
     <h3>{{ header }}</h3>
-    <form [formGroup]="addAdmin" (ngSubmit)="onSubmit()">
-       <div class="form-group row">
+    <form [formGroup]="addAdmin" (ngSubmit)="onSubmit()" autocomplete="off">
+        <input type="hidden" formControlName="id">
+        <input type="hidden" formControlName="type">
+        <div class="form-group row">
             <label for="name" class="col-md-1 col-form-label">Name</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="name" formControlName="name" autocomplete="off">
+                <input type="text" class="form-control" id="name" formControlName="name">
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addAdmin.get('name').valid && addAdmin.get('name').touched">
@@ -12,23 +14,24 @@
                     <span *ngIf="addAdmin.get('name').errors['minlength']">Name must be atleast 4 characters!</span>
                 </span>
             </div>
-        </div> 
+        </div>
         <div class="form-group row">
             <label for="lastname" class="col-md-1 col-form-label">Lastname</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="lastname" formControlName="lastname" autocomplete="off">
+                <input type="text" class="form-control" id="lastname" formControlName="lastname">
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addAdmin.get('lastname').valid && addAdmin.get('lastname').touched">
                     <span *ngIf="addAdmin.get('lastname').errors['required']">Lastname must be entered!</span>
-                    <span *ngIf="addAdmin.get('lastname').errors['minlength']">Lastname must be atleast 4 characters!</span>
+                    <span *ngIf="addAdmin.get('lastname').errors['minlength']">Lastname must be atleast 4
+                        characters!</span>
                 </span>
             </div>
         </div>
         <div class="form-group row">
             <label for="email" class="col-md-1 col-form-label">Email</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="email" formControlName="email" autocomplete="off">
+                <input type="text" class="form-control" id="email" formControlName="email">
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addAdmin.get('email').valid && addAdmin.get('email').touched">
@@ -44,18 +47,18 @@
         <div class="form-group row">
             <label for="address" class="col-md-1 col-form-label">Address</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="address" formControlName="address" autocomplete="off">
+                <input type="text" class="form-control" id="address" formControlName="address">
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addAdmin.get('address').valid && addAdmin.get('address').touched">
-                    Address must be entered!                
+                    Address must be entered!
                 </span>
             </div>
         </div>
         <div class="form-group row">
             <label for="number" class="col-md-1 col-form-label">Number</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="number" formControlName="number" autocomplete="off">
+                <input type="text" class="form-control" id="number" formControlName="number">
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addAdmin.get('number').valid && addAdmin.get('number').touched">

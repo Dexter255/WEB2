@@ -102,18 +102,18 @@ export class AddRacCompanyComponent implements OnInit {
     let branches: Branch[] = [];
 
     this.addRacCompany.get('services').value.forEach(element => {
-      services.push(new Service(0, element.description, +element.price));
+      services.push(new Service(0, element.description.trim(), +element.price));
     });
 
     this.addRacCompany.get('branches').value.forEach(element => {
-      branches.push(new Branch(0, element));
+      branches.push(new Branch(0, element.trim()));
     });
     
     let racCompany = new RentACarCompany(
-      this.addRacCompany.get('id').value,
-      this.addRacCompany.get('companyName').value,
-      this.addRacCompany.get('address').value,
-      this.addRacCompany.get('description').value,
+      this.addRacCompany.get('id').value.trim(),
+      this.addRacCompany.get('companyName').value.trim(),
+      this.addRacCompany.get('address').value.trim(),
+      this.addRacCompany.get('description').value.trim(),
       services,
       branches,
       this.vehicles);

@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ServerService } from '../server.service';
 import { Router } from '@angular/router';
-import { korisnik } from 'src/app/models/korisnik/korisnik';
-import { UserType } from 'src/app/models/korisnik/user-type.model';
 
 @Component({
   selector: 'app-register',
@@ -29,18 +27,18 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    let user = new korisnik(
-      this.registerForm.get('name').value,
-      this.registerForm.get('lastname').value,
-      this.registerForm.get('email').value,
-      this.registerForm.get('city').value,
-      this.registerForm.get('number').value,
-      this.registerForm.get('password').value,
-      UserType.User
-    )
+    // let user = new korisnik(
+    //   this.registerForm.get('name').value,
+    //   this.registerForm.get('lastname').value,
+    //   this.registerForm.get('email').value,
+    //   this.registerForm.get('city').value,
+    //   this.registerForm.get('number').value,
+    //   this.registerForm.get('password').value,
+    //   UserType.User
+    // )
 
-    this.serverService.register(user);
-
+    // this.serverService.register(user);
+    // .trim()
     alert("You have successfully registered!");
 
     this.router.navigate(['login']);

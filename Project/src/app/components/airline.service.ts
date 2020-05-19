@@ -1,5 +1,9 @@
 import { Flight } from '../models/flight/flight.model';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class AirlineService{
     private airlines: {companyName: string, description: string}[];
 

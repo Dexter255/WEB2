@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { korisnik } from 'src/app/models/korisnik/korisnik';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { AdminService } from 'src/app/components/admin.service';
 
 @Component({
@@ -9,28 +9,32 @@ import { AdminService } from 'src/app/components/admin.service';
   styleUrls: ['./admin-list.component.css']
 })
 export class AdminListComponent implements OnInit {
-  admins: korisnik[];
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private adminService: AdminService) { }
+    public adminService: AdminService) { }
 
   ngOnInit(): void {
     switch (this.route.snapshot['_routerState'].url.split('/')[2]) {
       case 'rac-company-admins':
-        this.admins = this.adminService.getRentACarCompanyAdmins();
+        this.adminService.getRacCompanyAdmins().subscribe();
         break;
 
       case 'airline-admins':
-        this.admins = this.adminService.getAirlineAdmins();
+        this.adminService.getAirlineAdmins().subscribe();
         break;
     }
   }
 
   onDeleteAdmin(id: number) {
-    this.adminService.deleteAdmin(id);
-    let index = this.admins.indexOf(this.admins.find(x => x.id === id));
-    this.admins.splice(index, 1);
+    this.adminService.deleteAdmin(id).subscribe(
+      res => {
+        this.adminService.getRacCompanyAdmins().subscribe();
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   onAddAdmin(){

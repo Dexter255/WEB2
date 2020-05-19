@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
     this.serverService.login(
-      this.loginForm.get('email').value,
-      this.loginForm.get('password').value
+      this.loginForm.get('email').value.trim(),
+      this.loginForm.get('password').value.trim()
     ) === false ? this.error = true : this.router.navigate(['']);
   }
 

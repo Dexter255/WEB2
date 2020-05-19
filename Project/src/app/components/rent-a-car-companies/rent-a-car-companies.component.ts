@@ -9,12 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./rent-a-car-companies.component.css']
 })
 export class RentACarCompaniesComponent implements OnInit {
+  isFetching = false;
 
   constructor(private router: Router,
     public racCompanyService: RacCompanyService) { }
 
   ngOnInit(): void {
-    this.racCompanyService.getRacCompanies();
+    this.isFetching = true;
+    this.racCompanyService.getRacCompanies().subscribe(
+      res => {
+        this.isFetching = false;
+      },
+      err => {
+        this.isFetching = false;
+      }
+    )
   }
 
   onSearch(){

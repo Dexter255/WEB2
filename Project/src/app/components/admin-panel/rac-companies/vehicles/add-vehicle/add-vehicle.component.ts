@@ -167,8 +167,8 @@ export class AddVehicleComponent implements OnInit {
 
       let vehicle = new Vehicle(
         this.addVehicle.get('vehicleId').value,
-        this.addVehicle.get('brand').value,
-        this.addVehicle.get('model').value,
+        this.addVehicle.get('brand').value.trim(),
+        this.addVehicle.get('model').value.trim(),
         +VehicleType[this.addVehicle.get('type').value],
         this.addVehicle.get('cubicCapacity').value,
         this.addVehicle.get('horsePower').value,
@@ -205,8 +205,8 @@ export class AddVehicleComponent implements OnInit {
 
           let vehicle = new Vehicle(
             this.addVehicle.get('vehicleId').value,
-            this.addVehicle.get('brand').value,
-            this.addVehicle.get('model').value,
+            this.addVehicle.get('brand').value.trim(),
+            this.addVehicle.get('model').value.trim(),
             +VehicleType[this.addVehicle.get('type').value],
             this.addVehicle.get('cubicCapacity').value,
             this.addVehicle.get('horsePower').value,

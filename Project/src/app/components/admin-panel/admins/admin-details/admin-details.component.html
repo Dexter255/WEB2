@@ -1,10 +1,10 @@
-<div class="container" style="background-color: white;">
+<div class="container" style="background-color: white;" *ngIf="user">
     <div class="row">
         <div class="col-md-3">
             <label> Name </label>
         </div>
         <div class="col-md-9">
-            <label> {{ user.ime }} </label>
+            <label> {{ user.Name }} </label>
         </div>
     </div>
     <div class="row">
@@ -12,7 +12,7 @@
             <label> Lastname </label>
         </div>
         <div class="col-md-9">
-            <label> {{ user.prezime }} </label>
+            <label> {{ user.Lastname }} </label>
         </div>
     </div>
     <div class="row">
@@ -20,7 +20,7 @@
             <label> Email address </label>
         </div>
         <div class="col-md-9">
-            <label> {{ user.email }} </label>
+            <label> {{ user.Email }} </label>
         </div>
     </div>
     <div class="row">
@@ -28,7 +28,7 @@
             <label> Address </label>
         </div>
         <div class="col-md-9">
-            <label> {{ user.adresa }} </label>
+            <label> {{ user.Address }} </label>
         </div>
     </div>
     <div class="row">
@@ -36,7 +36,7 @@
             <label> Number </label>
         </div>
         <div class="col-md-9">
-            <label> {{ user.telefon }} </label>
+            <label> {{ user.Number }} </label>
         </div>
     </div>
 </div>
