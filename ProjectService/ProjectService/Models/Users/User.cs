@@ -7,35 +7,15 @@ using System.Threading.Tasks;
 
 namespace ProjectService.Models.Users
 {
-    [Table("Users")]
     public class User
     {
         #region Fields
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
-        [MinLength(4)]
-        public string Name { get; set; }
-
-        [Required]
-        [MinLength(4)]
-        public string Lastname { get; set; }
-
-        [Required]
+        public string Fullname { get; set; }
+        public string Username { get; set; }
         public string Email { get; set; }
-
-        [Required]
-        [MinLength(4)]
         public string Address { get; set; }
-
-        [Required]
         public string Number { get; set; }
-
-        [Required]
         public string Password { get; set; }
-
-        [Required]
         public UserType Type { get; set; }
         #endregion
 
@@ -45,12 +25,11 @@ namespace ProjectService.Models.Users
 
         }
 
-        public User(int id, string name, string lastname, string email, string address,
+        public User(string fullname, string username, string email, string address,
             string number, string password, UserType type)
         {
-            Id = id;
-            Name = name;
-            Lastname = lastname;
+            Fullname = fullname;
+            Username = username;
             Email = email;
             Address = address;
             Number = number;

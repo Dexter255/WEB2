@@ -3,18 +3,17 @@ import { UserType } from './user-type.model';
 export class User
 {
     Id: number;
-    Name: string;
-    Lastname: string;
+    Fullname: string;
+    Username: string;
     Email: string;
     Address: string;
     Number: string;
     Password: string;
     Type: UserType;
 
-    constructor(id: number, name: string, lastname: string, email: string, address: string, number: string, password: string, type: UserType){
-        this.Id = id;
-        this.Name = name;
-        this.Lastname = lastname;
+    constructor(fullname: string, username: string, email: string, address: string, number: string, password: string, type: UserType){
+        this.Fullname = fullname;
+        this.Username = username;
         this.Email = email;
         this.Address = address;
         this.Number = number;

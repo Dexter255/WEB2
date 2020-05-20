@@ -23,97 +23,95 @@ namespace ProjectService.Controllers
 
         // GET: api/Admin
         [HttpGet("{mode}/{adminsOf}")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAdmins(string mode, string adminsOf)
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetAdmins(string mode, string adminsOf)
         {
             if (adminsOf.Equals("racCompany"))
             {
-                return await _context.Admins
-                    .Where(x => x.Type == UserType.Admin_RentACarCompanies)
+                return await _context.ApplicationUsers
                     .ToListAsync();
             }
             else if (adminsOf.Equals("airline"))
             {
-                return await _context.Admins
-                    .Where(x => x.Type == UserType.Admin_Airlines)
+                return await _context.ApplicationUsers
                     .ToListAsync();
             }
 
             return null;
         }
 
-        // GET: api/Admin/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetAdmin(int id)
-        {
-            var admin = await _context.Admins.FindAsync(id);
+        //// GET: api/Admin/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<User>> GetAdmin(int id)
+        //{
+        //    var admin = await _context.Admins.FindAsync(id);
 
-            if (admin == null)
-            {
-                return NotFound();
-            }
+        //    if (admin == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return admin;
-        }
+        //    return admin;
+        //}
 
-        // PUT: api/Admin/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdmin(int id, User admin)
-        {
-            if (id != admin.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Admin/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutAdmin(int id, User admin)
+        //{
+        //    if (id != admin.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(admin).State = EntityState.Modified;
+        //    _context.Entry(admin).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AdminExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!AdminExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Admin
-        [HttpPost]
-        public async Task<ActionResult<User>> PostAdmin(User admin)
-        {
-            _context.Admins.Add(admin);
-            await _context.SaveChangesAsync();
+        //// POST: api/Admin
+        //[HttpPost]
+        //public async Task<ActionResult<User>> PostAdmin(User admin)
+        //{
+        //    _context.Admins.Add(admin);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAdmin", new { id = admin.Id }, admin);
-        }
+        //    return CreatedAtAction("GetAdmin", new { id = admin.Id }, admin);
+        //}
 
-        // DELETE: api/Admin/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteAdmin(int id)
-        {
-            var admin = await _context.Admins.FindAsync(id);
-            if (admin == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Admin/5
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<User>> DeleteAdmin(int id)
+        //{
+        //    var admin = await _context.Admins.FindAsync(id);
+        //    if (admin == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Admins.Remove(admin);
-            await _context.SaveChangesAsync();
+        //    _context.Admins.Remove(admin);
+        //    await _context.SaveChangesAsync();
 
-            return admin;
-        }
+        //    return admin;
+        //}
 
-        private bool AdminExists(int id)
-        {
-            return _context.Admins.Any(e => e.Id == id);
-        }
+        //private bool AdminExists(int id)
+        //{
+        //    return _context.Admins.Any(e => e.Id == id);
+        //}
     }
 }

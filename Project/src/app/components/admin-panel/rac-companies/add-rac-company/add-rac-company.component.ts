@@ -110,7 +110,7 @@ export class AddRacCompanyComponent implements OnInit {
     });
     
     let racCompany = new RentACarCompany(
-      this.addRacCompany.get('id').value.trim(),
+      this.addRacCompany.get('id').value,
       this.addRacCompany.get('companyName').value.trim(),
       this.addRacCompany.get('address').value.trim(),
       this.addRacCompany.get('description').value.trim(),

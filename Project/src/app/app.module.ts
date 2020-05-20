@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component';
@@ -41,6 +41,7 @@ import { VehicleListNicerComponent } from './components/rent-a-car-companies/veh
 import { RentACarCompanySearchComponent } from './components/rent-a-car-companies/rent-a-car-company-search/rent-a-car-company-search.component';
 import { VehicleSearchComponent } from './components/rent-a-car-companies/vehicle-search/vehicle-search.component';
 import { VehicleService } from './components/vehicle.service';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,13 @@ import { VehicleService } from './components/vehicle.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

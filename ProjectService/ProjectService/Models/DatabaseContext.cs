@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProjectService.Models.RentACar;
 using ProjectService.Models.Users;
 using System;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ProjectService.Models
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        public DatabaseContext(DbContextOptions options) : base(options)
         {
 
         }
@@ -23,8 +24,12 @@ namespace ProjectService.Models
         public DbSet<FreeDate> FreeDates { get; set; }
         #endregion
 
-        #region Admin
-        public DbSet<User> Admins { get; set; }
+        //#region Admin
+        //public DbSet<User> Admins { get; set; }
+        //#endregion
+
+        #region Users
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         #endregion
     }
 }

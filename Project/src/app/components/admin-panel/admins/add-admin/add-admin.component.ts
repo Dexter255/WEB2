@@ -4,6 +4,7 @@ import { AdminService } from 'src/app/components/admin.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { UserType } from 'src/app/models/korisnik/user-type.model';
 import { User } from 'src/app/models/korisnik/user.model';
+import { ServerService } from 'src/app/components/server.service';
 
 @Component({
   selector: 'app-add-admin',
@@ -17,7 +18,8 @@ export class AddAdminComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private adminsService: AdminService) { }
+    private adminsService: AdminService,
+    private serverService: ServerService) { }
 
   ngOnInit(): void {
     let adminOf: UserType;
@@ -38,8 +40,8 @@ export class AddAdminComponent implements OnInit {
         this.addAdmin = new FormGroup({
           'id': new FormControl(0),
           'type': new FormControl(UserType[adminOf]),
-          'name': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-          'lastname': new FormControl(null, [Validators.required, Validators.minLength(4)]),
+          'fullname': new FormControl(null, [Validators.required, Validators.minLength(4)]),
+          'username': new FormControl(null, [Validators.required, Validators.minLength(4)]),
           'email': new FormControl(null, [Validators.required, Validators.email]),
           'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
           'number': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
@@ -60,8 +62,8 @@ export class AddAdminComponent implements OnInit {
               this.addAdmin = new FormGroup({
                 'id': new FormControl(id),
                 'type': new FormControl(UserType[adminOf]),
-                'name': new FormControl(admin.Name, [Validators.required, Validators.minLength(4)]),
-                'lastname': new FormControl(admin.Lastname, [Validators.required, Validators.minLength(4)]),
+                'fullname': new FormControl(admin.Name, [Validators.required, Validators.minLength(4)]),
+                'username': new FormControl(admin.Name, [Validators.required, Validators.minLength(4)]),
                 'email': new FormControl(admin.Email, [Validators.required, Validators.email]),
                 'address': new FormControl(admin.Address, [Validators.required, Validators.minLength(4)]),
                 'number': new FormControl(admin.Number, [Validators.required, Validators.pattern('^[0-9]*$')]),
@@ -83,9 +85,8 @@ export class AddAdminComponent implements OnInit {
     adminOf = UserType[this.addAdmin.get('type').value];
 
     let admin = new User(
-      this.addAdmin.get('id').value,
-      this.addAdmin.get('name').value.trim(),
-      this.addAdmin.get('lastname').value.trim(),
+      this.addAdmin.get('fullname').value.trim(),
+      this.addAdmin.get('username').value.trim(),
       this.addAdmin.get('email').value.trim(),
       this.addAdmin.get('address').value.trim(),
       this.addAdmin.get('number').value,
@@ -103,7 +104,7 @@ export class AddAdminComponent implements OnInit {
       );
     }
     else {
-      this.adminsService.addAdmin(admin).subscribe(
+      this.serverService.register(admin).subscribe(
         res => {
           this.router.navigate(['../'], { relativeTo: this.route });
         },
@@ -111,6 +112,14 @@ export class AddAdminComponent implements OnInit {
           console.log(err);
         }
       );
+      // this.adminsService.addAdmin(admin).subscribe(
+      //   res => {
+      //     this.router.navigate(['../'], { relativeTo: this.route });
+      //   },
+      //   err => {
+      //     console.log(err);
+      //   }
+      // );
     }
   }
 }

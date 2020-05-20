@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ServerService } from '../server.service';
 import { Router } from '@angular/router';
+import { UserType } from 'src/app/models/korisnik/user-type.model';
+import { User } from 'src/app/models/korisnik/user.model';
 
 @Component({
   selector: 'app-register',
@@ -16,10 +18,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      'name': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-      'lastname': new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      'fullname': new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      'username': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'email': new FormControl(null, [Validators.required, Validators.email, this.checkEmail]),
-      'city': new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'number': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6), this.comparePasswords]),
       'passwordConfirmed': new FormControl(null, [Validators.required, , this.comparePasswords])
@@ -27,21 +29,41 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    // let user = new korisnik(
-    //   this.registerForm.get('name').value,
-    //   this.registerForm.get('lastname').value,
-    //   this.registerForm.get('email').value,
-    //   this.registerForm.get('city').value,
-    //   this.registerForm.get('number').value,
-    //   this.registerForm.get('password').value,
-    //   UserType.User
-    // )
+    let user = new User(
+      this.registerForm.get('fullname').value.trim(),
+      this.registerForm.get('username').value.replace(/\s/g, ''),
+      this.registerForm.get('email').value.trim(),
+      this.registerForm.get('address').value.trim(),
+      this.registerForm.get('number').value.trim(),
+      this.registerForm.get('password').value,
+      UserType.User
+    );
 
-    // this.serverService.register(user);
-    // .trim()
-    alert("You have successfully registered!");
 
-    this.router.navigate(['login']);
+    this.serverService.register(user).subscribe(
+      (res: any) => {
+        if(res.Succeeded){
+          this.router.navigate(['login']);
+        }
+        else{
+          res.Errors.forEach(element => {
+            switch(element.code){
+              case 'DuplicateUserName':
+                alert("USPESNO. PROMENITI");
+                break;
+
+              default: 
+                
+                break;
+            }
+          });
+        }
+        
+      }, 
+      err => {
+        console.log(err);
+      }
+    )
   }
 
   // doraditi

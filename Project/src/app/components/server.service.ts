@@ -2,53 +2,42 @@ import { Injectable } from '@angular/core';
 
 import { User } from '../models/korisnik/user.model';
 import { UserType } from '../models/korisnik/user-type.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ServerService{
-    private loggedIn = false;
     private user: User;
+    private readonly BaseURI = 'https://localhost:44305/api';
 
-    constructor(){
-        // trenutno ulogovan user
-        this.loggedIn = true;
-        this.user = new User(0, 'Mihajlo', 'Rohalj', 'mihajlorohalj97@gmail.com', 'Sremska Mitrovica, Ratarska 32', '0640551693',
-        '123123', UserType.Admin);
+    constructor(private http: HttpClient,
+        private router: Router){}
 
-        // this.users.push(this.user);
-    }
-
-    login(email: string, password: string): boolean{
-        // for(let i = 0; i < this.users.length; i++){
-        //     if(this.users[i].email === email){
-        //         if(this.users[i].password === password){
-        //             this.user = this.users[i];
-        //             this.loggedIn =  true;
-        //             return true;
-        //         }
-        //         else{
-        //             return false;
-        //         }
-        //     }
-        // }
-        return false;
+    login(body: any){
+        return this.http.post(this.BaseURI + '/ApplicationUser/Login', body);
     }
 
     logout(){
-        //this.user = null;
-        this.loggedIn = false;
+        localStorage.removeItem('token');
+        this.router.navigate(['']);
     }
 
-    // register(user: korisnik){
-    //    // this.users.push(user);
-    // }
+    register(user: User){
+        return this.http.post(this.BaseURI + '/ApplicationUser/Register', user);
+    }
 
+    getUserProfile(){
+        return this.http.get(this.BaseURI + '/ApplicationUser/GetUserProfile');
+    }
+    
     isUserLoggedIn(){
-        return this.loggedIn;
+        return localStorage.getItem('token') !== null;
     }
 
     getUserType(){
-        return UserType[this.user.Type];
+        return UserType[UserType.Admin];
     }
 }

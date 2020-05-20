@@ -8,14 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public serverService: ServerService,
-    private router: Router) { }
+  constructor(public serverService: ServerService) { }
 
   ngOnInit(): void {
+
   }
 
   onLogout(){
     this.serverService.logout();
-    this.router.navigate(['']);
   }
 }

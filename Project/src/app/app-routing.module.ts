@@ -7,16 +7,13 @@ import { RentACarCompaniesComponent } from './components/rent-a-car-companies/re
 import { RentACarCompanyDetailsComponent } from './components/rent-a-car-companies/rent-a-car-company-details/rent-a-car-company-details.component';
 import { ProfilKorisnikaComponent } from './components/profil-korisnika/profil-korisnika.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
-import { RacCompanyResolver } from './resolvers/rac-company-resolver.service';
 import { AirlinesComponent } from './components/airlines/airlines.component';
 import { AirlineDetailsComponent } from './components/airlines/airline-details/airline-details.component';
-import { AirlineResolver } from './resolvers/airline-resolver.service';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AdminsComponent } from './components/admin-panel/admins/admins.component';
 import { AdminListComponent } from './components/admin-panel/admins/admin-list/admin-list.component';
 import { AdminDetailsComponent } from './components/admin-panel/admins/admin-details/admin-details.component';
 import { AddAdminComponent } from './components/admin-panel/admins/add-admin/add-admin.component';
-import { AdminResolver } from './resolvers/admin-resolver.service';
 import { ApAirlinesComponent } from './components/admin-panel/ap-airlines/ap-airlines.component';
 import { ApAirlineListComponent } from './components/admin-panel/ap-airlines/ap-airline-list/ap-airline-list.component';
 import { ApAddAirlineComponent } from './components/admin-panel/ap-airlines/ap-add-airline/ap-add-airline.component';
@@ -26,16 +23,15 @@ import { AddRacCompanyComponent } from './components/admin-panel/rac-companies/a
 import { VehiclesComponent } from './components/admin-panel/rac-companies/vehicles/vehicles.component';
 import { VehicleListComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-list/vehicle-list.component';
 import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-details/vehicle-details.component';
-import { VehicleResolver } from './resolvers/vehicle-resolver.service';
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
 import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
+import { AuthGuard } from './auth/auth.guard';
 
-// , resolve: { post: RacCompanyResolver }
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
-  { path: "userProfile", component: ProfilKorisnikaComponent },
+  { path: "userProfile", component: ProfilKorisnikaComponent, canActivate: [AuthGuard] },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent },
     { path: ":id/vehicles", component: VehicleListNicerComponent, children: [
