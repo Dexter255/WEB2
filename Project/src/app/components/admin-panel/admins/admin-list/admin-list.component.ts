@@ -45,7 +45,7 @@ export class AdminListComponent implements OnInit {
     this.router.navigate(['edit', id], {relativeTo: this.route});
   }
 
-  onDetailsAdmin(id: number){
-    this.router.navigate(['details', id], {relativeTo: this.route});
+  onDetailsAdmin(username: string){
+    this.router.navigate(['details', username], {relativeTo: this.route});
   }
 }

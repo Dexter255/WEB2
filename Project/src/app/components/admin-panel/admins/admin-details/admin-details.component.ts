@@ -10,18 +10,18 @@ import { User } from 'src/app/models/korisnik/user.model';
   styleUrls: ['./admin-details.component.css']
 })
 export class AdminDetailsComponent implements OnInit {
-  user: User;
+  admin: User;
 
   constructor(private route: ActivatedRoute,
     private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      let id = +params['id'];
+      let username = params['username'];
 
-      this.adminService.getAdmin(id).subscribe(
+      this.adminService.getAdmin(username).subscribe(
         res => {
-          this.user = res as User;
+          this.admin = res as User;
         },
         err => {
           console.log(err);

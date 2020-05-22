@@ -44,15 +44,15 @@ const routes: Routes = [
   { path: "admin-panel", component: AdminPanelComponent, children: [
     { path: "airline-admins", component: AdminsComponent, children: [
       { path: "", component: AdminListComponent },
-      { path: "details/:id", component: AdminDetailsComponent },
+      { path: "details/:username", component: AdminDetailsComponent },
       { path: "add", component: AddAdminComponent },
-      { path: "edit/:id", component: AddAdminComponent }
+      { path: "edit/:username", component: AddAdminComponent }
     ] },
     { path: "rac-company-admins", component: AdminsComponent, children: [
       { path: "", component: AdminListComponent },
-      { path: "details/:id", component: AdminDetailsComponent },
+      { path: "details/:username", component: AdminDetailsComponent },
       { path: "add", component: AddAdminComponent },
-      { path: "edit/:id", component: AddAdminComponent }
+      { path: "edit/:username", component: AddAdminComponent }
     ]},
     { path: "airlines", component: ApAirlinesComponent, children: [
       { path: "", component: ApAirlineListComponent },

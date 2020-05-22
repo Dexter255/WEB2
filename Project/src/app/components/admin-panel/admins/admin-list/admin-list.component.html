@@ -12,13 +12,13 @@
         <tbody>
             <tr class="text-center" *ngFor="let admin of adminService.admins">
                 <td> {{ admin.Fullname }}</td>
-                <td> {{ admin.UserName }}</td>
+                <td> {{ admin.Username }}</td>
                 <td> {{ admin.Email }}</td>
                 <td>
                     <span>
-                        <button class="btn btn-info mr-2" (click)="onDetailsAdmin(admin.Id)">Details</button>
-                        <button class="btn btn-secondary mr-2" (click)="onEditAdmin(admin.Id)">Edit</button>
-                        <button class="btn btn-danger" (click)="onDeleteAdmin(admin.Id)">Delete</button>
+                        <button class="btn btn-info mr-2" (click)="onDetailsAdmin(admin.Username)">Details</button>
+                        <button class="btn btn-secondary mr-2" (click)="onEditAdmin(admin.Username)">Edit</button>
+                        <button class="btn btn-danger" (click)="onDeleteAdmin(admin.Username)">Delete</button>
                     </span>
                 </td>
             </tr>

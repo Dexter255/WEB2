@@ -1,8 +1,8 @@
 <div class="container mt-3 ml-5" *ngIf="show">
     <h3>{{ header }}</h3>
     <form [formGroup]="addAdmin" (ngSubmit)="onSubmit()" autocomplete="off">
-        <input type="hidden" formControlName="id">
         <input type="hidden" formControlName="type">
+        <input type="hidden" formControlName="username" *ngIf="edit">
         <div class="form-group row">
             <label for="fullname" class="col-md-1 col-form-label">Fullname</label>
             <div class="col-md-3">
@@ -15,7 +15,7 @@
                 </span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row" *ngIf="!edit">
             <label for="username" class="col-md-1 col-form-label">Username</label>
             <div class="col-md-3">
                 <input type="text" class="form-control" id="username" formControlName="username">

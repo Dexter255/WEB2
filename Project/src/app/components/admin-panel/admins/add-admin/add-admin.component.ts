@@ -15,6 +15,7 @@ export class AddAdminComponent implements OnInit {
   addAdmin: FormGroup;
   show: boolean = false;
   header: string = "Add admin";
+  edit: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -38,7 +39,6 @@ export class AddAdminComponent implements OnInit {
     switch (this.route.snapshot['_routerState'].url.split('/')[3]) {
       case 'add':
         this.addAdmin = new FormGroup({
-          'id': new FormControl(0),
           'type': new FormControl(UserType[adminOf]),
           'fullname': new FormControl(null, [Validators.required, Validators.minLength(4)]),
           'username': new FormControl(null, [Validators.required, Validators.minLength(4)]),
@@ -52,18 +52,18 @@ export class AddAdminComponent implements OnInit {
       case 'edit':
         this.route.params.subscribe((params: Params) => {
           this.header = "Edit admin";
-          let id = +params['id'];
-
+          let username = params['username'];
+          this.edit = true;
+          
           let admin;
-          this.adminsService.getAdmin(id).subscribe(
+          this.adminsService.getAdmin(username).subscribe(
             res => {
               admin = res as User;
 
               this.addAdmin = new FormGroup({
-                'id': new FormControl(id),
                 'type': new FormControl(UserType[adminOf]),
-                'fullname': new FormControl(admin.Name, [Validators.required, Validators.minLength(4)]),
-                'username': new FormControl(admin.Name, [Validators.required, Validators.minLength(4)]),
+                'fullname': new FormControl(admin.Fullname, [Validators.required, Validators.minLength(4)]),
+                'username': new FormControl(admin.Username, [Validators.required, Validators.minLength(4)]),
                 'email': new FormControl(admin.Email, [Validators.required, Validators.email]),
                 'address': new FormControl(admin.Address, [Validators.required, Validators.minLength(4)]),
                 'number': new FormControl(admin.Number, [Validators.required, Validators.pattern('^[0-9]*$')]),
@@ -73,7 +73,7 @@ export class AddAdminComponent implements OnInit {
             err => {
               console.log(err);
             }
-          )
+          );
         });
         break;
     }
@@ -90,10 +90,10 @@ export class AddAdminComponent implements OnInit {
       this.addAdmin.get('email').value.trim(),
       this.addAdmin.get('address').value.trim(),
       this.addAdmin.get('number').value,
-      '123123', 
+      '123123',
       adminOf);
     
-    if (this.addAdmin.get('id').value !== 0) {
+    if (this.edit) {
       this.adminsService.updateAdmin(admin).subscribe(
         res => {
           this.router.navigate(['../../'], { relativeTo: this.route });
@@ -112,14 +112,6 @@ export class AddAdminComponent implements OnInit {
           console.log(err);
         }
       );
-      // this.adminsService.addAdmin(admin).subscribe(
-      //   res => {
-      //     this.router.navigate(['../'], { relativeTo: this.route });
-      //   },
-      //   err => {
-      //     console.log(err);
-      //   }
-      // );
     }
   }
 }

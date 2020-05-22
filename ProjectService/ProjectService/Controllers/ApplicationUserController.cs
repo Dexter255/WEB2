@@ -102,11 +102,13 @@ namespace ProjectService.Controllers
             string userId = User.Claims.First(x => x.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
 
-            return new
+            return new User()
             {
-                user.Fullname,
-                user.Email,
-                user.UserName
+                Fullname = user.Fullname,
+                Username = user.UserName,
+                Email = user.Email,
+                Address = user.Address,
+                Number = user.PhoneNumber
             };
         }
     }

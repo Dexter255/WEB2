@@ -22,21 +22,21 @@ export class AdminService{
     }
     
     getRacCompanyAdmins(){
-        return this.http.get(this.BaseURI + '/Admin/all/racCompany')
+        return this.http.get(this.BaseURI + '/Admin/GetAdmins/racCompany')
         .pipe(
             tap(res => this.admins = res as User[])
         );
     }
     
     getAirlineAdmins(){
-        return this.http.get(this.BaseURI + '/Admin/all/airline')
+        return this.http.get(this.BaseURI + '/Admin/GetAdmins/airline')
         .pipe(
             tap(res => this.admins = res as User[])
         );
     }
     
-    getAdmin(id: number){
-        return this.http.get(this.BaseURI + '/Admin/' + id);
+    getAdmin(username: string){
+        return this.http.get(this.BaseURI + '/Admin/GetAdmin/' + username);
     }
 
     addAdmin(admin: User){
@@ -44,7 +44,7 @@ export class AdminService{
     }
 
     updateAdmin(admin: User){
-        return this.http.put(this.BaseURI + '/Admin/' + admin.Id, admin);
+        return this.http.put(this.BaseURI + '/Admin/UpdateAdmin/' + admin.Username, admin);
     }
 
     deleteAdmin(id: number){

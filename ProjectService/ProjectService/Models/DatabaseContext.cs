@@ -24,10 +24,6 @@ namespace ProjectService.Models
         public DbSet<FreeDate> FreeDates { get; set; }
         #endregion
 
-        //#region Admin
-        //public DbSet<User> Admins { get; set; }
-        //#endregion
-
         #region Users
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         #endregion
