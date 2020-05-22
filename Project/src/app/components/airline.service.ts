@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class AirlineService{
-    private airlines: {companyName: string, description: string}[];
+    airlines: {companyName: string, description: string}[];
 
     constructor() {
         this.airlines = [];

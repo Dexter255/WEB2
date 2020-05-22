@@ -26,9 +26,11 @@ import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
 import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
 import { AuthGuard } from './auth/auth.guard';
+import { FlightsBusinessComponent } from './components/admin-panel/ap-airlines/flight-business/flight-business.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
+  { path: "flightBussiness", component: FlightsBusinessComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "userProfile", component: ProfilKorisnikaComponent, canActivate: [AuthGuard] },

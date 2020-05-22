@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
     "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
     "jquery": "^3.4.1",
     "nanobar": "^0.4.2",
     "ngx-toastr": "^12.0.1",

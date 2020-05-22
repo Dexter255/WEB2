@@ -1,0 +1,52 @@
+<div class="container mt-3 ml-5">
+    <h3>Add flight</h3>
+    <form [formGroup]="addFlight" (ngSubmit)="onSubmit()" autocomplete="off">
+        <!-- <input type="hidden" formControlName="companyId">
+        <input type="hidden" formControlName="vehicleId"> -->
+        <div class="form-group row">
+            <label for="takeOffDateTime" class="col-md-2 col-form-label">Take off date and time</label>
+            <div class="col-md-3">
+                <input type="datetime" class="form-control" id="takeOffDateTime" formControlName="takeOffDateTime">
+            </div>
+            <!-- <div class="col-md-7">
+                <span *ngIf="!addVehicle.get('brand').valid && addVehicle.get('brand').touched">
+                    <span *ngIf="addVehicle.get('brand').errors['required']">Brand must be entered!</span>
+                    <span *ngIf="addVehicle.get('brand').errors['minlength']">Brand must be atleast 2 characters!</span>
+                </span>
+            </div> -->
+        </div>
+        <div class="form-group row">
+            <label for="landingDateTime" class="col-md-2 col-form-label">Landing date and time</label>
+            <div class="col-md-3">
+                <input type="datetime" class="form-control" id="landingDateTime" formControlName="landingDateTime">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="flightDuration" class="col-md-2 col-form-label">Flight duration</label>
+            <div class="col-md-3">
+                <input type="time" class="form-control" id="flightDuration" formControlName="flightDuration">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="flightLength" class="col-md-2 col-form-label">Flight length</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="flightLength" formControlName="flightLength">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="numberOfLocations" class="col-md-2 col-form-label">Number of locations</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="numberOfLocations" formControlName="numberOfLocations">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="flightTicketPrice" class="col-md-2 col-form-label">Flight ticket price</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="flightTicketPrice" formControlName="flightTicketPrice">
+            </div>
+        </div>
+        <div class="ml-5">
+            <button class="btn btn-success" [disabled]="!addFlight.valid" type="submit"> Add flight </button>
+        </div>
+    </form>
+</div>

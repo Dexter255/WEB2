@@ -42,6 +42,9 @@ import { RentACarCompanySearchComponent } from './components/rent-a-car-companie
 import { VehicleSearchComponent } from './components/rent-a-car-companies/vehicle-search/vehicle-search.component';
 import { VehicleService } from './components/vehicle.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/flights.component';
+import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
+import { FlightBusinessComponent } from './components/admin-panel/ap-airlines/flight-business/flight-business.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +75,10 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     AddVehicleComponent,
     VehicleListNicerComponent,
     RentACarCompanySearchComponent,
-    VehicleSearchComponent
+    VehicleSearchComponent,
+    FlightsComponent,
+    AddFlightComponent,
+    FlightBusinessComponent
   ],
   imports: [
     BrowserModule,

@@ -1,14 +1,14 @@
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.deps.json
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.runtimeconfig.json
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.runtimeconfig.dev.json
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.dll
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.csproj.CoreCompileInputs.cache
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.RazorAssemblyInfo.cache
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.RazorAssemblyInfo.cs
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.AssemblyInfoInputs.cache
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.AssemblyInfo.cs
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.RazorTargetAssemblyInfo.cache
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.pdb
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.dll
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.pdb
-D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.csprojAssemblyReference.cache
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.deps.json
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.runtimeconfig.json
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.runtimeconfig.dev.json
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.dll
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\ProjectService.pdb
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.csproj.CoreCompileInputs.cache
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.RazorAssemblyInfo.cache
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.RazorAssemblyInfo.cs
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.AssemblyInfoInputs.cache
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.AssemblyInfo.cs
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.RazorTargetAssemblyInfo.cache
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.dll
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.pdb
+D:\OsmiSemestar\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.csprojAssemblyReference.cache
