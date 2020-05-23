@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AirlineService } from 'src/app/components/airline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServerService } from 'src/app/components/server.service';
+import { Airline } from 'src/app/models/flight/airline.model';
 
 @Component({
   selector: 'app-ap-airline-list',
@@ -9,7 +10,7 @@ import { ServerService } from 'src/app/components/server.service';
   styleUrls: ['./ap-airline-list.component.css']
 })
 export class ApAirlineListComponent implements OnInit {
-  airlines: {companyName: string, description: string}[];
+  airlines: Airline[];
   notAllowed: boolean;
 
   constructor(private route: ActivatedRoute,
@@ -36,5 +37,9 @@ export class ApAirlineListComponent implements OnInit {
   
   onDetailsAirline(index: number){
     this.router.navigate(['details', index], {relativeTo: this.route});
+  }
+
+  onSeeFlights(companyId: number){
+    this.router.navigate([companyId, 'flights'], {relativeTo: this.route});
   }
 }

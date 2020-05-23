@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AirlineService } from '../../airline.service';
+import { Airline } from 'src/app/models/flight/airline.model';
 
 @Component({
   selector: 'app-airline-details',
@@ -8,7 +9,7 @@ import { AirlineService } from '../../airline.service';
   styleUrls: ['./airline-details.component.css']
 })
 export class AirlineDetailsComponent implements OnInit {
-  airline: {companyName: string, description: string};
+  airline: Airline;
 
   constructor(private route: ActivatedRoute,
     private airlineService: AirlineService) { }

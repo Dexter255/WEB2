@@ -26,8 +26,8 @@ export class AdminListComponent implements OnInit {
     }
   }
 
-  onDeleteAdmin(id: number) {
-    this.adminService.deleteAdmin(id).subscribe(
+  onDeleteAdmin(username: string) {
+    this.adminService.deleteAdmin(username).subscribe(
       res => {
         this.adminService.getRacCompanyAdmins().subscribe();
       },

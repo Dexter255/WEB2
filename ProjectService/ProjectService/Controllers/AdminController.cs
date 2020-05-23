@@ -67,7 +67,7 @@ namespace ProjectService.Controllers
                 return NotFound();
             }
 
-            var adminValue = new User()
+            return new User()
             {
                 Fullname = admin.Fullname,
                 Username = admin.UserName,
@@ -75,8 +75,6 @@ namespace ProjectService.Controllers
                 Address = admin.Address,
                 Number = admin.PhoneNumber
             };
-
-            return adminValue;
         }
 
         // PUT: api/Admin/5
@@ -120,21 +118,31 @@ namespace ProjectService.Controllers
             return NoContent();
         }
 
-        //// DELETE: api/Admin/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<User>> DeleteAdmin(int id)
-        //{
-        //    var admin = await _context.Admins.FindAsync(id);
-        //    if (admin == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // DELETE: api/Admin/5
+        [HttpDelete("{username}")]
+        [Route("DeleteAdmin/{username}")]
+        public async Task<ActionResult<User>> DeleteAdmin(string username)
+        {
 
-        //    _context.Admins.Remove(admin);
-        //    await _context.SaveChangesAsync();
+            var admin = await _userManager.FindByNameAsync(username);
 
-        //    return admin;
-        //}
+
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.DeleteAsync(admin);
+
+            return new User()
+            {
+                Fullname = admin.Fullname,
+                Username = admin.UserName,
+                Email = admin.Email,
+                Address = admin.Address,
+                Number = admin.PhoneNumber
+            }; ;
+        }
 
         private bool AdminExists(string username)
         {

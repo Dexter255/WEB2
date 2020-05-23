@@ -4,7 +4,7 @@ export class Destination
     public  ID: number;
 
 
-    constructor(Name:string, ID:number) {
+    constructor(ID:number, Name:string) {
         this.Name = Name;
         this.ID = ID;
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AirlineService } from '../airline.service';
+import { Airline } from 'src/app/models/flight/airline.model';
 
 @Component({
   selector: 'app-airlines',
@@ -7,7 +8,7 @@ import { AirlineService } from '../airline.service';
   styleUrls: ['./airlines.component.css']
 })
 export class AirlinesComponent implements OnInit {
-  airlines: {companyName: string, description: string}[];
+  airlines: Airline[];
 
   constructor(private airlineService: AirlineService) { }
 

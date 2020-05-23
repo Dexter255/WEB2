@@ -26,11 +26,13 @@ import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
 import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
 import { AuthGuard } from './auth/auth.guard';
-import { FlightsBusinessComponent } from './components/admin-panel/ap-airlines/flight-business/flight-business.component';
+import { FlightBusinessComponent } from './components/admin-panel/ap-airlines/flight-business/flight-business.component';
+import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/flights.component';
+import { FlightListComponent } from './components/admin-panel/ap-airlines/flights/flight-list/flight-list.component';
+import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
-  { path: "flightBussiness", component: FlightsBusinessComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "userProfile", component: ProfilKorisnikaComponent, canActivate: [AuthGuard] },
@@ -60,8 +62,16 @@ const routes: Routes = [
       { path: "", component: ApAirlineListComponent },
       { path: "details/:id", component: AirlineDetailsComponent },
       { path: "add", component: ApAddAirlineComponent },
-      { path: "edit/:id", component: ApAddAirlineComponent }
+      { path: "edit/:id", component: ApAddAirlineComponent },
+      { path: ":id/flights", component: FlightsComponent, children: [
+        {
+          path: "", component: FlightListComponent
+        },
+        { path:"add", component: AddFlightComponent}
+        // OVDE SAM STAO; TREBA NAPRAVITI flight-list
+      ]}
     ] },
+    { path: "airlineBusiness", component: FlightBusinessComponent },
     { path: "rac-companies", component: RacCompaniesComponent, children: [
       { path: "", component: RacCompanyListComponent },
       { path: "details/:id", component: RentACarCompanyDetailsComponent },

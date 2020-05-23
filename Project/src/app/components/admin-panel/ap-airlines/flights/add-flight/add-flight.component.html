@@ -6,7 +6,7 @@
         <div class="form-group row">
             <label for="takeOffDateTime" class="col-md-2 col-form-label">Take off date and time</label>
             <div class="col-md-3">
-                <input type="datetime" class="form-control" id="takeOffDateTime" formControlName="takeOffDateTime">
+                <input type="datetime-local" class="form-control" id="takeOffDateTime" formControlName="takeOffDateTime">
             </div>
             <!-- <div class="col-md-7">
                 <span *ngIf="!addVehicle.get('brand').valid && addVehicle.get('brand').touched">
@@ -18,7 +18,7 @@
         <div class="form-group row">
             <label for="landingDateTime" class="col-md-2 col-form-label">Landing date and time</label>
             <div class="col-md-3">
-                <input type="datetime" class="form-control" id="landingDateTime" formControlName="landingDateTime">
+                <input type="datetime-local" class="form-control" id="landingDateTime" formControlName="landingDateTime">
             </div>
         </div>
         <div class="form-group row">
@@ -34,9 +34,25 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="numberOfLocations" class="col-md-2 col-form-label">Number of locations</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="numberOfLocations" formControlName="numberOfLocations">
+            <label for="destinations" class="col-md-2 col-form-label">Destinations</label>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success" (click)="onAddDestination()">Add destination</button>
+            </div>
+            <div class="col-md-8" formArrayName="destinations">
+                <div class="form-group" *ngFor="let destination of addFlight.get('destinations')['controls']; let i = index">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input title="Destination" type="text" class="form-control" [formControlName]="i" placeholder="Destination">
+                            <span *ngIf="!this.addFlight.get('destinations')['controls'][i].valid && this.addFlight.get('destinations')['controls'][i].touched">
+                                <span *ngIf="this.addFlight.get('destinations')['controls'][i].errors['required']">Destination must be entered!</span>
+                                <span *ngIf="this.addFlight.get('destinations')['controls'][i].errors['minlength']">Destination must be atlest 4 characters!</span>
+                            </span>
+                        </div>
+                        <div>
+                            <button class="btn btn-danger" type="button" (click)="onDeleteDestination(i)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group row">

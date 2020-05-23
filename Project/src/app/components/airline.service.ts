@@ -1,18 +1,23 @@
 import { Flight } from '../models/flight/flight.model';
 import { Injectable } from '@angular/core';
+import { Airline } from '../models/flight/airline.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AirlineService{
-    airlines: {companyName: string, description: string}[];
+    airlines: Airline[];
 
     constructor() {
         this.airlines = [];
 
-        this.airlines.push({companyName: "AvioKompanija1", description: "Opis AvioKompanije1"});
-        this.airlines.push({companyName: "AvioKompanija2", description: "Opis AvioKompanije2"});
-        this.airlines.push({companyName: "AvioKompanija3", description: "Opis AvioKompanije3"});
+        this.airlines.push(new Airline(5, "aaarte", "sadsad", "dsadsa", [],
+                                       [], [], []));
+    }
+
+    addFlight(companyID:number , flight: Flight)
+    {
+        this.airlines[companyID].Flights.push(flight);
     }
 
     checkAirlineId(index: number){
@@ -34,11 +39,16 @@ export class AirlineService{
         this.airlines.splice(index, 1);
     }
 
-    addAirline(airline: {companyName: string, description: string}){
+    addAirline(airline: Airline){
         this.airlines.push(airline);
     }
 
-    updateAirline(index: number, airline: {companyName: string, description: string}){
-        this.airlines[index] = airline;
+    updateAirline(airline: Airline){
+        //this.airlines[index] = airline;
+    }
+
+    getFlights(companyID: number)
+    {
+        return this.airlines[companyID].Flights;
     }
 }

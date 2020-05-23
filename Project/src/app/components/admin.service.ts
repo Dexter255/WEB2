@@ -47,7 +47,7 @@ export class AdminService{
         return this.http.put(this.BaseURI + '/Admin/UpdateAdmin/' + admin.Username, admin);
     }
 
-    deleteAdmin(id: number){
-        return this.http.delete(this.BaseURI + '/Admin/' + id);
+    deleteAdmin(username: string){
+        return this.http.delete(this.BaseURI + '/Admin/DeleteAdmin/' + username);
     }
 }

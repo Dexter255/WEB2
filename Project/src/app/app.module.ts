@@ -45,6 +45,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/flights.component';
 import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
 import { FlightBusinessComponent } from './components/admin-panel/ap-airlines/flight-business/flight-business.component';
+import { FlightListComponent } from './components/admin-panel/ap-airlines/flights/flight-list/flight-list.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { FlightBusinessComponent } from './components/admin-panel/ap-airlines/fl
     VehicleSearchComponent,
     FlightsComponent,
     AddFlightComponent,
-    FlightBusinessComponent
+    FlightBusinessComponent,
+    FlightListComponent
   ],
   imports: [
     BrowserModule,
