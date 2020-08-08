@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
@@ -30,11 +31,13 @@ import { FlightBusinessComponent } from './components/admin-panel/ap-airlines/fl
 import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/flights.component';
 import { FlightListComponent } from './components/admin-panel/ap-airlines/flights/flight-list/flight-list.component';
 import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
+import { LoginRegisterGuard } from './auth/login-register.guard';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
-  { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
+  { path: "login", component: LoginComponent, canActivate: [LoginRegisterGuard] },
+  { path: "register", component: RegisterComponent, canActivate: [LoginRegisterGuard] },
   { path: "userProfile", component: ProfilKorisnikaComponent, canActivate: [AuthGuard] },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent },
@@ -45,14 +48,14 @@ const routes: Routes = [
   { path: "airlines", component: AirlinesComponent, children: [
     { path: "details/:id", component: AirlineDetailsComponent }
   ] },
-  { path: "admin-panel", component: AdminPanelComponent, children: [
-    { path: "airline-admins", component: AdminsComponent, children: [
+  { path: "admin-panel", component: AdminPanelComponent, canActivate: [AuthGuard], data: { roles: ['Admin', 'Admin_RentACarCompanies', 'Admin_Airlines'] }, children: [
+    { path: "airline-admins", component: AdminsComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] }, children: [
       { path: "", component: AdminListComponent },
       { path: "details/:username", component: AdminDetailsComponent },
       { path: "add", component: AddAdminComponent },
       { path: "edit/:username", component: AddAdminComponent }
     ] },
-    { path: "rac-company-admins", component: AdminsComponent, children: [
+    { path: "rac-company-admins", component: AdminsComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] }, children: [
       { path: "", component: AdminListComponent },
       { path: "details/:username", component: AdminDetailsComponent },
       { path: "add", component: AddAdminComponent },
@@ -72,7 +75,7 @@ const routes: Routes = [
       ]}
     ] },
     { path: "airlineBusiness", component: FlightBusinessComponent },
-    { path: "rac-companies", component: RacCompaniesComponent, children: [
+    { path: "rac-companies", component: RacCompaniesComponent, canActivate: [AuthGuard], data: { roles: ['Admin_RentACarCompanies'] }, children: [
       { path: "", component: RacCompanyListComponent },
       { path: "details/:id", component: RentACarCompanyDetailsComponent },
       { path: "add", component: AddRacCompanyComponent },
@@ -86,6 +89,7 @@ const routes: Routes = [
     ] }
   ] },
   { path: "error", component: ErrorPageComponent},
+  { path: "forbidden", component: ForbiddenComponent},
   { path: "**", redirectTo: 'error' }
 ];
 

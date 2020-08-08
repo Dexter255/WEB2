@@ -1,7 +1,6 @@
 import { RentACarCompany } from '../models/rent-a-car/rac-company.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Vehicle } from '../models/rent-a-car/vehicle.model';
 import { pipe } from 'rxjs';
 import { tap } from 'rxjs/operators'
 

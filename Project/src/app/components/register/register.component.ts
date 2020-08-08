@@ -47,18 +47,11 @@ export class RegisterComponent implements OnInit {
         }
         else{
           res.Errors.forEach(element => {
-            switch(element.code){
-              case 'DuplicateUserName':
-                alert("USPESNO. PROMENITI");
-                break;
-
-              default: 
-                
-                break;
+            if(element.Code === 'DuplicateUserName'){
+              alert("Username vec zauzet. PROMENITI.");
             }
           });
         }
-        
       }, 
       err => {
         console.log(err);

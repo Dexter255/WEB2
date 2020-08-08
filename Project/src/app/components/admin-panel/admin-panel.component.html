@@ -5,8 +5,6 @@
     
     <div class="collapse navbar-collapse" id="navbarCollapseAdmin">
         <div class="navbar-nav" *ngIf="serverService.getUserType() === 'Admin'">
-            <a routerLink="rac-companies" routerLinkActive="active" class="nav-item nav-link">Rent a car companies</a>
-            <a routerLink="airlines" routerLinkActive="active" class="nav-item nav-link">Airlines</a>
             <a routerLink="rac-company-admins" routerLinkActive="active" class="nav-item nav-link">Rent a car company admins</a>
             <a routerLink="airline-admins" routerLinkActive="active" class="nav-item nav-link">Airline admins</a>
         </div>

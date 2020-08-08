@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators'
 
 import { User } from '../models/korisnik/user.model';
-import { UserType } from '../models/korisnik/user-type.model';
 
 @Injectable({
     providedIn: 'root'
@@ -39,6 +38,7 @@ export class AdminService{
         return this.http.get(this.BaseURI + '/Admin/GetAdmin/' + username);
     }
 
+    // umesto ove funkcije poziva se Register u ServerService
     addAdmin(admin: User){
         return this.http.post(this.BaseURI + '/Admin', admin);
     }

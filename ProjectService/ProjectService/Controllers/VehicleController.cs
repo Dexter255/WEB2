@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +56,7 @@ namespace ProjectService.Controllers
 
         // PUT: api/Vehicle/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin_RentACarCompanies")]
         public async Task<IActionResult> PutVehicle(int id, Vehicle vehicle)
         {
             if (id != vehicle.Id)
@@ -111,6 +113,7 @@ namespace ProjectService.Controllers
 
         // DELETE: api/Vehicle/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin_RentACarCompanies")]
         public async Task<ActionResult<Vehicle>> DeleteVehicle(int id)
         {
             var vehicle = await _context.Vehicles

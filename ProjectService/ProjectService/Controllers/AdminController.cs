@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,42 +23,61 @@ namespace ProjectService.Controllers
             _userManager = userManager;
         }
 
-        // GET: api/Admin
+        // GET: api/GetAdmins
         [HttpGet("{adminOf}")]
         [Route("GetAdmins/{adminOf}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetAdmins(string adminOf)
         {
             if (adminOf.Equals("racCompany"))
             {
-                return await _userManager.Users.Select(x =>
-                    new User()
+                List<User> users = new List<User>();
+
+                foreach(var user in _userManager.Users)
+                {
+                    var role = await _userManager.GetRolesAsync(user);
+                    if(role.FirstOrDefault() == UserType.Admin_RentACarCompanies.ToString())
                     {
-                        Fullname = x.Fullname,
-                        Username = x.UserName,
-                        Email = x.Email,
-                        Address = x.Address,
-                        Number = x.PhoneNumber
-                    })
-                    .ToListAsync();
+                        users.Add(new User() {
+                            Fullname = user.Fullname,
+                            Username = user.UserName,
+                            Email = user.Email,
+                            Address = user.Address,
+                            Number = user.PhoneNumber
+                        });
+                    }
+                }
+
+                return users;
             }
             else    // airline
             {
-                return await _userManager.Users.Select(x =>
-                    new User()
+                List<User> users = new List<User>();
+
+                foreach (var user in _userManager.Users)
+                {
+                    var role = await _userManager.GetRolesAsync(user);
+                    if (role.FirstOrDefault() == UserType.Admin_Airlines.ToString())
                     {
-                        Fullname = x.Fullname,
-                        Username = x.UserName,
-                        Email = x.Email,
-                        Address = x.Address,
-                        Number = x.PhoneNumber
-                    })
-                    .ToListAsync();
+                        users.Add(new User()
+                        {
+                            Fullname = user.Fullname,
+                            Username = user.UserName,
+                            Email = user.Email,
+                            Address = user.Address,
+                            Number = user.PhoneNumber
+                        });
+                    }
+                }
+
+                return users;
             }
         }
 
-        // GET: api/Admin/5
+        // GET: api/Admin/Dex
         [HttpGet("{username}")]
         [Route("GetAdmin/{username}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<User>> GetAdmin(string username)
         {
             var admin = await _userManager.FindByNameAsync(username);
@@ -77,9 +97,10 @@ namespace ProjectService.Controllers
             };
         }
 
-        // PUT: api/Admin/5
+        // PUT: api/Admin/Dex
         [HttpPut("{username}")]
         [Route("UpdateAdmin/{username}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutAdmin(string username, User admin)
         {
             if (username != admin.Username)
@@ -118,9 +139,10 @@ namespace ProjectService.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Admin/5
+        // DELETE: api/Admin/Dex
         [HttpDelete("{username}")]
         [Route("DeleteAdmin/{username}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<User>> DeleteAdmin(string username)
         {
 

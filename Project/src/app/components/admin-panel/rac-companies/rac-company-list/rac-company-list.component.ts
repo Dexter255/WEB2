@@ -29,7 +29,7 @@ export class RacCompanyListComponent implements OnInit {
         this.isFetching = false;
       }
     );
-    this.notAllowed = this.serverService.getUserType() !== 'Admin' ? true : false;
+    this.notAllowed = this.serverService.getUserType() !== 'Admin_RentACarCompanies' ? true : false;
   }
 
   onAddRacCompany(){

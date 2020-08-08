@@ -46,6 +46,7 @@ import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/f
 import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
 import { FlightBusinessComponent } from './components/admin-panel/ap-airlines/flight-business/flight-business.component';
 import { FlightListComponent } from './components/admin-panel/ap-airlines/flights/flight-list/flight-list.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { FlightListComponent } from './components/admin-panel/ap-airlines/flight
     FlightsComponent,
     AddFlightComponent,
     FlightBusinessComponent,
-    FlightListComponent
+    FlightListComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

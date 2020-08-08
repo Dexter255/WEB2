@@ -36,7 +36,7 @@ namespace ProjectService.Controllers
         // POST : api/ApplicationUser/Register
         [HttpPost]
         [Route("Register")]
-        public async Task<Object> AddAplicationUser(User user)
+        public async Task<Object> Register(User user)
         {
             var applicationUser = new ApplicationUser()
             {
@@ -50,11 +50,11 @@ namespace ProjectService.Controllers
             try
             {
                 var result = await _userManager.CreateAsync(applicationUser, user.Password);
+                await _userManager.AddToRoleAsync(applicationUser, user.Type.ToString());
                 return Ok(result);
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -68,11 +68,15 @@ namespace ProjectService.Controllers
 
             if(user != null &&  await _userManager.CheckPasswordAsync(user, model.Password))
             {
+                var role = await _userManager.GetRolesAsync(user);
+                IdentityOptions identityOptions = new IdentityOptions();
+
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("UserID", user.Id.ToString())
+                        new Claim("UserID", user.Id.ToString()),
+                        new Claim(identityOptions.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(30),
                     SigningCredentials = new SigningCredentials(
@@ -93,7 +97,7 @@ namespace ProjectService.Controllers
             }
         }
 
-        // POST : api/ApplicationUser/GetuserProfile
+        // POST : api/ApplicationUser/GetUserProfile
         [HttpGet]
         [Authorize]
         [Route("GetUserProfile")]
@@ -101,6 +105,8 @@ namespace ProjectService.Controllers
         {
             string userId = User.Claims.First(x => x.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
+
+            var role = _userManager.GetRolesAsync(user);
 
             return new User()
             {
@@ -111,5 +117,10 @@ namespace ProjectService.Controllers
                 Number = user.PhoneNumber
             };
         }
+
+        //npr. [Authorize(Roles = "Admin,User")]
+        //[HttpGet]
+        //[Authorize(Roles = "Admin")]
+        //[Route]
     }
 }

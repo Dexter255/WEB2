@@ -1,43 +1,47 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { User } from '../models/korisnik/user.model';
-import { UserType } from '../models/korisnik/user-type.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ServerService{
+export class ServerService {
     private user: User;
     private readonly BaseURI = 'https://localhost:44305/api';
 
     constructor(private http: HttpClient,
-        private router: Router){}
+        private router: Router) { }
 
-    login(body: any){
+    login(body: any) {
         return this.http.post(this.BaseURI + '/ApplicationUser/Login', body);
     }
 
-    logout(){
+    logout() {
         localStorage.removeItem('token');
         this.router.navigate(['']);
     }
 
-    register(user: User){
+    register(user: User) {
         return this.http.post(this.BaseURI + '/ApplicationUser/Register', user);
     }
 
-    getUserProfile(){
+    getUserProfile() {
         return this.http.get(this.BaseURI + '/ApplicationUser/GetUserProfile');
     }
-    
-    isUserLoggedIn(){
+
+    isUserLoggedIn() {
         return localStorage.getItem('token') !== null;
     }
 
-    getUserType(){
-        return UserType[UserType.Admin];
+    getUserType() {
+        let token = localStorage.getItem('token');
+
+        let jwtData = token.split('.')[1];
+        let decodedJwtJsonData = window.atob(jwtData);
+        let decodedJwtData = JSON.parse(decodedJwtJsonData);
+
+        return decodedJwtData.role;
     }
 }
