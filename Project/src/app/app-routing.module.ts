@@ -6,7 +6,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { RentACarCompaniesComponent } from './components/rent-a-car-companies/rent-a-car-companies.component';
 import { RentACarCompanyDetailsComponent } from './components/rent-a-car-companies/rent-a-car-company-details/rent-a-car-company-details.component';
-import { ProfilKorisnikaComponent } from './components/profil-korisnika/profil-korisnika.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { AirlinesComponent } from './components/airlines/airlines.component';
 import { AirlineDetailsComponent } from './components/airlines/airline-details/airline-details.component';
@@ -33,12 +32,13 @@ import { FlightListComponent } from './components/admin-panel/ap-airlines/flight
 import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
 import { LoginRegisterGuard } from './auth/login-register.guard';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { UserProfile } from './components/user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "login", component: LoginComponent, canActivate: [LoginRegisterGuard] },
   { path: "register", component: RegisterComponent, canActivate: [LoginRegisterGuard] },
-  { path: "userProfile", component: ProfilKorisnikaComponent, canActivate: [AuthGuard] },
+  { path: "user-profile", component: UserProfile, canActivate: [AuthGuard] },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent },
     { path: ":id/vehicles", component: VehicleListNicerComponent, children: [

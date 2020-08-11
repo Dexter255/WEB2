@@ -44,4 +44,8 @@ export class ServerService {
 
         return decodedJwtData.role;
     }
+
+    updateUser(user: User){
+        return this.http.put(this.BaseURI + '/ApplicationUser/UpdateUser/' + user.Username, user);
+    }
 }

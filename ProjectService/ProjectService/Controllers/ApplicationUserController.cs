@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ProjectService.Models;
@@ -118,9 +119,51 @@ namespace ProjectService.Controllers
             };
         }
 
-        //npr. [Authorize(Roles = "Admin,User")]
-        //[HttpGet]
-        //[Authorize(Roles = "Admin")]
-        //[Route]
+        // PUT: api/ApplicationUser/UpdateUser/Matke
+        [HttpPut("{username}")]
+        [Route("UpdateUser/{username}")]
+        public async Task<IActionResult> PutUser(string username, User user)
+        {
+            if (username != user.Username)
+            {
+                return BadRequest();
+            }
+
+            var userDB = await _userManager.FindByNameAsync(username);
+
+            if (userDB == null)
+            {
+                return NotFound();
+            }
+
+            userDB.Fullname = user.Fullname;
+            userDB.Email = user.Email;
+            userDB.Address = user.Address;
+            userDB.PhoneNumber = user.Number;
+
+            try
+            {
+                await _userManager.UpdateAsync(userDB);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(username))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool UserExists(string username)
+        {
+            return _userManager.Users.Any(e => e.UserName == username);
+        }
+
     }
 }
