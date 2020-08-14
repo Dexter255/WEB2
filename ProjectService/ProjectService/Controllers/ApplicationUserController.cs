@@ -21,14 +21,17 @@ namespace ProjectService.Controllers
     [ApiController]
     public class ApplicationUserController : ControllerBase
     {
+        private DatabaseContext _context;
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationSettings _applicationSettings;
 
-        public ApplicationUserController(UserManager<ApplicationUser> userManager, 
+        public ApplicationUserController(DatabaseContext context,
+            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<ApplicationSettings> applicationSettings)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _applicationSettings = applicationSettings.Value;
@@ -67,7 +70,7 @@ namespace ProjectService.Controllers
         {
             var user = await _userManager.FindByNameAsync(model.Username);
 
-            if(user != null &&  await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var role = await _userManager.GetRolesAsync(user);
                 IdentityOptions identityOptions = new IdentityOptions();
@@ -105,9 +108,13 @@ namespace ProjectService.Controllers
         public async Task<Object> GetUserProfile()
         {
             string userId = User.Claims.First(x => x.Type == "UserID").Value;
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .Include(x => x.FriendRequests)
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            var role = _userManager.GetRolesAsync(user);
+            user.Friends.ForEach(x => x.AreFriends = true);
 
             return new User()
             {
@@ -115,7 +122,10 @@ namespace ProjectService.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 Address = user.Address,
-                Number = user.PhoneNumber
+                Number = user.PhoneNumber,
+                Friends = user.Friends,
+                FriendRequests = user.FriendRequests,
+                FriendRequestsSent = user.FriendRequestsSent
             };
         }
 
@@ -158,6 +168,218 @@ namespace ProjectService.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("{username}")]
+        [Route("SearchUsers/{username}")]
+        public async Task<ActionResult<IEnumerable<Friend>>> SearchUsers(string username)
+        {
+            string userId = User.Claims.First(x => x.Type == "UserID").Value;
+            var loggedUser = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .Include(x => x.FriendRequests)
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            List<Friend> friends = new List<Friend>();
+
+            var usersDB = await _context.ApplicationUsers.ToListAsync();
+
+            foreach (var user in usersDB)
+            {
+                if (user.UserName.ToLower().Contains(username.ToLower()) &&
+                    !user.UserName.Equals(loggedUser.UserName) &&
+                    loggedUser.FriendRequests.FirstOrDefault(x => x.Username == user.UserName) == null &&
+                    loggedUser.FriendRequestsSent.FirstOrDefault(x => x.Username == user.UserName) == null)
+                {
+                    var areFriends = false;
+                    if (loggedUser.Friends.Any(x => x.Username == user.UserName))
+                        areFriends = true;
+
+                    friends.Add(new Friend(user.Fullname, user.UserName, user.Email, user.Address, user.PhoneNumber, areFriends));
+                }
+            }
+
+            return friends;
+        }
+
+        [HttpGet("{userId}/{username}")]
+        [Route("SendFriendRequest/{userId}/{username}")]
+        public async Task<Object> SendFriendRequest(string userId, string username)
+        {
+            var loggedUser = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .Include(x => x.FriendRequests)
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            var friend = await _context.ApplicationUsers
+                .Include(x => x.FriendRequests)
+                .FirstOrDefaultAsync(x => x.UserName == username);
+
+            loggedUser.FriendRequestsSent
+                .Add(new Friend(friend.Fullname,
+                                friend.UserName,
+                                friend.Email,
+                                friend.Address,
+                                friend.PhoneNumber,
+                                false));
+
+            friend.FriendRequests
+                .Add(new Friend(loggedUser.Fullname, 
+                                loggedUser.UserName, 
+                                loggedUser.Email, 
+                                loggedUser.Address, 
+                                loggedUser.PhoneNumber, 
+                                false));
+
+            await _userManager.UpdateAsync(loggedUser);
+            await _userManager.UpdateAsync(friend);
+
+            loggedUser.Friends.ForEach(x => x.AreFriends = true);
+
+            return new User()
+            {
+                Friends = loggedUser.Friends,
+                FriendRequests = loggedUser.FriendRequests,
+                FriendRequestsSent = loggedUser.FriendRequestsSent
+            };
+        }
+
+        [HttpGet("{userId}/{username}")]
+        [Route("CancelFriendRequest/{userId}/{username}")]
+        public async Task<Object> CancelFriendRequest(string userId, string username)
+        {
+            var loggedUser = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .Include(x => x.FriendRequests)
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            var friend = await _context.ApplicationUsers
+                .Include(x => x.FriendRequests)
+                .FirstOrDefaultAsync(x => x.UserName == username);
+
+            loggedUser.FriendRequestsSent.RemoveAll(x => x.Username == friend.UserName);
+            friend.FriendRequests.RemoveAll(x => x.Username == loggedUser.UserName);
+
+            await _userManager.UpdateAsync(loggedUser);
+            await _userManager.UpdateAsync(friend);
+
+            loggedUser.Friends.ForEach(x => x.AreFriends = true);
+
+            return new User()
+            {
+                Friends = loggedUser.Friends,
+                FriendRequests = loggedUser.FriendRequests,
+                FriendRequestsSent = loggedUser.FriendRequestsSent
+            };
+        }
+
+        [HttpGet("{userId}/{username}")]
+        [Route("AcceptFriendRequest/{userId}/{username}")]
+        public async Task<Object> AcceptFriendRequest(string userId, string username)
+        {
+            var loggedUser = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .Include(x => x.FriendRequests)
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            var friend = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.UserName == username);
+
+            loggedUser.Friends.Add(new Friend(
+                friend.Fullname,
+                friend.UserName,
+                friend.Email,
+                friend.Address,
+                friend.PhoneNumber,
+                true));
+            loggedUser.FriendRequests.RemoveAll(x => x.Username == friend.UserName);
+
+            friend.Friends.Add(new Friend(
+                loggedUser.Fullname,
+                loggedUser.UserName,
+                loggedUser.Email,
+                loggedUser.Address,
+                loggedUser.PhoneNumber,
+                true));
+            friend.FriendRequestsSent.RemoveAll(x => x.Username == loggedUser.UserName);
+
+            await _userManager.UpdateAsync(loggedUser);
+            await _userManager.UpdateAsync(friend);
+
+            loggedUser.Friends.ForEach(x => x.AreFriends = true);
+
+            return new User() {
+                Friends = loggedUser.Friends,
+                FriendRequests = loggedUser.FriendRequests,
+                FriendRequestsSent = loggedUser.FriendRequestsSent
+            };
+        }
+
+        [HttpGet("{userId}/{username}")]
+        [Route("DeclineFriendRequest/{userId}/{username}")]
+        public async Task<Object> DeclineFriendRequest(string userId, string username)
+        {
+            var loggedUser = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .Include(x => x.FriendRequests)
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            var friend = await _context.ApplicationUsers
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.UserName == username);
+
+            loggedUser.FriendRequests.RemoveAll(x => x.Username == friend.UserName);
+            friend.FriendRequestsSent.RemoveAll(x => x.Username == loggedUser.UserName);
+
+            await _userManager.UpdateAsync(loggedUser);
+            await _userManager.UpdateAsync(friend);
+
+            loggedUser.Friends.ForEach(x => x.AreFriends = true);
+
+            return new User()
+            {
+                Friends = loggedUser.Friends,
+                FriendRequests = loggedUser.FriendRequests,
+                FriendRequestsSent = loggedUser.FriendRequestsSent
+            };
+        }
+
+        [HttpGet("{userId}/{username}")]
+        [Route("DeleteFriend/{userId}/{username}")]
+        public async Task<Object> DeleteFriend(string userId, string username)
+        {
+            var loggedUser = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .Include(x => x.FriendRequests)
+                .Include(x => x.FriendRequestsSent)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            var friend = await _context.ApplicationUsers
+                .Include(x => x.Friends)
+                .FirstOrDefaultAsync(x => x.UserName == username);
+
+            loggedUser.Friends.RemoveAll(x => x.Username == username);
+
+            friend.Friends.RemoveAll(x => x.Username == loggedUser.UserName);
+
+            await _userManager.UpdateAsync(loggedUser);
+            await _userManager.UpdateAsync(friend);
+
+            loggedUser.Friends.ForEach(x => x.AreFriends = true);
+
+            return new User()
+            {
+                Friends = loggedUser.Friends,
+                FriendRequests = loggedUser.FriendRequests,
+                FriendRequestsSent = loggedUser.FriendRequestsSent
+            };
         }
 
         private bool UserExists(string username)

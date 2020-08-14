@@ -1,8 +1,8 @@
 import { UserType } from './user-type.model';
+import { Friend } from './friend.model';
 
 export class User
 {
-    Id: number;
     Fullname: string;
     Username: string;
     Email: string;
@@ -10,6 +10,9 @@ export class User
     Number: string;
     Password: string;
     Type: UserType;
+    Friends: Friend[];
+    FriendRequests: Friend[];
+    FriendRequestsSent: Friend[];
 
     constructor(fullname: string, username: string, email: string, address: string, number: string, password: string, type: UserType){
         this.Fullname = fullname;
@@ -19,14 +22,6 @@ export class User
         this.Number = number;
         this.Password = password;
         this.Type = type;
+        this.Friends = [];
     }
-
-    // getType(){
-    //     //return UserType[this.type];
-    //     return null;
-    // }
-    
-    // setType(userType: UserType){
-    //     //this.type = userType;
-    // }
 };

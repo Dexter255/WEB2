@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectService.Models;
 
 namespace ProjectService.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200812082924_Fifth")]
+    partial class Fifth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,10 +316,6 @@ namespace ProjectService.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<string>("ApplicationUserId1");
-
-                    b.Property<string>("ApplicationUserId2");
-
                     b.Property<string>("Email")
                         .IsRequired();
 
@@ -334,11 +332,7 @@ namespace ProjectService.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("ApplicationUserId1");
-
-                    b.HasIndex("ApplicationUserId2");
-
-                    b.ToTable("Friends");
+                    b.ToTable("Friend");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Users.ApplicationUser", b =>
@@ -428,16 +422,8 @@ namespace ProjectService.Migrations
             modelBuilder.Entity("ProjectService.Models.Users.Friend", b =>
                 {
                     b.HasOne("ProjectService.Models.Users.ApplicationUser")
-                        .WithMany("FriendRequests")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("ProjectService.Models.Users.ApplicationUser")
-                        .WithMany("FriendRequestsSent")
-                        .HasForeignKey("ApplicationUserId1");
-
-                    b.HasOne("ProjectService.Models.Users.ApplicationUser")
                         .WithMany("Friends")
-                        .HasForeignKey("ApplicationUserId2");
+                        .HasForeignKey("ApplicationUserId");
                 });
 #pragma warning restore 612, 618
         }

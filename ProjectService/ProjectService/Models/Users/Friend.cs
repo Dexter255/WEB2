@@ -7,44 +7,49 @@ using System.Threading.Tasks;
 
 namespace ProjectService.Models.Users
 {
-    public class User
+    public class Friend
     {
         #region Fields
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [MinLength(4)]
         public string Fullname { get; set; }
+
+        [Required]
+        [MinLength(4)]
         public string Username { get; set; }
+
+        [Required]
         public string Email { get; set; }
+
+        [Required]
+        [MinLength(4)]
         public string Address { get; set; }
+
+        [Required]
         public string Number { get; set; }
-        public string Password { get; set; }
-        public UserType Type { get; set; }
-        public List<Friend> Friends { get; set; }
-        public List<Friend> FriendRequests { get; set; }
-        public List<Friend> FriendRequestsSent { get; set; }
+
+        [NotMapped]
+        public bool AreFriends { get; set; }
         #endregion
 
         #region Constructors
-        public User()
+        public Friend()
         {
 
         }
 
-        public User(string fullname, string username, string email, string address,
-            string number, string password, UserType type)
+        public Friend(string fullname, string username, string email, string address, string number, bool areFriends)
         {
             Fullname = fullname;
             Username = username;
             Email = email;
             Address = address;
             Number = number;
-            Password = password;
-            Type = type;
-            Friends = new List<Friend>();
-            FriendRequests = new List<Friend>();
-            FriendRequestsSent = new List<Friend>();
+            AreFriends = areFriends;
         }
-
         #endregion
     }
 }
-
-

@@ -3,7 +3,7 @@
     <div class="col-md-3">
         <div class="file-field">
             <div class="d-flex justify-content-center">
-                <img [src]="url" class="rounded-circle avatar-pic" alt="Image" width="200" height="200">
+                <img [src]="imageUrl" class="rounded-circle avatar-pic" alt="Image" width="200" height="200">
             </div>
             <div class="d-flex justify-content-center">
                 <div class="btn btn-mdb-color btn-rounded float-left">
@@ -15,9 +15,11 @@
     </div>
 
     <div class="col-md-4" *ngIf="show">
+        <h5>Personal informations</h5>
         <form [formGroup]="editUser" (ngSubmit)="onSubmit()" autocomplete="off">
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="fullname" placeholder="Fullname">
+                <input type="text" class="form-control" formControlName="fullname" placeholder="Fullname"
+                    title="Fullname">
                 <span *ngIf="!editUser.get('fullname').valid && editUser.get('fullname').touched">
                     <span class="p-2" *ngIf="editUser.get('fullname').errors['required']"> Fullname must be
                         entered!</span>
@@ -26,7 +28,8 @@
                 </span>
             </div>
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="username" placeholder="Username" readonly>
+                <input type="text" class="form-control" formControlName="username" placeholder="Username"
+                    title="Username" readonly>
                 <span *ngIf="!editUser.get('username').valid && editUser.get('username').touched">
                     <span class="p-2" *ngIf="editUser.get('username').errors['required']"> Username must be
                         entered!</span>
@@ -35,7 +38,7 @@
                 </span>
             </div>
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="email" placeholder="Email">
+                <input type="text" class="form-control" formControlName="email" placeholder="Email" title="Email">
                 <span *ngIf="!editUser.get('email').valid && editUser.get('email').touched">
                     <span class="p-2"
                         *ngIf="editUser.get('email').errors['email'] || editUser.get('email').errors['required']">
@@ -44,7 +47,7 @@
                 </span>
             </div>
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="address" placeholder="Address">
+                <input type="text" class="form-control" formControlName="address" placeholder="Address" title="Address">
                 <span *ngIf="!editUser.get('address').valid && editUser.get('address').touched">
                     <span class="p-2" *ngIf="editUser.get('address').errors['required']">
                         Address must be entered!
@@ -55,7 +58,8 @@
                 </span>
             </div>
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="number" placeholder="Phone number">
+                <input type="text" class="form-control" formControlName="number" placeholder="Phone number"
+                    title="Phone number">
                 <span *ngIf="!editUser.get('number').valid && editUser.get('number').touched">
                     <span class="p-2" *ngIf="editUser.get('number').errors['required']">
                         Number must be entered!
@@ -72,6 +76,61 @@
     </div>
 
     <div class="col-md-4">
+        <h5>Search users</h5>
+        <form [formGroup]="searchUser" (ngSubmit)="onSearch()" class="ml-3" autocomplete="off">
+            <div class="form-group row">
+                <input type="text" formControlName="username" class="form-control col-md-4" placeholder="Username">
+                <div class="text-center ml-2">
+                    <button type="submit" class="btn btn-success">Search</button>
+                </div>
+                <div class="text-center ml-2">
+                    <button type="button" class="btn btn-danger" (click)="onReset()">Reset</button>
+                </div>
+            </div>
+        </form>
 
+        <!-- Friend requests -->
+        <ul class="list-group" *ngIf="serverService.friendRequests.length !== 0">
+            <h5>Friend requests</h5>
+            <li class="list-group-item d-flex justify-content-between" *ngFor="let friend of serverService.friendRequests">
+                <p class="p-0 m-0 flex-grow-1" [title]="toString(friend)">{{ friend.Username }}, {{ friend.Fullname }}
+                </p>
+                <div>
+                    <button class="btn btn-success" (click)="onAcceptFriendRequest(friend.Username)">Accept request</button>
+                </div>
+                <div>
+                    <button class="btn btn-danger ml-2" (click)="onDeclineFriendRequest(friend.Username)">Decline request</button>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="list-group" *ngIf="serverService.friendRequestsSent.length !== 0">
+            <h5>Friend requests sent</h5>
+            <li class="list-group-item d-flex justify-content-between" *ngFor="let friend of serverService.friendRequestsSent">
+                <p class="p-0 m-0 flex-grow-1" [title]="toString(friend)">{{ friend.Username }}, {{ friend.Fullname }}
+                </p>
+                <div>
+                    <button class="btn btn-danger" (click)="onCancelFriendRequest(friend.Username)">Cancel request</button>
+                </div>
+            </li>
+        </ul>
+        
+        <h5>Contacts</h5>
+        <ul class="list-group" *ngIf="serverService.friends.length !== 0 else friendsEmpty">
+            <li class="list-group-item d-flex justify-content-between" *ngFor="let friend of serverService.friends">
+                <p class="p-0 m-0 flex-grow-1" [title]="toString(friend)">{{ friend.Username }}, {{ friend.Fullname }}
+                </p>
+                <!-- <button class="btn btn-info">Details</button>  -->
+                <div *ngIf="friend.AreFriends else notFriends">
+                    <button class="btn btn-danger" (click)="onDeleteFriend(friend.Username)">Delete</button>
+                </div>
+                <ng-template #notFriends>
+                    <button class="btn btn-success" (click)="onSendFriendRequest(friend.Username)">Send request</button>
+                </ng-template>
+            </li>
+        </ul>
+        <ng-template #friendsEmpty>
+            <p class="text-info">You have no friends.</p>
+        </ng-template>
     </div>
 </div>

@@ -22,6 +22,7 @@ namespace ProjectService.Models
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<FreeDate> FreeDates { get; set; }
+        public DbSet<Friend> Friends { get; set; }
         #endregion
 
         #region Users
