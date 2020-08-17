@@ -1,26 +1,29 @@
 import { Flight } from './flight.model';
 import { Destination } from './destination.model';
+import { QuickReservationTicket } from './quick-reservation-ticket.model';
 import { Luggage } from './luggage.model';
 
 export class Airline {
-    public ID: number;
-    public Name: string;
+    public Id: number;
+    public CompanyName: string;
     public Address: string;
     public Description: string;
     public Destinations: Destination[];
     public Flights: Flight[];
-    public QuickReservationTickets: string[];
+    public QuickReservationTickets: QuickReservationTicket[];
     public LuggageInfo: Luggage[];
+    public Rating: number;
 
-    constructor(ID: number, Name: string, Address: string, Description: string, Destinations: Destination[],
-        Flights: Flight[], QuickReservationTickets: string[], LuggageInfo: Luggage[]) {
-        this.ID = ID;
-        this.Name = Name;
-        this.Address = Address;
-        this.Description = Description;
-        this.Destinations = Destinations;
-        this.Flights = Flights;
-        this.QuickReservationTickets = QuickReservationTickets;
-        this.LuggageInfo = LuggageInfo;
+    constructor(id: number, companyName: string, address: string, description: string, destinations: Destination[],
+        flights: Flight[], quickReservationTickets: QuickReservationTicket[], luggageInfo: Luggage[], rating: number) {
+        this.Id = id;
+        this.CompanyName = companyName;
+        this.Address = address;
+        this.Description = description;
+        this.Destinations = destinations;
+        this.Flights = flights;
+        this.QuickReservationTickets = quickReservationTickets;
+        this.LuggageInfo = luggageInfo;
+        this.Rating = rating;
     }
 }

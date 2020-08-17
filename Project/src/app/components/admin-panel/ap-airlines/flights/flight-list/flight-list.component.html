@@ -3,27 +3,23 @@
         (click)="onAddFlight()">
         Add flight
     </button>
-    <table class="table table-dark" *ngIf="flights.length !== 0 else empty">
+    <table class="table table-dark" *ngIf="flightService.flights.length !== 0 else empty">
         <thead>
             <tr class="text-center">
-                <th scope="col">Takeoff date</th>
-                <th scope="col">Landing date</th>
-                <th scope="col">Duration</th>
-                <th scope="col">Distance</th>
-                <th scope="col">Number of locations</th>
-                <th scope="col">Flight locations</th>
-                <th scope="col">Price</th>
+                <th scope="col">Start destination</th>
+                <th scope="col">End destination</th>
+                <th scope="col">Flight duration</th>
+                <th scope="col">Ticket price</th>
+                <th scope="col">Rating</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *ngFor="let flight of flights">
-                <td> {{ flight.StartFlightDateAndTime }} </td>
-                <td> {{ flight.EndFlightDateAndTime }} </td>
-                <td> {{ getTime(flight.FlightHours) }} </td>
-                <td> {{ flight.FlightDistance }} </td>
-                <td> {{ flight.FlightLocations.length }} </td>
-                <td> {{ flight.FlightLocations }} </td>
+            <tr class="text-center" *ngFor="let flight of flightService.flights">
+                <td> {{ flight.StartDestination }} </td>
+                <td> {{ flight.EndDestination }} </td>
+                <td> {{ getTime(flight.Hours) }} </td>
                 <td> {{ flight.FlightTicketPrice }} </td>
+                <td> {{ flight.Rating }} </td>
                 <!-- <td>
                     <span>
                         <button class="btn btn-info mr-2" (click)="onDetailsVehicle(vehicle.Id)">Details</button>
@@ -40,7 +36,7 @@
     </table>
     <ng-template #empty>
         <div class="row ml-3 mt-1">
-            <span class="text-info" style="font-size: large;">There is no vehicles available!</span>
+            <span class="text-info" style="font-size: large;">There is no flights available!</span>
         </div>
     </ng-template>
 </div>

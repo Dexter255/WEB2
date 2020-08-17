@@ -17,7 +17,14 @@ export class AirlineDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       let id = +params['id'];
-      this.airline = this.airlineService.getAirline(id);
+      this.airlineService.getAirline(id).subscribe(
+        res => {
+          this.airline = res as Airline;
+        },
+        err => {
+          console.log(err);
+        }
+      )
     })
   }
 

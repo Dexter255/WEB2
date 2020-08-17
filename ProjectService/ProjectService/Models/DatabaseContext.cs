@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ProjectService.Models.Flight;
 using ProjectService.Models.RentACar;
 using ProjectService.Models.Users;
 using System;
@@ -22,8 +23,17 @@ namespace ProjectService.Models
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<FreeDate> FreeDates { get; set; }
-        public DbSet<Friend> Friends { get; set; }
         #endregion
+
+
+        #region Airline
+        public DbSet<Airline> Airlines { get; set; }
+        public DbSet<Destination> Destinations { get; set; }
+        public DbSet<Flight.Flight> Flights{ get; set; }
+        public DbSet<Luggage> Luggages { get; set; }
+        public DbSet<QuickReservationTicket> QuickReservationTickets{ get; set; }
+        #endregion
+
 
         #region Users
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }

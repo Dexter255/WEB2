@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectService.Models.Users
 {
+    [Table("Friends")]
     public class Friend
     {
         #region Fields

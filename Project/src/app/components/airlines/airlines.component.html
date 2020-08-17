@@ -1,9 +1,9 @@
 <div class="row ml-3">
     <div class="col-md-4">
-        <div class="list-group" *ngIf="airlines.length !== 0 else empty">
+        <div class="list-group" *ngIf="airlineService.airlines.length !== 0 else empty">
             <a type="button" class="list-group-item list-group-item-action" 
-            *ngFor="let airline of airlines; let i = index" [routerLink]="['details', i]" routerLinkActive="active"> 
-                {{ airline.companyName}}, {{ airline.description}}
+            *ngFor="let airline of airlineService.airlines; let i = index" [routerLink]="['details', i]" routerLinkActive="active"> 
+                {{ airline.CompanyName}}, {{ airline.Description}}
             </a>
         </div>
         <ng-template #empty>

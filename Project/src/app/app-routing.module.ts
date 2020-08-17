@@ -61,15 +61,13 @@ const routes: Routes = [
       { path: "add", component: AddAdminComponent },
       { path: "edit/:username", component: AddAdminComponent }
     ]},
-    { path: "airlines", component: ApAirlinesComponent, children: [
+    { path: "airlines", component: ApAirlinesComponent, canActivate: [AuthGuard], data: { roles: ['Admin_Airlines'] }, children: [
       { path: "", component: ApAirlineListComponent },
       { path: "details/:id", component: AirlineDetailsComponent },
       { path: "add", component: ApAddAirlineComponent },
       { path: "edit/:id", component: ApAddAirlineComponent },
       { path: ":id/flights", component: FlightsComponent, children: [
-        {
-          path: "", component: FlightListComponent
-        },
+        { path: "", component: FlightListComponent },
         { path:"add", component: AddFlightComponent}
         // OVDE SAM STAO; TREBA NAPRAVITI flight-list
       ]}

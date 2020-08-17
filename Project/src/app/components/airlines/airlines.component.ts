@@ -8,12 +8,17 @@ import { Airline } from 'src/app/models/flight/airline.model';
   styleUrls: ['./airlines.component.css']
 })
 export class AirlinesComponent implements OnInit {
-  airlines: Airline[];
-
-  constructor(private airlineService: AirlineService) { }
+  constructor(public airlineService: AirlineService) { }
 
   ngOnInit(): void {
-    this.airlines = this.airlineService.getAirlines();
+    this.airlineService.getAirlines().subscribe(
+      res => {
+
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
 }

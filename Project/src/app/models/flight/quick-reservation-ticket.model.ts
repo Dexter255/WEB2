@@ -1,7 +1,6 @@
 import { Time } from '@angular/common';
-import { Destination } from './destination.model';
 
-export class Flight {
+export class QuickReservationTicket {
     public Id: number;
     public StartDestination: string;
     public EndDestination: string;
@@ -9,22 +8,20 @@ export class Flight {
     public EndDateAndTime: Date;
     public Hours: Time;
     public Distance: number;
-    public Locations: Destination[];
     public TicketPrice: number;
-    // mesta u avionu?
-    public Rating: number;
+    // mesto u avionu koje je rezervisano    ???
+    public Discount: number;
 
-    constructor(id: number, startDestination: string, endDestination: string, startDateAndTime: Date, endDateAndTime: Date, hours: Time, distance: number,
-        locations: Destination[], ticketPrice: number, rating: number) {
-        this.Id = id;
+    constructor(ID: number, startDestination: string, endDestination: string, startDateAndTime: Date, endDateAndTime: Date, hours: Time, distance: number,
+        locations: Location[], ticketPrice: number, discount: number) {
+        this.Id = ID;
         this.StartDestination = startDestination;
         this.EndDestination = endDestination;
         this.StartDateAndTime = startDateAndTime;
         this.EndDateAndTime = endDateAndTime;
         this.Hours = hours;
         this.Distance = distance;
-        this.Locations = locations;
         this.TicketPrice = ticketPrice;
-        this.Rating = rating;
+        this.Discount = discount;
     }
 }

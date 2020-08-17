@@ -1,54 +1,52 @@
-import { Flight } from '../models/flight/flight.model';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { pipe } from 'rxjs';
+import { tap } from 'rxjs/operators'
+
 import { Airline } from '../models/flight/airline.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AirlineService{
-    airlines: Airline[];
+export class AirlineService {
+    public airlines: Airline[];
+    private readonly BaseURI = 'https://localhost:44305/api';
 
-    constructor() {
+    constructor(private http: HttpClient) {
         this.airlines = [];
-
-        this.airlines.push(new Airline(5, "aaarte", "sadsad", "dsadsa", [],
-                                       [], [], []));
     }
 
-    addFlight(companyID:number , flight: Flight)
-    {
-        this.airlines[companyID].Flights.push(flight);
-    }
-
-    checkAirlineId(index: number){
-        if(this.airlines.length > index)
+    checkAirlineId(index: number) {
+        if (this.airlines.length > index)
             return true;
 
         return false;
     }
-    
-    getAirlines(){
-        return this.airlines;
+
+    getAirlines() {
+        return this.http.get(this.BaseURI + '/Airline')
+            .pipe(
+                tap(res => this.airlines = res as Airline[])
+            );;
     }
 
-    getAirline(index: number){
-        return this.airlines[index];
+    getAirline(airlineId: number) {
+        return this.http.get(this.BaseURI + '/Airline/' + airlineId);
     }
 
-    deleteAirline(index: number){
-        this.airlines.splice(index, 1);
+    deleteAirline(airlineId: number) {
+        return this.http.delete(this.BaseURI + '/Airline/' + airlineId);
     }
 
-    addAirline(airline: Airline){
-        this.airlines.push(airline);
+    addAirline(airline: Airline) {
+        return this.http.post(this.BaseURI + '/Airline', airline);
     }
 
-    updateAirline(airline: Airline){
-        //this.airlines[index] = airline;
+    updateAirline(airline: Airline) {
+        return this.http.put(this.BaseURI + '/Airline/' + airline.Id, airline);
     }
 
-    getFlights(companyID: number)
-    {
-        return this.airlines[companyID].Flights;
+    getDestinations(airlineId){
+        return this.http.get(this.BaseURI + '/Airline/GetDestinations/' + airlineId);
     }
 }

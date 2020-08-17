@@ -1,11 +1,9 @@
-export class Destination
-{
-    public  Name: string;
-    public  ID: number;
+export class Destination {
+    public Id: number;
+    public City: string;
 
-
-    constructor(ID:number, Name:string) {
-        this.Name = Name;
-        this.ID = ID;
+    constructor(id: number, city: string) {
+        this.Id = id;
+        this.City = city;
     }
 }

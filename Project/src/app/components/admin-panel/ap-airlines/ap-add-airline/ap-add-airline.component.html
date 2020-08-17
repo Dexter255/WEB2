@@ -1,4 +1,4 @@
-<div class="container mt-3 ml-5">
+<div class="container mt-3 ml-5" *ngIf="show">
     <h3>{{ header }}</h3>
     <form [formGroup]="addAirline" (ngSubmit)="onSubmit()">
         <input type="hidden" formControlName="id">
@@ -50,7 +50,7 @@
                             <input title="Destination" type="text" class="form-control" [formControlName]="i" placeholder="Destination">
                             <span *ngIf="!this.addAirline.get('destinations')['controls'][i].valid && this.addAirline.get('destinations')['controls'][i].touched">
                                 <span *ngIf="this.addAirline.get('destinations')['controls'][i].errors['required']">Destination must be entered!</span>
-                                <span *ngIf="this.addAirline.get('destinations')['controls'][i].errors['minlength']">Destination must be atlest 4 characters!</span>
+                                <span *ngIf="this.addAirline.get('destinations')['controls'][i].errors['minlength']">Destination must be atlest 2 characters!</span>
                             </span>
                         </div>
                         <div>
@@ -72,7 +72,7 @@
                             <div class="col-md-4">
                                 <input title="Weight" type="text" class="form-control" formControlName="weight" placeholder="Weight in kilos">
                                 <span *ngIf="!this.addAirline.get('luggageInfo')['controls'][i].get('weight').valid && this.addAirline.get('luggageInfo')['controls'][i].get('weight').touched">
-                                    <span *ngIf="this.addAirline.get('luggageInfo')['controls'][i].get('weight').errors['required']">Service must be entered!</span>
+                                    <span *ngIf="this.addAirline.get('luggageInfo')['controls'][i].get('weight').errors['required']">Weight must be entered!</span>
                                     <span *ngIf="this.addAirline.get('luggageInfo')['controls'][i].get('weight').errors['pattern']">Only numbers from 0-9 are allowed!</span>
                                 </span>
                             </div>

@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AirlineService } from 'src/app/components/airline.service';
-import { Flight } from 'src/app/models/flight/flight.model';
-import { FlightLocation } from 'src/app/models/flight/flight-location.model';
 import { Time } from '@angular/common';
-import { getTranslationDeclStmts } from '@angular/compiler/src/render3/view/template';
+import { Destination } from 'src/app/models/flight/destination.model';
 
 @Component({
   selector: 'app-add-flight',
@@ -13,33 +11,45 @@ import { getTranslationDeclStmts } from '@angular/compiler/src/render3/view/temp
   styleUrls: ['./add-flight.component.css']
 })
 export class AddFlightComponent implements OnInit {
-
   addFlight: FormGroup;
-
-
+  show: boolean = false;
+  destinations: Destination[];
+  
   constructor(private route: ActivatedRoute,
-    private airlineService: AirlineService) {
-
-  }
+    private airlineService: AirlineService) { }
 
   ngOnInit(): void {
+    let airlineId = +this.route.parent.snapshot.params['id'];
+
+    this.airlineService.getDestinations(airlineId).subscribe(
+      (res: Destination[]) => {
+        this.destinations = res;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    
     this.addFlight = new FormGroup({
-      'takeOffDateTime': new FormControl(null),
-      'landingDateTime': new FormControl(null),
-      'flightDuration': new FormControl(null),
-      'flightLength': new FormControl(null),
-      'destinations': new FormArray([]),
-      'flightTicketPrice': new FormControl(null)
-    })
+      'startDestination': new FormControl(null),
+      'endDestination': new FormControl(null),
+      'startDateAndTime': new FormControl(null),
+      'endDateAndTime': new FormControl(null),
+      'hours': new FormControl(null),
+      'distance': new FormControl(null),
+      'locations': new FormArray([]),
+      'ticketPrice': new FormControl(null)
+    });
   }
-  onAddDestination() {
+
+  onAddLocation() {
     let formControl = new FormControl(null);
 
-    (<FormArray>this.addFlight.get('destinations')).push(formControl);
+    (<FormArray>this.addFlight.get('locations')).push(formControl);
   }
 
-  onDeleteDestination(index: number) {
-    (<FormArray>this.addFlight.get('destinations')).removeAt(index);
+  onDeleteLocation(index: number) {
+    (<FormArray>this.addFlight.get('locations')).removeAt(index);
   }
 
   onSubmit() {
@@ -71,17 +81,19 @@ export class AddFlightComponent implements OnInit {
     let time: Time = {hours:+this.addFlight.get('flightDuration').value.split(':')[0], 
                       minutes:+this.addFlight.get('flightDuration').value.split(':')[1]}
                       
-    let destinations: FlightLocation[] = [];
+    let destinations: Destination[] = [];
     this.addFlight.get('destinations').value.forEach(element => {
-      destinations.push(new FlightLocation(0, element));
+      destinations.push(new Destination(0, element));
     });
-    let flight = new Flight(0, takeOffDateTime,
-      landingDateTime,
-      time,
-      +this.addFlight.get('flightLength').value,
-      destinations,
-      +this.addFlight.get('flightTicketPrice').value);
-    this.airlineService.addFlight(companyID, flight);
+    // let flight = new Flight(0, 
+
+    //   takeOffDateTime,
+    //   landingDateTime,
+    //   time,
+    //   +this.addFlight.get('flightLength').value,
+    //   destinations,
+    //   +this.addFlight.get('flightTicketPrice').value);
+    //   this.airlineService.addFlight(companyID, flight);
 
     
   }

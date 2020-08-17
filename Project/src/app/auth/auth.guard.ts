@@ -19,7 +19,6 @@ export class AuthGuard implements CanActivate{
                 }
                 else{
                     //     FORBIDDEN
-                    //this.router.navigate(['forbidden']);
                     this.router.navigateByUrl('forbidden', {skipLocationChange: true});
                     return false;
                 }
