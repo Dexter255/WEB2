@@ -25,3 +25,4 @@ D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectServi
 D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.RazorTargetAssemblyInfo.cache
 D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.dll
 D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.pdb
+D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.csprojAssemblyReference.cache

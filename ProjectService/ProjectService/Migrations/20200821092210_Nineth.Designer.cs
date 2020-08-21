@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectService.Models;
 
 namespace ProjectService.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200821092210_Nineth")]
+    partial class Nineth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,8 +250,7 @@ namespace ProjectService.Migrations
                     b.Property<string>("EndDestination")
                         .IsRequired();
 
-                    b.Property<string>("Hours")
-                        .IsRequired();
+                    b.Property<TimeSpan>("Hours");
 
                     b.Property<int>("Rating");
 
@@ -296,8 +297,14 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("Discount");
 
+                    b.Property<int>("Distance");
+
+                    b.Property<DateTime>("EndDateAndTime");
+
                     b.Property<string>("EndDestination")
                         .IsRequired();
+
+                    b.Property<DateTime>("Hours");
 
                     b.Property<DateTime>("StartDateAndTime");
 

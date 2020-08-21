@@ -24,19 +24,20 @@ namespace ProjectService.Controllers
 
         // GET: api/Airline
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Airline>>> GetAirliness()
+        public async Task<ActionResult<IEnumerable<Airline>>> GetAirlines()
         {
             return await _context.Airlines.ToListAsync();
         }
 
         // GET: api/Airline/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Airline>> GetAirline(int id)
+        [HttpGet("{airlineId}")]
+        [Route("GetAirline/{airlineId}")]
+        public async Task<ActionResult<Airline>> GetAirline(int airlineId)
         {
             var airline = await _context.Airlines
                 .Include(x => x.Destinations)
                 .Include(x => x.LuggageInfo)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == airlineId);
 
             if (airline == null)
             {
@@ -57,8 +58,6 @@ namespace ProjectService.Controllers
             return CreatedAtAction("PostAirline", new { id = airline.Id }, airline);
         }
 
-        //// PROMENITI CELU DELETE METODU
-
         // DELETE: api/Airline/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin_Airlines")]
@@ -76,21 +75,18 @@ namespace ProjectService.Controllers
                 return NotFound();
             }
 
-            foreach (var destination in airline.Destinations)
-                _context.Destinations.Remove(destination);
-
+            // PROVERITI DA LI JE NEKI OD LETOVA REZERVISAN
             foreach (var flight in airline.Flights)
                 _context.Flights.Remove(flight);
 
+            foreach (var destination in airline.Destinations)
+                _context.Destinations.Remove(destination);
+
             foreach (var qrt in airline.QuickReservationTickets)
-            {
                 _context.QuickReservationTickets.Remove(qrt);
-            }
 
             foreach (var luggage in airline.LuggageInfo)
-            {
                 _context.Luggages.Remove(luggage);
-            }
 
             _context.Airlines.Remove(airline);
             await _context.SaveChangesAsync();
@@ -111,6 +107,7 @@ namespace ProjectService.Controllers
             var airlineDb = await _context.Airlines
                 .Include(x => x.Destinations)
                 .Include(x => x.LuggageInfo)
+                .Include(x => x.Flights)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             // update properties on the parent
@@ -155,13 +152,13 @@ namespace ProjectService.Controllers
                 }
             }
 
-            //var vehicles = racCompany.Vehicles.ToList();
+            //var flights = airlineDb.Flights.ToList();
             //// add the new items
-            //foreach (var vehicle in rentACarCompany.Vehicles)
+            //foreach (var flight in airline.Flights)
             //{
-            //    if (vehicles.All(i => i.Id != vehicle.Id))
+            //    if (flights.All(i => i.Id != flight.Id))
             //    {
-            //        racCompany.Vehicles.Add(vehicle);
+            //        airlineDb.Flights.Add(flight);
             //    }
             //}
 

@@ -10,6 +10,7 @@ import { Airline } from '../models/flight/airline.model';
 })
 export class AirlineService {
     public airlines: Airline[];
+    public airline: Airline;
     private readonly BaseURI = 'https://localhost:44305/api';
 
     constructor(private http: HttpClient) {
@@ -31,7 +32,10 @@ export class AirlineService {
     }
 
     getAirline(airlineId: number) {
-        return this.http.get(this.BaseURI + '/Airline/' + airlineId);
+        return this.http.get(this.BaseURI + '/Airline/GetAirline/' + airlineId)
+            .pipe(
+                tap((res: Airline) => this.airline = res)
+            );
     }
 
     deleteAirline(airlineId: number) {
@@ -46,7 +50,7 @@ export class AirlineService {
         return this.http.put(this.BaseURI + '/Airline/' + airline.Id, airline);
     }
 
-    getDestinations(airlineId){
+    getDestinations(airlineId: number) {
         return this.http.get(this.BaseURI + '/Airline/GetDestinations/' + airlineId);
     }
 }

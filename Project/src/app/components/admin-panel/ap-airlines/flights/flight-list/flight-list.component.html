@@ -1,6 +1,5 @@
 <div class="row ml-3 mr-3 mt-3">
-    <button class="btn btn-success mb-2"
-        (click)="onAddFlight()">
+    <button class="btn btn-success mb-2" (click)="onAddFlight()">
         Add flight
     </button>
     <table class="table table-dark" *ngIf="flightService.flights.length !== 0 else empty">
@@ -11,26 +10,23 @@
                 <th scope="col">Flight duration</th>
                 <th scope="col">Ticket price</th>
                 <th scope="col">Rating</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr class="text-center" *ngFor="let flight of flightService.flights">
                 <td> {{ flight.StartDestination }} </td>
                 <td> {{ flight.EndDestination }} </td>
-                <td> {{ getTime(flight.Hours) }} </td>
-                <td> {{ flight.FlightTicketPrice }} </td>
+                <td> {{ flight.Hours }} </td>
+                <td> {{ flight.TicketPrice }} </td>
                 <td> {{ flight.Rating }} </td>
-                <!-- <td>
+                <td>
                     <span>
-                        <button class="btn btn-info mr-2" (click)="onDetailsVehicle(vehicle.Id)">Details</button>
-                        <button [disabled]="notAllowed || vehicle.Reserved" [ngClass]="{'not-allowed': notAllowed || vehicle.Reserved}"
-                            class="btn btn-secondary mr-2" (click)="onEditVehicle(vehicle.Id)"
-                            [title]="notAllowed ? 'Not allowed' : ''">Edit</button>
-                        <button [disabled]="notAllowed || vehicle.Reserved" [ngClass]="{'not-allowed': notAllowed}"
-                            class="btn btn-danger" (click)="onDeleteVehicle(vehicle.Id)"
-                            [title]="notAllowed ? 'Not allowed' : ''">Delete</button>
+                        <button class="btn btn-info mr-2" (click)="onDetailsFlight(flight.Id)">Details</button>
+                        <button class="btn btn-secondary mr-2" (click)="onEditFlight(flight.Id)">Edit</button>
+                        <button class="btn btn-danger" (click)="onDeleteFlight(flight.Id)">Delete</button>
                     </span>
-                </td> -->
+                </td>
             </tr>
         </tbody>
     </table>
@@ -40,7 +36,3 @@
         </div>
     </ng-template>
 </div>
-
-
-
-

@@ -71,7 +71,7 @@ export class ApAddAirlineComponent implements OnInit {
 	}
 
 	onAddDestination(city: string = null) {
-		let formControl = new FormControl(city, [Validators.required, Validators.minLength(2)]);
+		let formControl = new FormControl(city, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(2)]);
 
 		(<FormArray>this.addAirline.get('destinations')).push(formControl);
 	}

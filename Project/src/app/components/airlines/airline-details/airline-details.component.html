@@ -1,10 +1,18 @@
-<div class="container" style="background-color: white;" *ngIf="airline">
+<div class="container" style="background-color: white;" *ngIf="airlineService.airline">
     <div class="row">
         <div class="col-md-3">
             <label> Company name: </label>
         </div>
         <div class="col-md-9">
-            <label> {{ airline.CompanyName }} </label>
+            <label> {{ airlineService.airline.CompanyName }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label> Address </label>
+        </div>
+        <div class="col-md-9">
+            <label> {{ airlineService.airline.Address }} </label>
         </div>
     </div>
     <div class="row">
@@ -12,7 +20,27 @@
             <label> Description: </label>
         </div>
         <div class="col-md-9">
-            <label> {{ airline.Description }} </label>
+            <label> {{ airlineService.airline.Description }} </label>
+        </div>
+    </div>
+    <div class="row" *ngIf="airlineService.airline.Destinations.length !== 0">
+        <div class="col-md-3">
+            <label> Destinations: </label>
+        </div>
+        <div class="col-md-9">
+            <ul class="row ml-2" *ngFor="let destination of airlineService.airline.Destinations">
+                <li> {{ destination.City }} </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" *ngIf="airlineService.airline.LuggageInfo.length !== 0">
+        <div class="col-md-3">
+            <label> Luggage info: </label>
+        </div>
+        <div class="col-md-9">
+            <ul class="row ml-2" *ngFor="let luggage of airlineService.airline.LuggageInfo">
+                <li> {{ luggage.Weight }}kg -> {{ luggage.Price }}&euro;  </li>
+            </ul>
         </div>
     </div>
 </div>

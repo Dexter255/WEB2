@@ -9,6 +9,7 @@ import { FlightService } from 'src/app/components/flight.service';
   styleUrls: ['./flight-list.component.css']
 })
 export class FlightListComponent implements OnInit {
+  private airlineId: number;
 
   constructor(private route: ActivatedRoute,
     public flightService: FlightService,
@@ -16,20 +17,36 @@ export class FlightListComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.flightService.getFlights(+params['id']).subscribe(
+      this.airlineId = +params['id'];
+      this.flightService.getFlights(this.airlineId).subscribe(
         res => {},
         err => {
           console.log(err);
         }
       );
-    })
+    });
   }
 
   onAddFlight() {
     this.router.navigate(['add'], { relativeTo: this.route });
   }
 
-  getTime(time: Time): string {
-    return time.hours + ' : ' + time.minutes;
+  onDetailsFlight(flightId: number){
+    this.router.navigate(['details', flightId], { relativeTo: this.route });
+  }
+
+  onEditFlight(flightId: number){
+    this.router.navigate(['edit', flightId], { relativeTo: this.route });
+  }
+
+  onDeleteFlight(flightId: number){
+    this.flightService.deleteFlight(flightId).subscribe(
+      res => {
+        this.flightService.getFlights(this.airlineId).subscribe();
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }

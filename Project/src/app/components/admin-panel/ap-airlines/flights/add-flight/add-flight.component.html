@@ -1,63 +1,98 @@
 <div class="container mt-3 ml-5">
-    <h3>Add flight</h3>
+    <h3> {{ header }} </h3>
     <form [formGroup]="addFlight" (ngSubmit)="onSubmit()" autocomplete="off">
-        <!-- <input type="hidden" formControlName="companyId">
-        <input type="hidden" formControlName="vehicleId"> -->
+        <input type="hidden" formControlName="airlineId">
+        <input type="hidden" formControlName="flightId">
+        <div class="form-group row" formGroupName="destination">
+            <label for="startDestination" class="col-md-2 col-form-label">Take off destination</label>
+            <div class="col-md-4">
+                <select class="custom-select" formControlName="startDestination" data-live-search="true">
+                    <option *ngFor="let destination of destinations" [ngValue]="destination.City">{{destination.City}}
+                    </option>
+                </select>
+                <span
+                    *ngIf="!this.addFlight.get('destination').get('startDestination').valid && this.addFlight.get('destination').get('startDestination').touched">
+                    <span *ngIf="this.addFlight.get('destination').get('startDestination').errors['required']">Choose
+                        take off destination!</span>
+                </span>
+            </div>
+            <div class="col-md-2 text-center">
+                landing destination
+            </div>
+            <div class="col-md-4">
+                <select class="custom-select" formControlName="endDestination">
+                    <option *ngFor="let destination of destinations" [ngValue]="destination.City">{{destination.City}}
+                    </option>
+                </select>
+                <span
+                    *ngIf="!this.addFlight.get('destination').get('endDestination').valid && this.addFlight.get('destination').get('endDestination').touched">
+                    <span *ngIf="this.addFlight.get('destination').get('endDestination').errors['required']">Choose
+                        landing destination!</span>
+                </span>
+                <span *ngIf="addFlight.get('destination').errors !== null">
+                    <span *ngIf="this.addFlight.get('destination').errors['sameDestination']">Take off and landing
+                        destination cannot be same!</span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group row" formGroupName="dateAndTime">
+            <label for="startDateAndTime" class="col-md-2 col-form-label">Take off</label>
+            <div class="col-md-4">
+                <input type="datetime-local" class="form-control" id="startDateAndTime"
+                    formControlName="startDateAndTime">
+                <span
+                    *ngIf="!this.addFlight.get('dateAndTime').get('startDateAndTime').valid && this.addFlight.get('dateAndTime').get('startDateAndTime').touched">
+                    <span *ngIf="this.addFlight.get('dateAndTime').get('startDateAndTime').errors['required']">Take off
+                        date and time must be entered!</span>
+                    <span *ngIf="this.addFlight.get('dateAndTime').get('startDateAndTime').errors['currentDate']">Take
+                        off cannot be smaller than current date and time!</span>
+                </span>
+                <span *ngIf="this.addFlight.get('dateAndTime').errors !== null">
+                    <span *ngIf="this.addFlight.get('dateAndTime').errors['takeOffGreater']">Take off must be smaller
+                        than landing date and time!</span>
+                </span>
+            </div>
+            <label for="endDateAndTime" class="col-md-2 col-form-label text-center">landing</label>
+            <div class="col-md-4">
+                <input type="datetime-local" class="form-control" id="endDateAndTime" formControlName="endDateAndTime">
+                <span
+                    *ngIf="!this.addFlight.get('dateAndTime').get('endDateAndTime').valid && this.addFlight.get('dateAndTime').get('endDateAndTime').touched">
+                    <span *ngIf="this.addFlight.get('dateAndTime').get('endDateAndTime').errors['required']">Landing
+                        date and time must be entered!</span>
+                    <span *ngIf="this.addFlight.get('dateAndTime').get('endDateAndTime').errors['currentDate']">Landing
+                        cannot be smaller than current date and time!</span>
+                </span>
+            </div>
+        </div>
         <!-- <div class="form-group row">
-            <label for="startDestination" class="col-md-2 col-form-label">Start destination</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="startDestination" formControlName="startDestination">
+            <label for="hours" class="col-md-2 col-form-label">Duration</label>
+            <div class="col-md-4">
+                <input type="time" class="form-control" id="hours" formControlName="hours">
+                <span *ngIf="!this.addFlight.get('hours').valid && this.addFlight.get('hours').touched">
+                    <span *ngIf="this.addFlight.get('hours').errors['required']">Duration must be entered!</span>
+                </span>
             </div>
         </div> -->
         <div class="form-group row">
-            <label for="startDestination" class="col-md-2 col-form-label">Start destination</label>
-            <div class="col-md-3">
-                <select class="custom-select" formControlName="startDestination">
-                    <option *ngFor="let destination of destinations" [ngValue]="destination.City">{{destination.City}}</option>
-                 </select>
-            </div>
-        </div>
-        
-        <div class="form-group row">
-            <label for="endDestination" class="col-md-2 col-form-label">End destination</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="endDestination" formControlName="endDestination">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="startDateAndTime" class="col-md-2 col-form-label">Take off date and time</label>
-            <div class="col-md-3">
-                <input type="datetime-local" class="form-control" id="startDateAndTime"
-                    formControlName="startDateAndTime">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="endDateAndTime" class="col-md-2 col-form-label">Landing date and time</label>
-            <div class="col-md-3">
-                <input type="datetime-local" class="form-control" id="endDateAndTime" formControlName="endDateAndTime">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="hours" class="col-md-2 col-form-label">Duration</label>
-            <div class="col-md-3">
-                <input type="time" class="form-control" id="hours" formControlName="hours">
-            </div>
-        </div>
-        <div class="form-group row">
             <label for="distance" class="col-md-2 col-form-label">Distance</label>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <input type="text" class="form-control" id="distance" formControlName="distance">
+                <span *ngIf="!this.addFlight.get('distance').valid && this.addFlight.get('distance').touched">
+                    <span *ngIf="this.addFlight.get('distance').errors['required']">Distance must be entered!</span>
+                    <span *ngIf="this.addFlight.get('distance').errors['pattern']">Only numbers from 0-9 are
+                        allowed!</span>
+                </span>
             </div>
         </div>
         <div class="form-group row">
-            <label for="destinations" class="col-md-2 col-form-label">Flight transfer(s)</label>
+            <label for="locations" class="col-md-2 col-form-label">Flight transfer(s)</label>
             <div class="col-md-2">
                 <button type="button" class="btn btn-success" (click)="onAddLocation()">Add flight transfer</button>
             </div>
             <div class="col-md-8" formArrayName="locations">
                 <div class="form-group" *ngFor="let location of addFlight.get('locations')['controls']; let i = index">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <input title="Location" type="text" class="form-control" [formControlName]="i"
                                 placeholder="Location">
                             <span
@@ -67,6 +102,8 @@
                                 <span
                                     *ngIf="this.addFlight.get('locations')['controls'][i].errors['minlength']">Location
                                     must be atlest 2 characters!</span>
+                                <span *ngIf="this.addFlight.get('locations')['controls'][i].errors['pattern']">Only
+                                    letters are allowed!</span>
                             </span>
                         </div>
                         <div>
@@ -78,12 +115,18 @@
         </div>
         <div class="form-group row">
             <label for="ticketPrice" class="col-md-2 col-form-label">Ticket price</label>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <input type="text" class="form-control" id="ticketPrice" formControlName="ticketPrice">
+                <span *ngIf="!this.addFlight.get('ticketPrice').valid && this.addFlight.get('ticketPrice').touched">
+                    <span *ngIf="this.addFlight.get('ticketPrice').errors['required']">Ticket price must be
+                        entered!</span>
+                    <span *ngIf="this.addFlight.get('ticketPrice').errors['pattern']">Only numbers from 0-9 are
+                        allowed!</span>
+                </span>
             </div>
         </div>
         <div class="ml-5">
-            <button class="btn btn-success" [disabled]="!addFlight.valid" type="submit"> Add flight </button>
+            <button class="btn btn-success" [disabled]="!addFlight.valid" type="submit"> {{ header }} </button>
         </div>
     </form>
 </div>

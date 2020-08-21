@@ -7,15 +7,15 @@ export class Flight {
     public EndDestination: string;
     public StartDateAndTime: Date;
     public EndDateAndTime: Date;
-    public Hours: Time;
+    public Hours: string;
     public Distance: number;
     public Locations: Destination[];
     public TicketPrice: number;
     // mesta u avionu?
     public Rating: number;
 
-    constructor(id: number, startDestination: string, endDestination: string, startDateAndTime: Date, endDateAndTime: Date, hours: Time, distance: number,
-        locations: Destination[], ticketPrice: number, rating: number) {
+    constructor(id: number, startDestination: string, endDestination: string, startDateAndTime: Date, endDateAndTime: Date, hours: string, distance: number,
+        locations: Destination[], ticketPrice: number) {
         this.Id = id;
         this.StartDestination = startDestination;
         this.EndDestination = endDestination;
@@ -25,6 +25,5 @@ export class Flight {
         this.Distance = distance;
         this.Locations = locations;
         this.TicketPrice = ticketPrice;
-        this.Rating = rating;
     }
 }

@@ -23,15 +23,6 @@ namespace ProjectService.Models.Flight
         public DateTime StartDateAndTime { get; set; }
 
         [Required]
-        public DateTime EndDateAndTime { get; set; }
-
-        [Required]
-        public DateTime Hours { get; set; }
-
-        [Required]
-        public int Distance { get; set; }
-
-        [Required]
         public int TicketPrice { get; set; }
 
         // mesto u avionu koje je rezervisano   ???

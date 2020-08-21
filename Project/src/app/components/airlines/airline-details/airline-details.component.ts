@@ -9,18 +9,15 @@ import { Airline } from 'src/app/models/flight/airline.model';
   styleUrls: ['./airline-details.component.css']
 })
 export class AirlineDetailsComponent implements OnInit {
-  airline: Airline;
 
   constructor(private route: ActivatedRoute,
-    private airlineService: AirlineService) { }
+    public airlineService: AirlineService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       let id = +params['id'];
       this.airlineService.getAirline(id).subscribe(
-        res => {
-          this.airline = res as Airline;
-        },
+        res => { },
         err => {
           console.log(err);
         }

@@ -1,0 +1,42 @@
+<div class="container" style="background-color: white;" *ngIf="ticketService.ticket">
+    <div class="row">
+        <div class="col-md-3">
+            <label> Take off destination: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ ticketService.ticket.StartDestination }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label> Landing destination: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ ticketService.ticket.EndDestination }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label> Take off date and time: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ convertDate(ticketService.ticket.StartDateAndTime) }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label> Ticket price: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ ticketService.ticket.TicketPrice }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label> Discount: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ ticketService.ticket.Discount }} </label>
+        </div>
+    </div>
+</div>

@@ -33,6 +33,11 @@ import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights
 import { LoginRegisterGuard } from './auth/login-register.guard';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { UserProfile } from './components/user-profile/user-profile.component';
+import { FlightDetailsComponent } from './components/admin-panel/ap-airlines/flights/flight-details/flight-details.component';
+import { TicketsComponent } from './components/admin-panel/ap-airlines/tickets/tickets.component';
+import { TicketListComponent } from './components/admin-panel/ap-airlines/tickets/ticket-list/ticket-list.component';
+import { AddTicketComponent } from './components/admin-panel/ap-airlines/tickets/add-ticket/add-ticket.component';
+import { TicketDetailsComponent } from './components/admin-panel/ap-airlines/tickets/ticket-details/ticket-details.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -68,8 +73,15 @@ const routes: Routes = [
       { path: "edit/:id", component: ApAddAirlineComponent },
       { path: ":id/flights", component: FlightsComponent, children: [
         { path: "", component: FlightListComponent },
-        { path:"add", component: AddFlightComponent}
-        // OVDE SAM STAO; TREBA NAPRAVITI flight-list
+        { path:"add", component: AddFlightComponent },
+        { path:"details/:id", component: FlightDetailsComponent },
+        { path:"edit/:id", component: AddFlightComponent }
+      ]},
+      { path: ":id/tickets", component: TicketsComponent, children: [
+        { path: "", component: TicketListComponent },
+        { path: "add", component: AddTicketComponent },
+        { path: "edit/:id", component: AddTicketComponent },
+        { path: "details/:id", component: TicketDetailsComponent }
       ]}
     ] },
     { path: "airlineBusiness", component: FlightBusinessComponent },

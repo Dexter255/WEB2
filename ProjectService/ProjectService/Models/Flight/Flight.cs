@@ -26,7 +26,7 @@ namespace ProjectService.Models.Flight
         public DateTime EndDateAndTime { get; set; }
 
         [Required]
-        public DateTime Hours { get; set; }
+        public string Hours { get; set; }
 
         [Required]
         public int Distance { get; set; }

@@ -51,6 +51,7 @@
                             <span *ngIf="!this.addAirline.get('destinations')['controls'][i].valid && this.addAirline.get('destinations')['controls'][i].touched">
                                 <span *ngIf="this.addAirline.get('destinations')['controls'][i].errors['required']">Destination must be entered!</span>
                                 <span *ngIf="this.addAirline.get('destinations')['controls'][i].errors['minlength']">Destination must be atlest 2 characters!</span>
+                                <span *ngIf="this.addAirline.get('destinations')['controls'][i].errors['pattern']">Only letters are allowed!</span>
                             </span>
                         </div>
                         <div>
