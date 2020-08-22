@@ -1,0 +1,25 @@
+<div class="container" style="background-color: white;">
+    <div *ngIf="airlineService.airline">
+        <ul class="list-group">
+            <li class="list-group-item">Company name: {{ airlineService.airline.CompanyName }} </li>
+            <li class="list-group-item">Rating: {{ airlineService.airline.Rating }}</li>
+        </ul>
+    </div>   
+    <br>
+    <br>
+    <div class="row">
+        <div class="col">
+            <label> Daily income: </label>
+            <canvas id="dailyIncome"></canvas>
+        </div>    
+        <div class="col">
+            <label> Weekly income: </label>
+            <canvas id="weeklyIncome"></canvas>   
+        </div> 
+        <div class="col">
+            <label> Monthly income: </label>
+            <canvas id="monthlyIncome"></canvas>  
+        </div>
+    </div>
+</div>
+

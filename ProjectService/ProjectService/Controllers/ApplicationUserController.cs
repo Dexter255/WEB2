@@ -187,17 +187,24 @@ namespace ProjectService.Controllers
 
             foreach (var user in usersDB)
             {
-                if (user.UserName.ToLower().Contains(username.ToLower()) &&
-                    !user.UserName.Equals(loggedUser.UserName) &&
-                    loggedUser.FriendRequests.FirstOrDefault(x => x.Username == user.UserName) == null &&
-                    loggedUser.FriendRequestsSent.FirstOrDefault(x => x.Username == user.UserName) == null)
-                {
-                    var areFriends = false;
-                    if (loggedUser.Friends.Any(x => x.Username == user.UserName))
-                        areFriends = true;
+                var role = await _userManager.GetRolesAsync(user);
 
-                    friends.Add(new Friend(user.Fullname, user.UserName, user.Email, user.Address, user.PhoneNumber, areFriends));
+                if (role.FirstOrDefault().Equals(UserType.User.ToString()))
+                {
+                    if (user.UserName.ToLower().Contains(username.ToLower()) &&
+                        !user.UserName.Equals(loggedUser.UserName) &&
+                        loggedUser.FriendRequests.FirstOrDefault(x => x.Username == user.UserName) == null &&
+                        loggedUser.FriendRequestsSent.FirstOrDefault(x => x.Username == user.UserName) == null)
+                    {
+                        var areFriends = false;
+                        if (loggedUser.Friends.Any(x => x.Username == user.UserName))
+                            areFriends = true;
+
+                        friends.Add(new Friend(user.Fullname, user.UserName, user.Email, user.Address, user.PhoneNumber, areFriends));
+                    }
+
                 }
+
             }
 
             return friends;
@@ -380,6 +387,44 @@ namespace ProjectService.Controllers
                 FriendRequests = loggedUser.FriendRequests,
                 FriendRequestsSent = loggedUser.FriendRequestsSent
             };
+        }
+
+        [HttpGet("{username}")]
+        [Route("GetFriend/{username}")]
+        public async Task<Object> GetFriend(string username)
+        {
+            var friend = await _context.ApplicationUsers
+                .Include(x => x.FriendRequests)
+                .FirstOrDefaultAsync(x => x.UserName == username);
+
+            return new Friend()
+            {
+                Fullname = friend.Fullname,
+                Username = friend.UserName,
+                Email = friend.Email,
+                Address = friend.Address,
+                Number = friend.PhoneNumber
+            };
+        }
+
+        // PUT: api/ApplicationUser/UpdateUser/Matke
+        [HttpPut("{userId}")]
+        [Route("ChangePassword/{userId}")]
+        public async Task<IActionResult> ChangePassword(string userId, PasswordModel password)
+        {            
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, password.NewPassword);
+
+            await _userManager.UpdateAsync(user);
+
+            return NoContent();
         }
 
         private bool UserExists(string username)

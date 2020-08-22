@@ -11,12 +11,17 @@ import { tap } from 'rxjs/operators';
 })
 export class ServerService {
     private readonly BaseURI = 'https://localhost:44305/api';
+    public friend: Friend;
     public friends: Friend[];
     public friendRequests: Friend[];
     public friendRequestsSent: Friend[];
 
     constructor(private http: HttpClient,
-        private router: Router) { }
+        private router: Router) {
+        this.friends = [];
+        this.friendRequests = [];
+        this.friendRequestsSent = [];
+    }
 
     login(body: any) {
         return this.http.post(this.BaseURI + '/ApplicationUser/Login', body);
@@ -139,5 +144,20 @@ export class ServerService {
                     }
                 )
             );
+    }
+
+    getFriend(username: string) {
+        return this.http.get(this.BaseURI + '/ApplicationUser/GetFriend/' + username)
+            .pipe(
+                tap(
+                    (res: Friend) => {
+                        this.friend = res;
+                    }
+                )
+            );
+    }
+
+    changePassword(body: any){
+        return this.http.put(this.BaseURI + '/ApplicationUser/ChangePassword/' + this.getUserId(), body);
     }
 }

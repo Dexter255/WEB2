@@ -26,7 +26,6 @@ import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
 import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
 import { AuthGuard } from './auth/auth.guard';
-import { FlightBusinessComponent } from './components/admin-panel/ap-airlines/flight-business/flight-business.component';
 import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/flights.component';
 import { FlightListComponent } from './components/admin-panel/ap-airlines/flights/flight-list/flight-list.component';
 import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
@@ -38,12 +37,20 @@ import { TicketsComponent } from './components/admin-panel/ap-airlines/tickets/t
 import { TicketListComponent } from './components/admin-panel/ap-airlines/tickets/ticket-list/ticket-list.component';
 import { AddTicketComponent } from './components/admin-panel/ap-airlines/tickets/add-ticket/add-ticket.component';
 import { TicketDetailsComponent } from './components/admin-panel/ap-airlines/tickets/ticket-details/ticket-details.component';
+import { AirlineBusinessComponent } from './components/admin-panel/ap-airlines/airline-business/airline-business.component';
+import { FriendsComponent } from './components/friends/friends.component';
+import { FriendDetailsComponent } from './components/friends/friend-details/friend-details.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "login", component: LoginComponent, canActivate: [LoginRegisterGuard] },
   { path: "register", component: RegisterComponent, canActivate: [LoginRegisterGuard] },
   { path: "user-profile", component: UserProfile, canActivate: [AuthGuard] },
+  { path: "friends", component: FriendsComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
+    { path: "details/:username", component: FriendDetailsComponent }
+  ] },
+  // { path: "reservations", component: UserProfile, canActivate: [AuthGuard], data: { roles: ['User'] } },
+  // { path: "invitations", component: UserProfile, canActivate: [AuthGuard], data: { roles: ['User'] } },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent },
     { path: ":id/vehicles", component: VehicleListNicerComponent, children: [
@@ -82,9 +89,9 @@ const routes: Routes = [
         { path: "add", component: AddTicketComponent },
         { path: "edit/:id", component: AddTicketComponent },
         { path: "details/:id", component: TicketDetailsComponent }
-      ]}
+      ]},
+      { path: ":id/income", component: AirlineBusinessComponent },
     ] },
-    { path: "airlineBusiness", component: FlightBusinessComponent },
     { path: "rac-companies", component: RacCompaniesComponent, canActivate: [AuthGuard], data: { roles: ['Admin_RentACarCompanies'] }, children: [
       { path: "", component: RacCompanyListComponent },
       { path: "details/:id", component: RentACarCompanyDetailsComponent },

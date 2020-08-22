@@ -16,58 +16,54 @@
 
     <div class="col-md-4" *ngIf="show">
         <h5>Personal informations</h5>
-        <form [formGroup]="editUser" (ngSubmit)="onSubmit()" autocomplete="off">
+        <form [formGroup]="editUser" (ngSubmit)="onSubmitUser()" autocomplete="off">
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="fullname" placeholder="Fullname"
-                    title="Fullname">
-                <span *ngIf="!editUser.get('fullname').valid && editUser.get('fullname').touched">
-                    <span class="p-2" *ngIf="editUser.get('fullname').errors['required']"> Fullname must be
-                        entered!</span>
-                    <span class="p-2" *ngIf="editUser.get('fullname').errors['minlength']"> Fullname must be atleast 4
-                        character!</span>
-                </span>
+                <label for="fullname" class="col-md-3 col-form-label">Fullname</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="fullname" formControlName="fullname">
+                    <span *ngIf="!editUser.get('fullname').valid && editUser.get('fullname').touched">
+                        <span *ngIf="editUser.get('fullname').errors['required']">Fullname must be entered!</span>
+                        <span *ngIf="editUser.get('fullname').errors['minlength']">Fullname must be atleast 4 characters!</span>
+                    </span>
+                </div>
             </div>
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="username" placeholder="Username"
-                    title="Username" readonly>
-                <span *ngIf="!editUser.get('username').valid && editUser.get('username').touched">
-                    <span class="p-2" *ngIf="editUser.get('username').errors['required']"> Username must be
-                        entered!</span>
-                    <span class="p-2" *ngIf="editUser.get('username').errors['minlength']"> Username must be atleast 4
-                        character!</span>
-                </span>
+                <label for="username" class="col-md-3 col-form-label">Username</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="username" formControlName="username" readonly>
+                    <span *ngIf="!editUser.get('username').valid && editUser.get('username').touched">
+                        <span *ngIf="editUser.get('username').errors['required']">Username must be entered!</span>
+                        <span *ngIf="editUser.get('username').errors['minlength']">Username must be atleast 4 characters!</span>
+                    </span>
+                </div>
             </div>
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="email" placeholder="Email" title="Email">
-                <span *ngIf="!editUser.get('email').valid && editUser.get('email').touched">
-                    <span class="p-2"
-                        *ngIf="editUser.get('email').errors['email'] || editUser.get('email').errors['required']">
-                        Email must be entered!
+                <label for="email" class="col-md-3 col-form-label">Email</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="email" formControlName="email" readonly>
+                    <span *ngIf="!editUser.get('email').valid && editUser.get('email').touched">
+                        <span *ngIf="editUser.get('email').errors['required']">Email must be entered!</span>
                     </span>
-                </span>
+                </div>
             </div>
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="address" placeholder="Address" title="Address">
-                <span *ngIf="!editUser.get('address').valid && editUser.get('address').touched">
-                    <span class="p-2" *ngIf="editUser.get('address').errors['required']">
-                        Address must be entered!
+                <label for="address" class="col-md-3 col-form-label">Address</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="address" formControlName="address" readonly>
+                    <span *ngIf="!editUser.get('address').valid && editUser.get('address').touched">
+                        <span *ngIf="editUser.get('address').errors['required']">Address must be entered!</span>
                     </span>
-                    <span class="p-2" *ngIf="editUser.get('address').errors['minlength']">
-                        Address must be atleast 4 characters!
-                    </span>
-                </span>
+                </div>
             </div>
             <div class="form-group row">
-                <input type="text" class="form-control" formControlName="number" placeholder="Phone number"
-                    title="Phone number">
-                <span *ngIf="!editUser.get('number').valid && editUser.get('number').touched">
-                    <span class="p-2" *ngIf="editUser.get('number').errors['required']">
-                        Number must be entered!
+                <label for="number" class="col-md-3 col-form-label">Number</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="number" formControlName="number" readonly>
+                    <span *ngIf="!editUser.get('number').valid && editUser.get('number').touched">
+                        <span *ngIf="editUser.get('number').errors['required']">Number must be entered!</span>
+                        <span *ngIf="editUser.get('number').errors['pattern']">Only numbers from 0-9 are allowed! </span>
                     </span>
-                    <span class="p-2" *ngIf="editUser.get('number').errors['pattern']">
-                        Only numbers from 0-9 are allowed!
-                    </span>
-                </span>
+                </div>
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-success" [disabled]="!editUser.valid">Save changes</button>
@@ -76,61 +72,40 @@
     </div>
 
     <div class="col-md-4">
-        <h5>Search users</h5>
-        <form [formGroup]="searchUser" (ngSubmit)="onSearch()" class="ml-3" autocomplete="off">
+        <h5>Reset password</h5>
+        <form [formGroup]="editPassword" (ngSubmit)="onSubmitPassword()" autocomplete="off">
             <div class="form-group row">
-                <input type="text" formControlName="username" class="form-control col-md-4" placeholder="Username">
-                <div class="text-center ml-2">
-                    <button type="submit" class="btn btn-success">Search</button>
-                </div>
-                <div class="text-center ml-2">
-                    <button type="button" class="btn btn-danger" (click)="onReset()">Reset</button>
+                <label for="oldPassword" class="col-md-4 col-form-label">Old password</label>
+                <div class="col-md-8">
+                    <input type="password" class="form-control" id="oldPassword" formControlName="oldPassword">
+                    <span *ngIf="!editPassword.get('oldPassword').valid && editPassword.get('oldPassword').touched">
+                        <span *ngIf="editPassword.get('oldPassword').errors['required']">Old passwords must be entered!</span>
+                    </span>
                 </div>
             </div>
+            <div class="form-group row" formGroupName="passwordGroup">
+                <label for="newPassword" class="col-md-4 col-form-label">New password</label>
+                <div class="col-md-8">
+                    <input type="password" class="form-control" id="newPassword" formControlName="newPassword">
+                    <span *ngIf="!editPassword.get('passwordGroup').get('newPassword').valid && editPassword.get('passwordGroup').get('newPassword').touched">
+                        <span *ngIf="editPassword.get('passwordGroup').get('newPassword').errors['required']">New password must be entered!</span>
+                        <span *ngIf="editPassword.get('passwordGroup').get('newPassword').errors['minlength']">New password must be atleast 6 characters!</span>
+                    </span>
+                </div>
+                <label for="reentered" class="col-md-4 col-form-label mt-3">Re-enter</label>
+                <div class="col-md-8 mt-3">
+                    <input type="password" class="form-control" id="reentered" formControlName="reentered">
+                    <span *ngIf="!editPassword.get('passwordGroup').get('reentered').valid && editPassword.get('passwordGroup').get('reentered').touched">
+                        <span *ngIf="editPassword.get('passwordGroup').get('reentered').errors['required']">Password must be entered!</span>
+                    </span>
+                    <span *ngIf="editPassword.get('passwordGroup').errors !== null">
+                        <span *ngIf="editPassword.get('passwordGroup').errors['notMatch']">Passwords must match!</span>
+                    </span>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success" [disabled]="!editPassword.valid">Change password</button>
+            </div>
         </form>
-
-        <!-- Friend requests -->
-        <ul class="list-group" *ngIf="serverService.friendRequests.length !== 0">
-            <h5>Friend requests</h5>
-            <li class="list-group-item d-flex justify-content-between" *ngFor="let friend of serverService.friendRequests">
-                <p class="p-0 m-0 flex-grow-1" [title]="toString(friend)">{{ friend.Username }}, {{ friend.Fullname }}
-                </p>
-                <div>
-                    <button class="btn btn-success" (click)="onAcceptFriendRequest(friend.Username)">Accept request</button>
-                </div>
-                <div>
-                    <button class="btn btn-danger ml-2" (click)="onDeclineFriendRequest(friend.Username)">Decline request</button>
-                </div>
-            </li>
-        </ul>
-
-        <ul class="list-group" *ngIf="serverService.friendRequestsSent.length !== 0">
-            <h5>Friend requests sent</h5>
-            <li class="list-group-item d-flex justify-content-between" *ngFor="let friend of serverService.friendRequestsSent">
-                <p class="p-0 m-0 flex-grow-1" [title]="toString(friend)">{{ friend.Username }}, {{ friend.Fullname }}
-                </p>
-                <div>
-                    <button class="btn btn-danger" (click)="onCancelFriendRequest(friend.Username)">Cancel request</button>
-                </div>
-            </li>
-        </ul>
-        
-        <h5>Contacts</h5>
-        <ul class="list-group" *ngIf="serverService.friends.length !== 0 else friendsEmpty">
-            <li class="list-group-item d-flex justify-content-between" *ngFor="let friend of serverService.friends">
-                <p class="p-0 m-0 flex-grow-1" [title]="toString(friend)">{{ friend.Username }}, {{ friend.Fullname }}
-                </p>
-                <!-- <button class="btn btn-info">Details</button>  -->
-                <div *ngIf="friend.AreFriends else notFriends">
-                    <button class="btn btn-danger" (click)="onDeleteFriend(friend.Username)">Delete</button>
-                </div>
-                <ng-template #notFriends>
-                    <button class="btn btn-success" (click)="onSendFriendRequest(friend.Username)">Send request</button>
-                </ng-template>
-            </li>
-        </ul>
-        <ng-template #friendsEmpty>
-            <p class="text-info">You have no friends.</p>
-        </ng-template>
     </div>
 </div>

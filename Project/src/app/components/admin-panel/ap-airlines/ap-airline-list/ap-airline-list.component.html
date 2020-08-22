@@ -6,8 +6,10 @@
             <tr class="text-center">
                 <th scope="col">Company name</th>
                 <th scope="col">Description</th>
+                <th scope="col">Rating</th>
                 <th scope="col">Flights</th>
                 <th scope="col">Quick reservation tickets</th>
+                <th scope="col">Income</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -15,11 +17,15 @@
             <tr class="text-center" *ngFor="let airline of airlineService.airlines;">
                 <td> {{ airline.CompanyName }} </td>
                 <td> {{ airline.Description }} </td>
+                <td> {{ airline.Rating }} </td>
                 <td> 
                     <button class="btn btn-info" (click)="onSeeFlights(airline.Id)">See flights</button> 
                 </td>
                 <td> 
                     <button class="btn btn-info" (click)="onSeeTickets(airline.Id)">See tickets</button> 
+                </td>
+                <td> 
+                    <button class="btn btn-info" (click)="onSeeIncome(airline.Id)">See income</button> 
                 </td>
                 <td>
                     <span>

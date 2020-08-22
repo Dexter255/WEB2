@@ -63,4 +63,8 @@ export class ApAirlineListComponent implements OnInit {
   onSeeTickets(airlineId: number){
     this.router.navigate([airlineId, 'tickets'], { relativeTo: this.route });
   }
+  
+  onSeeIncome(airlineId: number){
+    this.router.navigate([airlineId, 'income'], { relativeTo: this.route });    
+  }
 }

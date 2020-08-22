@@ -13,6 +13,7 @@ import { Friend } from 'src/app/models/korisnik/friend.model';
 })
 export class UserProfile implements OnInit {
 	editUser: FormGroup;
+	editPassword: FormGroup;
 	searchUser: FormGroup;
 	selectedFile: File;
 	imageUrl: string | ArrayBuffer;
@@ -22,10 +23,6 @@ export class UserProfile implements OnInit {
 		public serverService: ServerService) { }
 
 	ngOnInit(): void {
-		this.serverService.friends = [];
-		this.serverService.friendRequests = [];
-		this.serverService.friendRequestsSent = [];
-
 		this.imageUrl = 'https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg';
 
 		this.editUser = new FormGroup({
@@ -54,12 +51,26 @@ export class UserProfile implements OnInit {
 			}
 		);
 
-		this.searchUser = new FormGroup({
-			'username': new FormControl(null)
+		this.editPassword = new FormGroup({
+			'oldPassword': new FormControl(null, Validators.required),
+			'passwordGroup': new FormGroup({
+				'newPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+				'reentered': new FormControl(null, Validators.required)
+			}, this.comparePasswords)
 		});
 	}
 
-	onSubmit() {
+	comparePasswords(formGroup: FormGroup): { [error: string]: boolean } {
+		if(formGroup.get('newPassword').value !== null && formGroup.get('reentered').value !== null){
+		  if(formGroup.get('newPassword').value !== formGroup.get('reentered').value){
+			return { 'notMatch': true };
+		  }
+		}
+		
+		return null;
+	  }
+
+	onSubmitUser() {
 		let user = new User(
 			this.editUser.get('fullname').value.trim(),
 			this.editUser.get('username').value.trim(),
@@ -79,66 +90,6 @@ export class UserProfile implements OnInit {
 		);
 	}
 
-	//#region Friend
-	onSearch() {
-		if (this.searchUser.get("username").value !== null) {
-			this.serverService.searchUsers(this.searchUser.get("username").value).subscribe(
-				(res: Friend[]) => {
-					this.serverService.friends.length = 0;
-					this.serverService.friends = res;
-				},
-				err => {
-					console.log(err);
-				}
-			)
-		}
-	}
-
-	onReset() {
-		this.resetForm();
-		this.serverService.friends.length = 0;
-		this.serverService.getUserProfile().subscribe();
-	}
-
-	resetForm() {
-		this.searchUser.setValue({
-			'username': null
-		});
-	}
-
-	onSendFriendRequest(username: string) {
-		this.serverService.sendFriendRequest(username).subscribe();
-		this.resetForm();
-	}
-
-	onCancelFriendRequest(username: string) {
-		this.serverService.cancelFriendRequest(username).subscribe();
-		this.resetForm();
-	}
-
-	onAcceptFriendRequest(username: string) {
-		this.serverService.acceptFriendRequest(username).subscribe();
-		this.resetForm();
-	}
-	
-	onDeclineFriendRequest(username: string) {
-		this.serverService.declineFriendRequest(username).subscribe();
-	}
-
-	onDeleteFriend(username: string) {
-		this.serverService.deleteFriend(username).subscribe();
-		this.resetForm();
-	}
-
-	toString(friend: Friend): string {
-		return 'Username: ' + friend.Username +
-			'\nFullname: ' + friend.Fullname +
-			'\nEmail: ' + friend.Email +
-			'\nAddress: ' + friend.Address +
-			'\nPhone number: ' + friend.Number;
-	}
-	//#endregion
-
 	onFileChange(event) {
 		this.selectedFile = event.target.files[0];
 
@@ -151,4 +102,18 @@ export class UserProfile implements OnInit {
 		reader.readAsDataURL(this.selectedFile);
 	}
 
+	onSubmitPassword(){
+		let body = {
+			'OldPassword': this.editPassword.get('oldPassword').value.trim(),
+			'NewPassword': this.editPassword.get('passwordGroup').get('newPassword').value
+		  };
+		this.serverService.changePassword(body).subscribe(
+			res => {
+				this.router.navigate(['user-profile']);
+			},
+			err => {
+				console.log(err);
+			}
+		);
+	}
 }

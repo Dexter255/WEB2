@@ -11,6 +11,14 @@
             <a routerLink="rac-companies" routerLinkActive="active" class="nav-item nav-link">Rent a car companies</a>
         </div>
         <div class="navbar-nav ml-auto" *ngIf="serverService.isUserLoggedIn() else notLoggedIn">
+            <div class="row">
+                <a routerLink="friends" routerLinkActive="active" class="nav-item nav-link mr-3"
+                    *ngIf="serverService.getUserType() === 'User'">Friends</a>
+                <a routerLink="reservations" routerLinkActive="active" class="nav-item nav-link mr-3"
+                    *ngIf="serverService.getUserType() === 'User'">Reservations</a>
+                <a routerLink="invitations" routerLinkActive="active" class="nav-item nav-link mr-3"
+                    *ngIf="serverService.getUserType() === 'User'">Invitations</a>
+            </div>
             <a routerLink="admin-panel" routerLinkActive="active" class="nav-item nav-link mr-3"
                 *ngIf="serverService.getUserType() !== 'User'">Admin panel</a>
             <div class="dropdown show mr-3">

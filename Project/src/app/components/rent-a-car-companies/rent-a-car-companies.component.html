@@ -9,6 +9,17 @@
 </div>
 <div class="row ml-3 mt-3">
     <div class="col-md-3">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <select #sortBy class="custom-select" (change)="onSortChange(sortBy.value)">
+                    <option selected="true" disabled>Sort by</option>    
+                    <option value="0">Name ascending</option>
+                    <option value="1">Name descending</option>
+                    <option value="2">City ascending</option>
+                    <option value="3">City descending</option>
+                </select>
+            </div>
+        </div>
         <div class="list-group" *ngIf="racCompanyService.racCompanies.length !== 0 else empty">
             <a type="button" class="list-group-item list-group-item-action" 
             *ngFor="let racCompany of racCompanyService.racCompanies" [routerLink]="['details', racCompany.Id]" routerLinkActive="active"> 

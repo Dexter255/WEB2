@@ -26,6 +26,21 @@ export class RentACarCompaniesComponent implements OnInit {
     )
   }
 
+  onSortChange(sortBy: string){
+    if(sortBy === '0'){
+      this.racCompanyService.racCompanies = this.racCompanyService.racCompanies.sort((a, b) => (a.CompanyName > b.CompanyName) ? 1 : -1);
+    }
+    else if(sortBy === '1'){
+      this.racCompanyService.racCompanies = this.racCompanyService.racCompanies.sort((a, b) => (a.CompanyName > b.CompanyName) ? -1 : 1);
+    }
+    else if(sortBy === '2'){
+      this.racCompanyService.racCompanies = this.racCompanyService.racCompanies.sort((a, b) => (a.Address > b.Address) ? 1 : -1);
+    }
+    else if(sortBy === '3'){
+      this.racCompanyService.racCompanies = this.racCompanyService.racCompanies.sort((a, b) => (a.Address > b.Address) ? -1 : 1);
+    }
+  }
+  
   onSearch(){
     //this.racCompanyService.setRacCompaniesSearch();
     //this.racCompanies = this.racCompanyService.searchRacCompanies(racCompanySearch);

@@ -1,10 +1,13 @@
+import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module'
-import { AppComponent } from './app.component';
+import { ToastrModule } from 'ngx-toastr';
+
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
@@ -34,7 +37,6 @@ import { VehicleSearchComponent } from './components/rent-a-car-companies/vehicl
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/flights.component';
 import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
-import { FlightBusinessComponent } from './components/admin-panel/ap-airlines/flight-business/flight-business.component';
 import { FlightListComponent } from './components/admin-panel/ap-airlines/flights/flight-list/flight-list.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { UserProfile } from './components/user-profile/user-profile.component';
@@ -43,6 +45,9 @@ import { TicketsComponent } from './components/admin-panel/ap-airlines/tickets/t
 import { TicketListComponent } from './components/admin-panel/ap-airlines/tickets/ticket-list/ticket-list.component';
 import { AddTicketComponent } from './components/admin-panel/ap-airlines/tickets/add-ticket/add-ticket.component';
 import { TicketDetailsComponent } from './components/admin-panel/ap-airlines/tickets/ticket-details/ticket-details.component';
+import { AirlineBusinessComponent } from './components/admin-panel/ap-airlines/airline-business/airline-business.component';
+import { FriendsComponent } from './components/friends/friends.component';
+import { FriendDetailsComponent } from './components/friends/friend-details/friend-details.component';
 
 @NgModule({
   declarations: [
@@ -76,21 +81,26 @@ import { TicketDetailsComponent } from './components/admin-panel/ap-airlines/tic
     VehicleSearchComponent,
     FlightsComponent,
     AddFlightComponent,
-    FlightBusinessComponent,
     FlightListComponent,
     ForbiddenComponent,
     FlightDetailsComponent,
     TicketsComponent,
     TicketListComponent,
     AddTicketComponent,
-    TicketDetailsComponent
+    TicketDetailsComponent,
+    AirlineBusinessComponent,
+    FriendsComponent,
+    FriendDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DialogModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {
