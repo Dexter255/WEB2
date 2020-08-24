@@ -40,6 +40,8 @@ import { TicketDetailsComponent } from './components/admin-panel/ap-airlines/tic
 import { AirlineBusinessComponent } from './components/admin-panel/ap-airlines/airline-business/airline-business.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { FriendDetailsComponent } from './components/friends/friend-details/friend-details.component';
+import { FlightListNicerComponent } from './components/flight-list-nicer/flight-list-nicer.component';
+import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -59,6 +61,12 @@ const routes: Routes = [
   ]},
   { path: "airlines", component: AirlinesComponent, children: [
     { path: "details/:id", component: AirlineDetailsComponent }
+  ] },
+  { path: "flights/:id", component: FlightListNicerComponent, children: [
+    { path: "details/:id", component: FlightDetailsComponent }
+  ] },
+  { path: "tickets/:id", component: TicketListNicerComponent, children: [
+    { path: "details/:id", component: TicketDetailsComponent }
   ] },
   { path: "admin-panel", component: AdminPanelComponent, canActivate: [AuthGuard], data: { roles: ['Admin', 'Admin_RentACarCompanies', 'Admin_Airlines'] }, children: [
     { path: "airline-admins", component: AdminsComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] }, children: [

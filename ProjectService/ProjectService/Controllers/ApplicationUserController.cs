@@ -419,6 +419,15 @@ namespace ProjectService.Controllers
                 return NotFound();
             }
 
+            if (await _userManager.CheckPasswordAsync(user, password.OldPassword))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(new { message = "Old password is incorrect." });
+            }
+
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var result = await _userManager.ResetPasswordAsync(user, token, password.NewPassword);
 

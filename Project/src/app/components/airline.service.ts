@@ -27,7 +27,7 @@ export class AirlineService {
     getAirlines() {
         return this.http.get(this.BaseURI + '/Airline')
             .pipe(
-                tap(res => this.airlines = res as Airline[])
+                tap((res: Airline[]) => this.airlines = res)
             );;
     }
 
@@ -52,5 +52,12 @@ export class AirlineService {
 
     getDestinations(airlineId: number) {
         return this.http.get(this.BaseURI + '/Airline/GetDestinations/' + airlineId);
+    }
+
+    searchAirlines(body: any) {
+        return this.http.post(this.BaseURI + '/Airline/SearchAirlines', body)
+            .pipe(
+                tap((res: Airline[]) => this.airlines = res)
+            );
     }
 }

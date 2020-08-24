@@ -1,0 +1,63 @@
+<div class="row ml-3">
+    <h6 class="ml-3">Search flights by:</h6>
+    <div class="col-md-12">
+        <form class="form-inline" [formGroup]="searchTickets" (ngSubmit)="onSearch()">
+            <div class="form-row">
+                <div class="col">
+                    <input formControlName="startDestination" type="text" class="form-control" placeholder="Start destination" title="Start destination">
+                </div>
+                <div class="col">
+                    <input formControlName="endDestination" type="text" class="form-control" placeholder="End destination" title="End destination">
+                </div>
+                <div class="col">
+                    <input formControlName="startDate" type="date" class="form-control" title="Take off date">
+                </div>
+                <div class="col">
+                    <select class="custom-select" formControlName="ticketPrice" title="Ticket price">
+                        <option value="0-100"> 0 - 100 &euro; </option>
+                        <option value="101-200"> 101 - 200 &euro; </option>
+                        <option value="201-300"> 201 - 300 &euro; </option>
+                        <option value="301-400"> 301 - 400 &euro; </option>
+                        <option value="401-500"> 401 - 500 &euro; </option>
+                        <option value="501-600"> 501 - 600 &euro; </option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="ml-3 mr-3">
+    <hr style="border-color: cadetblue;">
+</div>
+<div class="row ml-3">
+    <div class="col-md-4">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <select #sortBy class="custom-select" (change)="onSortChange(sortBy.value)">
+                    <option selected="true" disabled>Sort by</option>    
+                    <option value="0">Price &uarr;</option>
+                    <option value="1">Price &darr;</option>
+                </select>
+            </div>
+        </div>
+        <div class="list-group" *ngIf="ticketService.tickets.length !== 0 else empty">
+            <a type="button" class="list-group-item list-group-item-action"
+                *ngFor="let ticket of ticketService.tickets" [routerLink]="['details', ticket.Id]"
+                routerLinkActive="active">
+                {{ ticket.StartDestination }}, {{ ticket.EndDestination }}, {{ ticket.TicketPrice }}&euro;
+            </a>
+        </div>
+        <ng-template #empty>
+            <p class="text-info">There is no tickets available!</p>
+        </ng-template>
+    </div>
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+</div>

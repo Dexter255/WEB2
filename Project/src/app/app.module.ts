@@ -48,6 +48,8 @@ import { TicketDetailsComponent } from './components/admin-panel/ap-airlines/tic
 import { AirlineBusinessComponent } from './components/admin-panel/ap-airlines/airline-business/airline-business.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { FriendDetailsComponent } from './components/friends/friend-details/friend-details.component';
+import { FlightListNicerComponent } from './components/flight-list-nicer/flight-list-nicer.component';
+import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +92,9 @@ import { FriendDetailsComponent } from './components/friends/friend-details/frie
     TicketDetailsComponent,
     AirlineBusinessComponent,
     FriendsComponent,
-    FriendDetailsComponent
+    FriendDetailsComponent,
+    FlightListNicerComponent,
+    TicketListNicerComponent
   ],
   imports: [
     BrowserModule,

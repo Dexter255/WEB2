@@ -30,7 +30,7 @@ export class TicketService {
     }
     
     addTicket(airlineId: number, ticket: QuickReservationTicket) {
-        return this.http.post(this.BaseURI + '/Ticket/' + airlineId, ticket);
+        return this.http.post(this.BaseURI + '/Ticket/AddTicket/' + airlineId, ticket);
     }
 
     updateTicket(ticket: QuickReservationTicket) {
@@ -39,5 +39,12 @@ export class TicketService {
 
     deleteTicket(ticketId: number) {
         return this.http.delete(this.BaseURI + '/Ticket/' + ticketId);
+    }
+
+    searchTickets(airlineId: number, body: any){
+        return this.http.post(this.BaseURI + '/Ticket/SearchTickets/' + airlineId, body)
+        .pipe(
+            tap((res: QuickReservationTicket[]) => this.tickets = res)
+        );
     }
 }

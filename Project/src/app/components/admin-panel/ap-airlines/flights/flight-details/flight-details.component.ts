@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FlightService } from 'src/app/components/flight.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Flight } from 'src/app/models/flight/flight.model';
+import { ServerService } from 'src/app/components/server.service';
 
 @Component({
   selector: 'app-flight-details',
@@ -9,15 +10,17 @@ import { Flight } from 'src/app/models/flight/flight.model';
   styleUrls: ['./flight-details.component.css']
 })
 export class FlightDetailsComponent implements OnInit {
+  flightId: number;
 
   constructor(private route: ActivatedRoute,
-    public flightService: FlightService) { }
+    public flightService: FlightService,
+    public serverService: ServerService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      let flightId = +params['id'];
+      this.flightId = +params['id'];
 
-      this.flightService.getFlight(flightId).subscribe(
+      this.flightService.getFlight(this.flightId).subscribe(
         res => { },
         err => {
           console.log(err);
@@ -31,5 +34,9 @@ export class FlightDetailsComponent implements OnInit {
     let dateSplited = dateTime.split('T')[0].split('-');
 
     return dateSplited[2] + '-' + dateSplited[1] + '-' + dateSplited[0] + ' ' + dateTime.split('T')[1];
+  }
+
+  onReserve(){
+    
   }
 }

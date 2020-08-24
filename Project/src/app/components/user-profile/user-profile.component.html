@@ -40,7 +40,7 @@
             <div class="form-group row">
                 <label for="email" class="col-md-3 col-form-label">Email</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="email" formControlName="email" readonly>
+                    <input type="text" class="form-control" id="email" formControlName="email">
                     <span *ngIf="!editUser.get('email').valid && editUser.get('email').touched">
                         <span *ngIf="editUser.get('email').errors['required']">Email must be entered!</span>
                     </span>
@@ -49,7 +49,7 @@
             <div class="form-group row">
                 <label for="address" class="col-md-3 col-form-label">Address</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="address" formControlName="address" readonly>
+                    <input type="text" class="form-control" id="address" formControlName="address">
                     <span *ngIf="!editUser.get('address').valid && editUser.get('address').touched">
                         <span *ngIf="editUser.get('address').errors['required']">Address must be entered!</span>
                     </span>
@@ -58,7 +58,7 @@
             <div class="form-group row">
                 <label for="number" class="col-md-3 col-form-label">Number</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="number" formControlName="number" readonly>
+                    <input type="text" class="form-control" id="number" formControlName="number">
                     <span *ngIf="!editUser.get('number').valid && editUser.get('number').touched">
                         <span *ngIf="editUser.get('number').errors['required']">Number must be entered!</span>
                         <span *ngIf="editUser.get('number').errors['pattern']">Only numbers from 0-9 are allowed! </span>

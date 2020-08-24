@@ -194,6 +194,35 @@ namespace ProjectService.Controllers
             return airline.Destinations;
         }
 
+        // POST: api/Airline/SearchFlights
+        [HttpPost]
+        [Route("SearchAirlines")]
+        public async Task<ActionResult<IEnumerable<Airline>>> SearchAirlines(SearchAirlineModel airline)
+        {
+            // po default-u
+            // 1 januar 2001 00 00 00
+            var airlines = await _context.Airlines
+                .Include(x => x.Flights)
+                .Include(x => x.Destinations)
+                .ToListAsync();
+
+            if (!String.IsNullOrEmpty(airline.CompanyName))
+                airlines = airlines.FindAll(x => x.CompanyName.ToLower().Contains(airline.CompanyName.ToLower()));
+
+            if (!String.IsNullOrEmpty(airline.Address))
+                airlines = airlines.FindAll(x => x.Address.ToLower().Contains(airline.Address.ToLower()));
+
+            if (!String.IsNullOrEmpty(airline.FlightStartDestination))
+                airlines = airlines.FindAll(x => x.Destinations.Any(y => y.City.ToLower().Contains(airline.FlightStartDestination.ToLower())));
+
+            if (!String.IsNullOrEmpty(airline.FlightEndDestination))
+                airlines = airlines.FindAll(x => x.Destinations.Any(y => y.City.ToLower().Contains(airline.FlightEndDestination.ToLower())));
+
+            if (airline.FlightStartDate.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d"))
+                airlines = airlines.FindAll(x => x.Flights.Any(y => y.StartDateAndTime.Date.ToString("d") == airline.FlightStartDate.Date.ToString("d")));
+
+            return airlines;
+        }
 
         private bool AirlineExists(int id)
         {

@@ -45,6 +45,13 @@ export class FlightService {
     }
 
     addFlight(airlineId: number, flight: Flight) {
-        return this.http.post(this.BaseURI + '/Flight/' + airlineId, flight);
+        return this.http.post(this.BaseURI + '/Flight/AddFlight/' + airlineId, flight);
+    }
+
+    searchFlights(airlineId: number, body: any){
+        return this.http.post(this.BaseURI + '/Flight/SearchFlights/' + airlineId, body)
+        .pipe(
+            tap((res: Flight[]) => this.flights = res)
+        );
     }
 }

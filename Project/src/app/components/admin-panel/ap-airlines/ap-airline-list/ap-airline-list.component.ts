@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AirlineService } from 'src/app/components/airline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServerService } from 'src/app/components/server.service';
-import { Airline } from 'src/app/models/flight/airline.model';
-import { UserType } from 'src/app/models/korisnik/user-type.model';
 
 @Component({
   selector: 'app-ap-airline-list',
@@ -11,7 +9,6 @@ import { UserType } from 'src/app/models/korisnik/user-type.model';
   styleUrls: ['./ap-airline-list.component.css']
 })
 export class ApAirlineListComponent implements OnInit {
-  notAllowed: boolean;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -25,7 +22,6 @@ export class ApAirlineListComponent implements OnInit {
         console.log(err);
       }
     );
-    this.notAllowed = this.serverService.getUserType() !== UserType[UserType.Admin_Airlines] ? true : false;
   }
 
   onAddAirline() {

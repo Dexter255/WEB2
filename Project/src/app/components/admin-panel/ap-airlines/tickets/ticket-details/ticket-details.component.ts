@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { TicketService } from 'src/app/components/ticket.service';
+import { ServerService } from 'src/app/components/server.service';
 
 @Component({
   selector: 'app-ticket-details',
@@ -8,15 +9,17 @@ import { TicketService } from 'src/app/components/ticket.service';
   styleUrls: ['./ticket-details.component.css']
 })
 export class TicketDetailsComponent implements OnInit {
+  ticketId: number;
 
   constructor(private route: ActivatedRoute,
-    public ticketService: TicketService) { }
+    public ticketService: TicketService,
+    public serverService: ServerService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      let ticketId = +params['id'];
+      this.ticketId = +params['id'];
 
-      this.ticketService.getTicket(ticketId).subscribe();
+      this.ticketService.getTicket(this.ticketId).subscribe();
     });
   }
 
@@ -25,5 +28,9 @@ export class TicketDetailsComponent implements OnInit {
     let dateSplited = dateTime.split('T')[0].split('-');
 
     return dateSplited[2] + '-' + dateSplited[1] + '-' + dateSplited[0] + ' ' + dateTime.split('T')[1];
+  }
+
+  onReserve(){
+
   }
 }

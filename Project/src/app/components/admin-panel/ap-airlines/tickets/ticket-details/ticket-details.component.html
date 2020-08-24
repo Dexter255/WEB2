@@ -17,7 +17,7 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <label> Take off date and time: </label>
+            <label> Take off date: </label>
         </div>
         <div class="col-md-3">
             <label> {{ convertDate(ticketService.ticket.StartDateAndTime) }} </label>
@@ -28,7 +28,7 @@
             <label> Ticket price: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ ticketService.ticket.TicketPrice }} </label>
+            <label> {{ ticketService.ticket.TicketPrice }} &euro; </label>
         </div>
     </div>
     <div class="row">
@@ -36,7 +36,15 @@
             <label> Discount: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ ticketService.ticket.Discount }} </label>
+            <label> {{ ticketService.ticket.Discount }} % </label>
+        </div>
+    </div>
+    <div class="row" *ngIf="serverService.getUserType() === 'User'">
+        <div class="col-md-12">
+            <!-- <button class="btn btn-success" [disabled]="vehicle.reserved"
+                [title]="vehicle.reserved ? 'Already reserved' : ''"
+                (click)="onReserve()">Reserve - PREPRAVITI</button> -->
+            <button class="btn btn-success" (click)="onReserve()">Reserve - PREPRAVITI</button>
         </div>
     </div>
 </div>

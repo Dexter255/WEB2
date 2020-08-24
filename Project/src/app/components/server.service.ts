@@ -54,13 +54,17 @@ export class ServerService {
     }
 
     getUserType() {
-        let token = localStorage.getItem('token');
+        if(localStorage.getItem('token') !== null){
+            let token = localStorage.getItem('token');
+            
+            let jwtData = token.split('.')[1];
+            let decodedJwtJsonData = window.atob(jwtData);
+            let decodedJwtData = JSON.parse(decodedJwtJsonData);
+            
+            return decodedJwtData.role;
+        }
 
-        let jwtData = token.split('.')[1];
-        let decodedJwtJsonData = window.atob(jwtData);
-        let decodedJwtData = JSON.parse(decodedJwtJsonData);
-
-        return decodedJwtData.role;
+        return null;
     }
 
     getUserId() {

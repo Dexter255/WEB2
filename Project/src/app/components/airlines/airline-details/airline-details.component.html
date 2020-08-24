@@ -39,8 +39,28 @@
         </div>
         <div class="col-md-9">
             <ul class="row ml-2" *ngFor="let luggage of airlineService.airline.LuggageInfo">
-                <li> {{ luggage.Weight }}kg -> {{ luggage.Price }}&euro;  </li>
+                <li> {{ luggage.Weight }} kg -> {{ luggage.Price }} &euro;  </li>
             </ul>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label> Rating: </label>
+        </div>
+        <div class="col-md-9">
+            <label> {{ airlineService.airline.Rating }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label> Flights: </label>
+        </div>
+        <button class="btn btn-info ml-3" (click)="onSeeFlights(airlineService.airline.Id)">See flights</button>
+    </div>
+    <div class="row mt-1">
+        <div class="col-md-3">
+            <label> Quick tickets: </label>
+        </div>
+        <button class="btn btn-info ml-3" (click)="onSeeTickets(airlineService.airline.Id)">See tickets</button>
     </div>
 </div>

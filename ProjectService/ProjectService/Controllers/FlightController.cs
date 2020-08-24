@@ -58,6 +58,7 @@ namespace ProjectService.Controllers
 
         // POST: api/Flight
         [HttpPost("{airlineId}")]
+        [Route("AddFlight/{airlineId}")]
         [Authorize(Roles = "Admin_Airlines")]
         public async Task<ActionResult<Airline>> PostFlight(int airlineId, Flight flight)
         {
@@ -150,6 +151,36 @@ namespace ProjectService.Controllers
             await _context.SaveChangesAsync();
 
             return flight;
+        }
+
+        [HttpPost("{airlineId}")]
+        [Route("SearchFlights/{airlineId}")]
+        public async Task<ActionResult<IEnumerable<Flight>>> SearchFlights(int airlineId, SearchFlightModel flight)
+        {
+            // po default-u
+            // 1 januar 2001 00 00 00
+            var airline = await _context.Airlines
+                .Include(x => x.Flights)
+                .FirstOrDefaultAsync(x => x.Id == airlineId);
+
+            if (!String.IsNullOrEmpty(flight.StartDestination))
+                airline.Flights = airline.Flights.FindAll(x => x.StartDestination.ToLower().Contains(flight.StartDestination.ToLower()));
+
+            if (!String.IsNullOrEmpty(flight.EndDestination))
+                airline.Flights = airline.Flights.FindAll(x => x.EndDestination.ToLower().Contains(flight.EndDestination.ToLower()));
+
+            if (flight.StartDate.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d"))
+                airline.Flights = airline.Flights.FindAll(x => x.StartDateAndTime.Date.ToString("d") == flight.StartDate.Date.ToString("d"));
+
+            if (!String.IsNullOrEmpty(flight.TicketPrice))
+            {
+                int lowerPrice = Int32.Parse(flight.TicketPrice.Split('-')[0]);
+                int higherPrice = Int32.Parse(flight.TicketPrice.Split('-')[1]);
+
+                airline.Flights = airline.Flights.FindAll(x => lowerPrice <= x.TicketPrice && x.TicketPrice <= higherPrice);
+            }
+
+            return airline.Flights;
         }
 
         private bool FlightExists(int id)

@@ -1,14 +1,51 @@
 <div class="row ml-3">
+    <h6 class="ml-3">Search airlines by:</h6>
+    <div class="col-md-12">
+        <form [formGroup]="searchAirlines" (ngSubmit)="onSearch()">
+            <div class="form-row">
+                <div class="col-md-2">
+                    <input formControlName="companyName" type="text" class="form-control" placeholder="Company name" title="Company name">
+                </div>
+                <div class="col-md-2">
+                    <input formControlName="address" type="text" class="form-control" placeholder="Address" title="Address">
+                </div>
+            </div>
+            <div class="mt-1">
+                <h6>Additional criterias for flights:</h6>
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <input formControlName="flightStartDestination" type="text" class="form-control" placeholder="Start destination" title="Start destination">
+                    </div>
+                    <div class="col-md-2">
+                        <input formControlName="flightEndDestination" type="text" class="form-control" placeholder="End destination" title="End destination">
+                    </div>
+                    <div class="col-md-2">
+                        <input formControlName="flightStartDate" type="date" class="form-control" title="Take off date">
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="ml-3 mr-3">
+    <hr style="border-color: cadetblue;">
+</div>
+<div class="row ml-3">
     <div class="col-md-4">
         <div class="form-group row">
             <div class="col-md-6">
                 <select #sortBy class="custom-select" (change)="onSortChange(sortBy.value)">
                     <option selected="true" disabled>Sort by</option>    
-                    <option value="0">Name ascending</option>
-                    <option value="1">Name descending</option>
-                    <option value="2">City ascending</option>
-                    <option value="3">City descending</option>
-                    <!-- <option value="City">City</option> -->
+                    <option value="0">Name &uarr; </option>
+                    <option value="1">Name &darr; </option>
+                    <option value="2">City &uarr; </option>
+                    <option value="3">City &darr; </option>
                 </select>
             </div>
         </div>

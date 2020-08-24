@@ -44,7 +44,7 @@
             <label> Distance: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ flightService.flight.Distance }} </label>
+            <label> {{ flightService.flight.Distance }} km </label>
         </div>
     </div>
     <div class="row" *ngIf="flightService.flight.Locations.length !== 0">
@@ -60,7 +60,7 @@
             <label> Ticket price: </label>
         </div>
         <div class="col-md-3">
-            <label> {{ flightService.flight.TicketPrice }} </label>
+            <label> {{ flightService.flight.TicketPrice }} &euro; </label>
         </div>
     </div>
     <div class="row">
@@ -69,6 +69,14 @@
         </div>
         <div class="col-md-3">
             <label> {{ flightService.flight.Rating }} </label>
+        </div>
+    </div>
+    <div class="row" *ngIf="serverService.getUserType() === 'User'">
+        <div class="col-md-12">
+            <!-- <button class="btn btn-success" [disabled]="vehicle.reserved"
+                [title]="vehicle.reserved ? 'Already reserved' : ''"
+                (click)="onReserve()">Reserve - PREPRAVITI</button> -->
+            <button class="btn btn-success" (click)="onReserve()">Reserve - PREPRAVITI</button>
         </div>
     </div>
 </div>

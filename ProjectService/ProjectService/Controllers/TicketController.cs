@@ -57,6 +57,7 @@ namespace ProjectService.Controllers
 
         // POST: api/Ticket
         [HttpPost("{airlineId}")]
+        [Route("AddTicket/{airlineId}")]
         [Authorize(Roles = "Admin_Airlines")]
         public async Task<ActionResult<QuickReservationTicket>> PostTicket(int airlineId, QuickReservationTicket ticket)
         {
@@ -121,6 +122,36 @@ namespace ProjectService.Controllers
             await _context.SaveChangesAsync();
 
             return ticket;
+        }
+
+        [HttpPost("{airlineId}")]
+        [Route("SearchTickets/{airlineId}")]
+        public async Task<ActionResult<IEnumerable<QuickReservationTicket>>> SearchTickets(int airlineId, SearchFlightModel ticket)
+        {
+            // po default-u
+            // 1 januar 2001 00 00 00
+            var airline = await _context.Airlines
+                .Include(x => x.QuickReservationTickets)
+                .FirstOrDefaultAsync(x => x.Id == airlineId);
+
+            if (!String.IsNullOrEmpty(ticket.StartDestination))
+                airline.QuickReservationTickets = airline.QuickReservationTickets.FindAll(x => x.StartDestination.ToLower().Contains(ticket.StartDestination.ToLower()));
+
+            if (!String.IsNullOrEmpty(ticket.EndDestination))
+                airline.QuickReservationTickets = airline.QuickReservationTickets.FindAll(x => x.EndDestination.ToLower().Contains(ticket.EndDestination.ToLower()));
+
+            if (ticket.StartDate.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d"))
+                airline.QuickReservationTickets = airline.QuickReservationTickets.FindAll(x => x.StartDateAndTime.Date.ToString("d") == ticket.StartDate.Date.ToString("d"));
+
+            if (!String.IsNullOrEmpty(ticket.TicketPrice))
+            {
+                int lowerPrice = Int32.Parse(ticket.TicketPrice.Split('-')[0]);
+                int higherPrice = Int32.Parse(ticket.TicketPrice.Split('-')[1]);
+
+                airline.QuickReservationTickets = airline.QuickReservationTickets.FindAll(x => lowerPrice <= x.TicketPrice && x.TicketPrice <= higherPrice);
+            }
+
+            return airline.QuickReservationTickets;
         }
 
         private bool TicketExists(int id)

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AirlineService } from '../../airline.service';
 import { Airline } from 'src/app/models/flight/airline.model';
 
@@ -11,6 +11,7 @@ import { Airline } from 'src/app/models/flight/airline.model';
 export class AirlineDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     public airlineService: AirlineService) { }
 
   ngOnInit(): void {
@@ -25,4 +26,11 @@ export class AirlineDetailsComponent implements OnInit {
     })
   }
 
+  onSeeFlights(airlineId: number) {
+    this.router.navigate(['flights', airlineId]);
+  }
+
+  onSeeTickets(airlineId: number) {
+    this.router.navigate(['tickets', airlineId]);
+  }
 }
