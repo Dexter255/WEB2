@@ -46,6 +46,8 @@ namespace ProjectService.Controllers
         {
             var flight = await _context.Flights
                 .Include(x => x.Locations)
+                .Include(x => x.Rows)
+                    .ThenInclude(y => y.Seats)
                 .FirstOrDefaultAsync(x => x.Id == flightId);
 
             if (flight == null)
@@ -65,6 +67,16 @@ namespace ProjectService.Controllers
             var airline = _context.Airlines
                 .Include(x => x.Flights)
                 .FirstOrDefault(x => x.Id == airlineId);
+
+            for(int row = 0; row < flight.ySeats; row++)
+            {
+                Row rowObj = new Row();
+                for(int seat = 0; seat < flight.xSeats; seat++)
+                {
+                    rowObj.Seats.Add(new Seat());
+                }
+                flight.Rows.Add(rowObj);
+            }
 
             airline.Flights.Add(flight);
             await _context.SaveChangesAsync();
@@ -181,6 +193,34 @@ namespace ProjectService.Controllers
             }
 
             return airline.Flights;
+        }
+
+        // POST: api/Flight/ReserveSeat/2
+        [HttpPost("{flightId}")]
+        [Route("ReserveSeat/{flightId}")]
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult<Airline>> ReserveSeat(int flightId, SeatModel seat)
+        {
+            var a = 2;
+            //var airline = _context.Airlines
+            //    .Include(x => x.Flights)
+            //    .FirstOrDefault(x => x.Id == airlineId);
+
+            //for (int row = 0; row < flight.ySeats; row++)
+            //{
+            //    Row rowObj = new Row();
+            //    for (int seat = 0; seat < flight.xSeats; seat++)
+            //    {
+            //        rowObj.Seats.Add(new Seat());
+            //    }
+            //    flight.Rows.Add(rowObj);
+            //}
+
+            //airline.Flights.Add(flight);
+            //await _context.SaveChangesAsync();
+
+            //return CreatedAtAction("PostFlight", new { id = flight.Id }, flight);
+            return null;
         }
 
         private bool FlightExists(int id)

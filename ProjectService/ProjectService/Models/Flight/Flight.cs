@@ -37,6 +37,16 @@ namespace ProjectService.Models.Flight
         [Required]
         public int TicketPrice { get; set; }
 
+        // mesta u avionu
+        [NotMapped]
+        public int xSeats { get; set; }
+
+        [NotMapped]
+        public int ySeats { get; set; }
+
+        [Required]
+        public List<Row> Rows { get; set; }
+
         [Required]
         public int Rating { get; set; }
     }

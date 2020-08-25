@@ -1,0 +1,19 @@
+input[type='checkbox'] {
+    display: none;
+}
+
+.seatButtonTaken {
+    padding: 7px; 
+    border: 1px solid #ccc;
+    background: red;
+}
+
+.seatButtonFree {
+    padding: 7px; 
+    border: 1px solid #ccc;
+    background: honeydew;
+}
+
+input:checked + .seatButtonFree {
+    background: yellow;
+}

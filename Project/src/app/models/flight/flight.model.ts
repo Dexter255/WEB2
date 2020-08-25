@@ -1,5 +1,6 @@
 import { Time } from '@angular/common';
 import { Destination } from './destination.model';
+import { Row } from './row.model';
 
 export class Flight {
     public Id: number;
@@ -12,10 +13,13 @@ export class Flight {
     public Locations: Destination[];
     public TicketPrice: number;
     // mesta u avionu?
+    public xSeats: number;
+    public ySeats: number;
+    public Rows: Row[];
     public Rating: number;
 
     constructor(id: number, startDestination: string, endDestination: string, startDateAndTime: Date, endDateAndTime: Date, hours: string, distance: number,
-        locations: Destination[], ticketPrice: number) {
+        locations: Destination[], ticketPrice: number, xSeats: number, ySeats: number) {
         this.Id = id;
         this.StartDestination = startDestination;
         this.EndDestination = endDestination;
@@ -25,5 +29,8 @@ export class Flight {
         this.Distance = distance;
         this.Locations = locations;
         this.TicketPrice = ticketPrice;
+        this.xSeats = xSeats;
+        this.ySeats = ySeats;
+        this.Rows = [];
     }
 }

@@ -125,6 +125,37 @@
                 </span>
             </div>
         </div>
+        <div class="form-group row">
+            <label for="seats" class="col-md-2 col-form-label">Seats</label>
+            <div class="col-md-4">
+                <div class="row col-md-12">
+                    <input type="text" class="form-control col-md-4" id="xSeats" formControlName="xSeats" readonly>
+                    <span *ngIf="!this.addFlight.get('xSeats').valid && this.addFlight.get('xSeats').touched">
+                        <span *ngIf="this.addFlight.get('xSeats').errors['required']">Seats must be entered!</span>
+                        <span *ngIf="this.addFlight.get('xSeats').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                    </span>
+                </div>
+                <div class="row col-md-12">
+                    <label class="ml-5 col-form-label">X</label>
+                </div>
+                <div class="row col-md-12" *ngIf="this.addFlight.get('flightId').value === 0 else readonly">
+                    <input type="text" class="form-control col-md-4" id="ySeats" formControlName="ySeats">
+                    <span *ngIf="!this.addFlight.get('ySeats').valid && this.addFlight.get('ySeats').touched">
+                        <span *ngIf="this.addFlight.get('ySeats').errors['required']">Seats must be entered!</span>
+                        <span *ngIf="this.addFlight.get('ySeats').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                    </span>
+                </div>
+                <ng-template #readonly>
+                    <div class="row col-md-12">
+                        <input type="text" class="form-control col-md-4" id="ySeats" formControlName="ySeats" readonly>
+                        <span *ngIf="!this.addFlight.get('ySeats').valid && this.addFlight.get('ySeats').touched">
+                            <span *ngIf="this.addFlight.get('ySeats').errors['required']">Seats must be entered!</span>
+                            <span *ngIf="this.addFlight.get('ySeats').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                        </span>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
         <div class="ml-5">
             <button class="btn btn-success" [disabled]="!addFlight.valid" type="submit"> {{ header }} </button>
         </div>

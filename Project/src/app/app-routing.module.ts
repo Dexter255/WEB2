@@ -42,6 +42,7 @@ import { FriendsComponent } from './components/friends/friends.component';
 import { FriendDetailsComponent } from './components/friends/friend-details/friend-details.component';
 import { FlightListNicerComponent } from './components/flight-list-nicer/flight-list-nicer.component';
 import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
+import { FlightReserveComponent } from './components/flight-list-nicer/flight-reserve/flight-reserve.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -63,7 +64,8 @@ const routes: Routes = [
     { path: "details/:id", component: AirlineDetailsComponent }
   ] },
   { path: "flights/:id", component: FlightListNicerComponent, children: [
-    { path: "details/:id", component: FlightDetailsComponent }
+    { path: "details/:id", component: FlightDetailsComponent },
+    { path: "reserve/:id", component: FlightReserveComponent, canActivate: [AuthGuard], data: { roles: ['User'] } }
   ] },
   { path: "tickets/:id", component: TicketListNicerComponent, children: [
     { path: "details/:id", component: TicketDetailsComponent }

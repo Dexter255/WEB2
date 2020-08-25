@@ -6,7 +6,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module'
-import { ToastrModule } from 'ngx-toastr';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -50,6 +49,7 @@ import { FriendsComponent } from './components/friends/friends.component';
 import { FriendDetailsComponent } from './components/friends/friend-details/friend-details.component';
 import { FlightListNicerComponent } from './components/flight-list-nicer/flight-list-nicer.component';
 import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
+import { FlightReserveComponent } from './components/flight-list-nicer/flight-reserve/flight-reserve.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +94,8 @@ import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-
     FriendsComponent,
     FriendDetailsComponent,
     FlightListNicerComponent,
-    TicketListNicerComponent
+    TicketListNicerComponent,
+    FlightReserveComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +105,6 @@ import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-
     HttpClientModule,
     DialogModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
   ],
   providers: [
     {

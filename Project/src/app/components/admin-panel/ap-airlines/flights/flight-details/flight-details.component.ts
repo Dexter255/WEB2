@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightService } from 'src/app/components/flight.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Flight } from 'src/app/models/flight/flight.model';
 import { ServerService } from 'src/app/components/server.service';
 
@@ -13,6 +13,7 @@ export class FlightDetailsComponent implements OnInit {
   flightId: number;
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     public flightService: FlightService,
     public serverService: ServerService) { }
 
@@ -37,6 +38,6 @@ export class FlightDetailsComponent implements OnInit {
   }
 
   onReserve(){
-    
+    this.router.navigate(['../../reserve', this.flightId], {relativeTo: this.route});
   }
 }

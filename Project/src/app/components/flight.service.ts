@@ -54,4 +54,8 @@ export class FlightService {
             tap((res: Flight[]) => this.flights = res)
         );
     }
+
+    reserveFlight(flightId: number, body: any){
+        return this.http.post(this.BaseURI + '/Flight/ReserveSeat/' + flightId, body);
+    }
 }
