@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectService.Models.Flight;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,9 +18,12 @@ namespace ProjectService.Models.Users
         public string Number { get; set; }
         public string Password { get; set; }
         public UserType Type { get; set; }
+        public string PassportNumber { get; set; }
         public List<Friend> Friends { get; set; }
         public List<Friend> FriendRequests { get; set; }
         public List<Friend> FriendRequestsSent { get; set; }
+        public List<ReservedFlight> ReservedFlights { get; set; }
+        public List<Flight.Flight> FlightInvitations { get; set; }
         #endregion
 
         #region Constructors

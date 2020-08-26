@@ -50,6 +50,7 @@ import { FriendDetailsComponent } from './components/friends/friend-details/frie
 import { FlightListNicerComponent } from './components/flight-list-nicer/flight-list-nicer.component';
 import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 import { FlightReserveComponent } from './components/flight-list-nicer/flight-reserve/flight-reserve.component';
+import { ReservationListComponent } from './components/reservation-list/reservation-list.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { FlightReserveComponent } from './components/flight-list-nicer/flight-re
     FriendDetailsComponent,
     FlightListNicerComponent,
     TicketListNicerComponent,
-    FlightReserveComponent
+    FlightReserveComponent,
+    ReservationListComponent
   ],
   imports: [
     BrowserModule,

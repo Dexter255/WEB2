@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectService.Models;
 
 namespace ProjectService.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200826114428_Fourteenth")]
+    partial class Fourteenth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,8 +243,6 @@ namespace ProjectService.Migrations
 
                     b.Property<int?>("AirlineId");
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<int>("Distance");
 
                     b.Property<DateTime>("EndDateAndTime");
@@ -266,8 +266,6 @@ namespace ProjectService.Migrations
 
                     b.HasIndex("AirlineId");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.ToTable("Flights");
                 });
 
@@ -288,27 +286,6 @@ namespace ProjectService.Migrations
                     b.HasIndex("AirlineId");
 
                     b.ToTable("Luggages");
-                });
-
-            modelBuilder.Entity("ProjectService.Models.Flight.Passenger", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ReservedFlightId");
-
-                    b.Property<string>("User_Fullname");
-
-                    b.Property<string>("User_PassportNumber");
-
-                    b.Property<string>("User_Username");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReservedFlightId");
-
-                    b.ToTable("Passengers");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Flight.QuickReservationTicket", b =>
@@ -336,23 +313,6 @@ namespace ProjectService.Migrations
                     b.HasIndex("AirlineId");
 
                     b.ToTable("QuickReservationTickets");
-                });
-
-            modelBuilder.Entity("ProjectService.Models.Flight.ReservedFlight", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<int>("FlightId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("ReservedFlights");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Flight.Row", b =>
@@ -617,10 +577,6 @@ namespace ProjectService.Migrations
                     b.HasOne("ProjectService.Models.Flight.Airline")
                         .WithMany("Flights")
                         .HasForeignKey("AirlineId");
-
-                    b.HasOne("ProjectService.Models.Users.ApplicationUser")
-                        .WithMany("FlightInvitations")
-                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Flight.Luggage", b =>
@@ -630,25 +586,11 @@ namespace ProjectService.Migrations
                         .HasForeignKey("AirlineId");
                 });
 
-            modelBuilder.Entity("ProjectService.Models.Flight.Passenger", b =>
-                {
-                    b.HasOne("ProjectService.Models.Flight.ReservedFlight")
-                        .WithMany("Passengers")
-                        .HasForeignKey("ReservedFlightId");
-                });
-
             modelBuilder.Entity("ProjectService.Models.Flight.QuickReservationTicket", b =>
                 {
                     b.HasOne("ProjectService.Models.Flight.Airline")
                         .WithMany("QuickReservationTickets")
                         .HasForeignKey("AirlineId");
-                });
-
-            modelBuilder.Entity("ProjectService.Models.Flight.ReservedFlight", b =>
-                {
-                    b.HasOne("ProjectService.Models.Users.ApplicationUser")
-                        .WithMany("ReservedFlights")
-                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Flight.Row", b =>

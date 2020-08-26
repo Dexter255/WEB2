@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace ProjectService.Models.Flight
 {
-    [Table("Seats")]
-    public class Seat
+    [Table("ReservedFlights")]
+    public class ReservedFlight
     {
         [Key]
         public int Id { get; set; }
-        public string User_Username { get; set; }
-        public string User_Fullname { get; set; }
-        public string User_PassportNumber { get; set; }
+        public int FlightId { get; set; }
+        public List<Passenger> Passengers { get; set; }
     }
 }

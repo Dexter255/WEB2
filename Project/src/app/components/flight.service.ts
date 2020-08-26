@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Flight } from '../models/flight/flight.model';
 import { tap } from 'rxjs/operators';
+import { SeatModel } from '../models/flight/seat-model.model';
 
 @Injectable({
     providedIn: 'root'
@@ -55,7 +56,7 @@ export class FlightService {
         );
     }
 
-    reserveFlight(flightId: number, body: any){
-        return this.http.post(this.BaseURI + '/Flight/ReserveSeat/' + flightId, body);
+    reserveFlight(flightId: number, body: SeatModel[]){
+        return this.http.post(this.BaseURI + '/Flight/ReserveFlight/' + flightId, body);
     }
 }

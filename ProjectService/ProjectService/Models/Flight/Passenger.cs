@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ProjectService.Models.Flight
 {
-    [Table("Seats")]
-    public class Seat
+    [Table("Passengers")]
+    public class Passenger
     {
         [Key]
         public int Id { get; set; }

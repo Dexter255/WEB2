@@ -17,3 +17,15 @@ input[type='checkbox'] {
 input:checked + .seatButtonFree {
     background: yellow;
 }
+
+input.ng-invalid.ng-touched{
+    border: 2px solid red;
+}
+
+input.ng-valid.ng-touched{
+    border: 2px solid green;
+}
+
+.red-span{
+    color: red;
+}

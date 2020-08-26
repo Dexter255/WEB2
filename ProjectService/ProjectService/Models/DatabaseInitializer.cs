@@ -18,19 +18,22 @@ namespace ProjectService.Models
             _context = context;
         }
 
-        public async void Initialize()
+        public async Task Initialize()
         {
             var roles = new List<string>() { "Admin", "Admin_RentACarCompanies", "Admin_Airlines", "User" };
 
             var roleStore = new RoleStore<IdentityRole>(_context);
+            roleStore.AutoSaveChanges = true;
 
             foreach(var role in roles)
             {
                 if(!_context.Roles.Any(x => x.Name == role))
                 {
-                    await roleStore.CreateAsync(new IdentityRole { Name = role });
+                    await roleStore.CreateAsync(new IdentityRole { Name = role, NormalizedName = role.ToUpper() });
                 }
             }
+
+            //await _context.SaveChangesAsync();
 
             var user = new ApplicationUser()
             {

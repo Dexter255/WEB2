@@ -27,6 +27,17 @@
             </span>
         </div>
         <div class="form-group">
+            <input class="form-control" type="text" placeholder="Passport number" formControlName="passportNumber" id="passportNumber">
+            <span *ngIf="!registerForm.get('passportNumber').valid && registerForm.get('passportNumber').touched">
+                <span class="p-2" *ngIf="registerForm.get('passportNumber').errors['required']">
+                    Passport number must be entered!
+                </span>
+                <span class="p-2" *ngIf="registerForm.get('passportNumber').errors['pattern']">
+                    Passport number must contains 9 digits!
+                </span>
+            </span>
+        </div>
+        <div class="form-group">
             <input class="form-control" type="text" placeholder="Address" formControlName="address" id="address">
             <span *ngIf="!registerForm.get('address').valid && registerForm.get('address').touched">
                 <span class="p-2" *ngIf="registerForm.get('address').errors['required']">

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectService.Models;
 using ProjectService.Models.Flight;
+using ProjectService.Models.Users;
 
 namespace ProjectService.Controllers
 {
@@ -16,8 +18,10 @@ namespace ProjectService.Controllers
     public class FlightController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public FlightController(DatabaseContext context)
+        public FlightController(DatabaseContext context,
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
         }
@@ -68,10 +72,10 @@ namespace ProjectService.Controllers
                 .Include(x => x.Flights)
                 .FirstOrDefault(x => x.Id == airlineId);
 
-            for(int row = 0; row < flight.ySeats; row++)
+            for (int row = 0; row < flight.ySeats; row++)
             {
                 Row rowObj = new Row();
-                for(int seat = 0; seat < flight.xSeats; seat++)
+                for (int seat = 0; seat < flight.xSeats; seat++)
                 {
                     rowObj.Seats.Add(new Seat());
                 }
@@ -195,32 +199,88 @@ namespace ProjectService.Controllers
             return airline.Flights;
         }
 
-        // POST: api/Flight/ReserveSeat/2
+        // POST: api/Flight/ReserveFlight/2
         [HttpPost("{flightId}")]
-        [Route("ReserveSeat/{flightId}")]
+        [Route("ReserveFlight/{flightId}")]
         [Authorize(Roles = "User")]
-        public async Task<ActionResult<Airline>> ReserveSeat(int flightId, SeatModel seat)
+        public async Task<IActionResult> ReserveFlight(int flightId, List<SeatModel> seats)
         {
-            var a = 2;
-            //var airline = _context.Airlines
-            //    .Include(x => x.Flights)
-            //    .FirstOrDefault(x => x.Id == airlineId);
+            string userId = User.Claims.First(x => x.Type == "UserID").Value;
+            var loggedUser = await _context.ApplicationUsers
+                .Include(x => x.ReservedFlights)
+                    .ThenInclude(y => y.Passengers)
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            //for (int row = 0; row < flight.ySeats; row++)
-            //{
-            //    Row rowObj = new Row();
-            //    for (int seat = 0; seat < flight.xSeats; seat++)
-            //    {
-            //        rowObj.Seats.Add(new Seat());
-            //    }
-            //    flight.Rows.Add(rowObj);
-            //}
+            var flight = await _context.Flights
+                .Include(x => x.Rows)
+                    .ThenInclude(y => y.Seats)
+                .FirstOrDefaultAsync(x => x.Id == flightId);
 
-            //airline.Flights.Add(flight);
-            //await _context.SaveChangesAsync();
+            List<Passenger> passengers = new List<Passenger>();
+            foreach (var seat in seats)
+            {
+                var seatTemp = flight.Rows
+                    .FirstOrDefault(x => x.Id == seat.RowId)
+                    .Seats
+                    .FirstOrDefault(x => x.Id == seat.SeatId);
 
-            //return CreatedAtAction("PostFlight", new { id = flight.Id }, flight);
-            return null;
+                // dodaje se osoba koja je napravila rezervaciju
+                if(!String.IsNullOrEmpty(seat.User_Username) && seat.User_Username.Equals("for me"))
+                {
+                    seatTemp.User_Fullname = loggedUser.Fullname;
+                    seatTemp.User_PassportNumber = loggedUser.PassportNumber;
+                    seatTemp.User_Username = loggedUser.UserName;
+
+                    passengers.Add(new Passenger()
+                    {
+                        User_Fullname = loggedUser.Fullname,
+                        User_PassportNumber = loggedUser.PassportNumber,
+                        User_Username = loggedUser.UserName
+                    });
+                }
+                // dodaje se osoba koja nije korisnik aplikacije
+                else if (String.IsNullOrEmpty(seat.User_Username))
+                {
+                    seatTemp.User_Fullname = seat.User_Fullname;
+                    seatTemp.User_PassportNumber = seat.User_PassportNumber;
+
+                    passengers.Add(new Passenger()
+                    {
+                        User_Fullname = seat.User_Fullname,
+                        User_PassportNumber = seat.User_PassportNumber
+                    });
+                }
+                // poziva se postojeci user
+                else
+                {
+                    var user = await _context.ApplicationUsers
+                        .Include(x => x.FlightInvitations)
+                        .FirstOrDefaultAsync(x => x.UserName == seat.User_Username);
+
+                    user.FlightInvitations.Add(flight);
+
+                    seatTemp.User_Fullname = user.Fullname;
+                    seatTemp.User_PassportNumber = user.PassportNumber;
+                    seatTemp.User_Username = user.UserName;
+
+                    passengers.Add(new Passenger()
+                    {
+                        User_Fullname = seat.User_Fullname,
+                        User_PassportNumber = seat.User_PassportNumber,
+                        User_Username = seat.User_Username
+                    });
+                }
+            }
+
+            loggedUser.ReservedFlights.Add(new ReservedFlight()
+            {
+                FlightId = flight.Id,
+                Passengers = passengers
+            });
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         private bool FlightExists(int id)

@@ -43,6 +43,7 @@ import { FriendDetailsComponent } from './components/friends/friend-details/frie
 import { FlightListNicerComponent } from './components/flight-list-nicer/flight-list-nicer.component';
 import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 import { FlightReserveComponent } from './components/flight-list-nicer/flight-reserve/flight-reserve.component';
+import { ReservationListComponent } from './components/reservation-list/reservation-list.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -52,7 +53,7 @@ const routes: Routes = [
   { path: "friends", component: FriendsComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
     { path: "details/:username", component: FriendDetailsComponent }
   ] },
-  // { path: "reservations", component: UserProfile, canActivate: [AuthGuard], data: { roles: ['User'] } },
+  { path: "reservations", component: ReservationListComponent, canActivate: [AuthGuard], data: { roles: ['User'] } },
   // { path: "invitations", component: UserProfile, canActivate: [AuthGuard], data: { roles: ['User'] } },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent },

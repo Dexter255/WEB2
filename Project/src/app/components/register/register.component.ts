@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
       'fullname': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'username': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'email': new FormControl(null, [Validators.required, Validators.email, this.checkEmail]),
+      'passportNumber': new FormControl(null, [Validators.required, Validators.pattern('^(?!0{3})[0-9]{9}$')]),
       'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'number': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6), this.comparePasswords]),
@@ -36,7 +37,8 @@ export class RegisterComponent implements OnInit {
       this.registerForm.get('address').value.trim(),
       this.registerForm.get('number').value.trim(),
       this.registerForm.get('password').value,
-      UserType.User
+      UserType.User,
+      this.registerForm.get('passportNumber').value
     );
 
 
