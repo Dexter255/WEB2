@@ -15,5 +15,7 @@ namespace ProjectService.Models.Flight
         public string User_Username { get; set; }
         public string User_Fullname { get; set; }
         public string User_PassportNumber { get; set; }
+        public int RowId { get; set; }
+        public int SeatId { get; set; }
     }
 }

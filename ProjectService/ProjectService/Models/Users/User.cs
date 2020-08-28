@@ -23,7 +23,7 @@ namespace ProjectService.Models.Users
         public List<Friend> FriendRequests { get; set; }
         public List<Friend> FriendRequestsSent { get; set; }
         public List<ReservedFlight> ReservedFlights { get; set; }
-        public List<Flight.Flight> FlightInvitations { get; set; }
+        public List<FlightInvitation> FlightInvitations { get; set; }
         #endregion
 
         #region Constructors

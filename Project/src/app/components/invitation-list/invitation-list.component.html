@@ -1,0 +1,31 @@
+<div class="row ml-3">
+    <div class="col-md-4">
+        <div class="list-group" *ngIf="flightService.flightInvitations.length !== 0 else empty">
+            <!-- <a type="button" class="list-group-item list-group-item-action"
+                *ngFor="let flight of flightService.flightInvitations" (click)="onInvitationDetails(flight)"
+                routerLinkActive="active">
+                {{ flight.Destination }}
+            </a> -->
+            <li class="list-group-item d-flex justify-content-between" *ngFor="let flight of flightService.flightInvitations">
+                <p class="p-0 m-0 flex-grow-1">{{ flight.Destination }} </p>
+                <button class="btn btn-info ml-1" (click)="onFlightInvitationDetails(flight)">Details</button>
+                <div *ngIf="convertEnum(flight.Option) === 'Pending'">
+                    <button class="btn btn-success ml-1" (click)="onFlightInvitationAccept(flight.Id)">Accept</button>
+                    <button class="btn btn-danger ml-1" (click)="onFlightInvitationDecline(flight.Id)">Decline</button>
+                </div>
+                <div *ngIf="convertEnum(flight.Option) === 'Accepted'">
+                    <label>Accepted</label>
+                </div>
+                <div *ngIf="convertEnum(flight.Option) === 'Declined'">
+                    <label>Declined</label>
+                </div>
+            </li>
+        </div>
+        <ng-template #empty>
+            <p class="text-info">You don't have any flight invitation!</p>
+        </ng-template>
+    </div>
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightService } from '../../flight.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ServerService } from '../../server.service';
 import { SeatModel } from 'src/app/models/flight/seat-model.model';
+import { SeatType } from 'src/app/models/flight/seat-type.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-flight-reserve',
@@ -15,6 +17,8 @@ export class FlightReserveComponent implements OnInit {
   formSeat: FormGroup;
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService,
     public flightService: FlightService,
     public serverService: ServerService) { }
 
@@ -30,6 +34,10 @@ export class FlightReserveComponent implements OnInit {
     });
   }
 
+  convertEnum(seatType: SeatType){
+    return SeatType[seatType];
+  }
+  
   onAddSeat(rowId: number, seatId: number, seatNumber: number) {
     let formGroup = new FormGroup({
       'seatNumber': new FormControl(seatNumber),
@@ -38,7 +46,7 @@ export class FlightReserveComponent implements OnInit {
       'seatId': new FormControl(seatId),
       'friendUsername': new FormControl(null),
       'fullname': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-      'passportNumber': new FormControl(null, Validators.required)
+      'passportNumber': new FormControl(null, [Validators.required, Validators.pattern('^(?!0{3})[0-9]{9}$')])
     });
 
     (<FormArray>this.formSeat.get('seats')).push(formGroup);
@@ -69,7 +77,7 @@ export class FlightReserveComponent implements OnInit {
       this.formSeat.get('seats')['controls'][index].patchValue({
         'friendUsername': 'for me',
         'fullname': 'null',
-        'passportNumber': '000000000'
+        'passportNumber': '001000000'
       });
     }
     else{
@@ -85,7 +93,7 @@ export class FlightReserveComponent implements OnInit {
     this.formSeat.get('seats')['controls'][index].patchValue({
       'friendUsername': this.formSeat.get('seats')['controls'][index].get('friendUsername').value,
       'fullname': 'null',  // kasnije se na backend-u pokupe podaci ako na tom mestu sedi prijatelj
-      'passportNumber': '000000000'
+      'passportNumber': '001000000'
     });
   }
 
@@ -102,7 +110,13 @@ export class FlightReserveComponent implements OnInit {
       ));
     });
 
-    if(seats.length !== 0)
-      this.flightService.reserveFlight(this.flightId, seats).subscribe();
+    if(seats.length !== 0){
+      this.flightService.reserveFlight(this.flightId, seats).subscribe(
+        res => {
+          this.toastr.success('Flight reservation successfully made', 'Reservation');
+          this.router.navigate(['reservations']);
+        }
+      );
+    }
   }
 }

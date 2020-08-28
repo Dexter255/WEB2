@@ -1,4 +1,5 @@
 import { AppComponent } from './app.component';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -6,6 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module'
+import { ToastrModule } from 'ngx-toastr';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -51,6 +53,10 @@ import { FlightListNicerComponent } from './components/flight-list-nicer/flight-
 import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 import { FlightReserveComponent } from './components/flight-list-nicer/flight-reserve/flight-reserve.component';
 import { ReservationListComponent } from './components/reservation-list/reservation-list.component';
+import { ReservedFlightDetailsComponent } from './components/reservation-list/reserved-flight-details/reserved-flight-details.component';
+import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
+import { InvitationDetailsComponent } from './components/invitation-list/invitation-details/invitation-details.component';
+import { AddQuickReservationTicketsComponent } from './components/admin-panel/ap-airlines/flights/add-quick-reservation-tickets/add-quick-reservation-tickets.component';
 
 @NgModule({
   declarations: [
@@ -97,9 +103,14 @@ import { ReservationListComponent } from './components/reservation-list/reservat
     FlightListNicerComponent,
     TicketListNicerComponent,
     FlightReserveComponent,
-    ReservationListComponent
+    ReservationListComponent,
+    ReservedFlightDetailsComponent,
+    InvitationListComponent,
+    InvitationDetailsComponent,
+    AddQuickReservationTicketsComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -107,6 +118,7 @@ import { ReservationListComponent } from './components/reservation-list/reservat
     HttpClientModule,
     DialogModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

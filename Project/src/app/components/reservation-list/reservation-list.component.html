@@ -1,5 +1,5 @@
 <div class="row ml-3 mr-3 mt-3">
-    <div class="col-3">
+    <div class="col-2">
       <div class="list-group" id="list-tab" role="tablist">
         <a class="list-group-item list-group-item-action active" id="list-flights-list" data-toggle="list"
           href="#list-flights" role="tab" aria-controls="friends">Flights</a>
@@ -10,23 +10,18 @@
     <div class="col-4">
       <div class="tab-content" id="nav-tabContent">
         <!-- Flights -->
-        <!-- <div class="tab-pane fade show active" id="list-flights" role="tabpanel" aria-labelledby="list-flights-list">
-          <ul class="list-group" *ngIf="serverService.reservedFlights.length !== 0 else flightsEmpty">
-            <li class="list-group-item d-flex justify-content-between" *ngFor="let flight of serverService.reservedFlights">
-              <p class="p-0 m-0 flex-grow-1">{{ friend.Username }}, {{ friend.Fullname }} </p>
-              <div *ngIf="friend.AreFriends else notFriends">
-                <button class="btn btn-danger" (click)="onDeleteFriend(friend.Username)">Delete</button>
-              </div>
-              <ng-template #notFriends>
-                <button class="btn btn-success" (click)="onSendFriendRequest(friend.Username)">Send request</button>
-              </ng-template>
-              <button class="btn btn-info ml-1" (click)="onDetailsFriend(friend.Username)">Details</button>
+        <div class="tab-pane fade show active" id="list-flights" role="tabpanel" aria-labelledby="list-flights-list">
+          <ul class="list-group" *ngIf="flightService.reservedFlights.length !== 0 else flightsEmpty">
+            <li class="list-group-item d-flex justify-content-between" *ngFor="let flight of flightService.reservedFlights">
+              <p class="p-0 m-0 flex-grow-1">{{ flight.Destination }} </p>
+              <button class="btn btn-info ml-1" (click)="onReservedFlightDetails(flight)">Details</button>
+              <button class="btn btn-danger ml-1" (click)="onReservedFlightCancel(flight)">Cancel</button>
             </li>
           </ul>
           <ng-template #flightsEmpty>
             <p class="text-info">You haven't made any reservation.</p>
           </ng-template>
-        </div> -->
+        </div>
   
         <!-- Vehicles  -->
         <!-- <div class="tab-pane fade" id="list-friend-requests-sent" role="tabpanel" aria-labelledby="list-friend-requests-sent-list">
@@ -46,7 +41,7 @@
         </div> -->
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <router-outlet></router-outlet>
     </div>
   </div>

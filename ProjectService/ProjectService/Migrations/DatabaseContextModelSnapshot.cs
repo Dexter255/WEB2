@@ -241,8 +241,6 @@ namespace ProjectService.Migrations
 
                     b.Property<int?>("AirlineId");
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<int>("Distance");
 
                     b.Property<DateTime>("EndDateAndTime");
@@ -266,9 +264,30 @@ namespace ProjectService.Migrations
 
                     b.HasIndex("AirlineId");
 
+                    b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("ProjectService.Models.Flight.FlightInvitation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Destination");
+
+                    b.Property<int>("FlightId");
+
+                    b.Property<string>("InvitationFromUser");
+
+                    b.Property<int>("Option");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Flights");
+                    b.ToTable("FlightInvitations");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Flight.Luggage", b =>
@@ -297,6 +316,10 @@ namespace ProjectService.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ReservedFlightId");
+
+                    b.Property<int>("RowId");
+
+                    b.Property<int>("SeatId");
 
                     b.Property<string>("User_Fullname");
 
@@ -346,6 +369,8 @@ namespace ProjectService.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
+                    b.Property<string>("Destination");
+
                     b.Property<int>("FlightId");
 
                     b.HasKey("Id");
@@ -377,6 +402,8 @@ namespace ProjectService.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("RowId");
+
+                    b.Property<int>("Type");
 
                     b.Property<string>("User_Fullname");
 
@@ -617,7 +644,10 @@ namespace ProjectService.Migrations
                     b.HasOne("ProjectService.Models.Flight.Airline")
                         .WithMany("Flights")
                         .HasForeignKey("AirlineId");
+                });
 
+            modelBuilder.Entity("ProjectService.Models.Flight.FlightInvitation", b =>
+                {
                     b.HasOne("ProjectService.Models.Users.ApplicationUser")
                         .WithMany("FlightInvitations")
                         .HasForeignKey("ApplicationUserId");

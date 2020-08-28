@@ -32,6 +32,11 @@ namespace ProjectService.Models
         public DbSet<Flight.Flight> Flights{ get; set; }
         public DbSet<Luggage> Luggages { get; set; }
         public DbSet<QuickReservationTicket> QuickReservationTickets{ get; set; }
+        public DbSet<ReservedFlight> ReservedFlights { get; set; }
+        public DbSet<FlightInvitation> FlightInvitations { get; set; }
+        public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<Row> Rows { get; set; }
+        public DbSet<Seat> Seats { get; set; }
         #endregion
 
 

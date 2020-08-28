@@ -5,6 +5,7 @@ import { AirlineService } from 'src/app/components/airline.service';
 import { Destination } from 'src/app/models/flight/destination.model';
 import { Flight } from 'src/app/models/flight/flight.model';
 import { FlightService } from 'src/app/components/flight.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-flight',
@@ -18,6 +19,7 @@ export class AddFlightComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService,
     private airlineService: AirlineService,
     private flightService: FlightService) { }
 
@@ -192,7 +194,8 @@ export class AddFlightComponent implements OnInit {
     if (this.addFlight.get('flightId').value === 0) {
       this.flightService.addFlight(this.addFlight.get('airlineId').value, flight).subscribe(
         res => {
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.toastr.success('Flight successfully added', 'Flight');
+          this.router.navigate(['../add-seats', res['Id']], { relativeTo: this.route });
         },
         err => {
           console.log(err);
@@ -202,6 +205,7 @@ export class AddFlightComponent implements OnInit {
     else {
       this.flightService.updateFlight(flight).subscribe(
         res => {
+          this.toastr.success('Flight successfully edited', 'Flight');
           this.router.navigate(['../../'], { relativeTo: this.route });
         },
         err => {

@@ -8,6 +8,12 @@ input[type='checkbox'] {
     background: red;
 }
 
+.seatButtonTicket {
+    padding: 7px; 
+    border: 1px solid #ccc;
+    background: purple;
+}
+
 .seatButtonFree {
     padding: 7px; 
     border: 1px solid #ccc;

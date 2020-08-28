@@ -3,15 +3,20 @@
     <div class="row justify-content-center ml-4" *ngFor="let row of flightService.flight.Rows; let i = index">
         <div *ngFor="let seat of row.Seats; let j = index" [ngClass]="{'mr-5': j % 3 === 2}">
             <label>
-                <span *ngIf="seat.User_PassportNumber !== null">
+                <span *ngIf="convertEnum(seat.Type) === 'Taken'">
                     <input type="checkbox" checked disabled/>
                     <span class="seatButtonTaken" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
                     <span class="seatButtonTaken" *ngIf="i === 0">0{{ j + 1}}</span>
                 </span>
-                <span *ngIf="seat.User_PassportNumber === null">
+                <span *ngIf="convertEnum(seat.Type) === 'Free'">
                     <input id={{row.Id}}+{{seat.Id}} type="checkbox" (change)="checked(row.Id, seat.Id, i, j)"/>
                     <span class="seatButtonFree" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
                     <span class="seatButtonFree" *ngIf="i === 0">0{{ j + 1}}</span>
+                </span>
+                <span *ngIf="convertEnum(seat.Type) === 'QuickReservation'">
+                    <input type="checkbox" checked disabled/>
+                    <span class="seatButtonTicket" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
+                    <span class="seatButtonTicket" *ngIf="i === 0">0{{ j + 1}}</span>
                 </span>
             </label>
         </div>
@@ -40,17 +45,17 @@
                             <div class="row" *ngIf="formSeat.get('seats')['controls'][i].get('seatFor').value === 'Other'">
                                 <div class="col-md-4">
                                     <input title="Fullname" type="text" class="form-control" formControlName="fullname" placeholder="Fullname">
-                                    <!-- <span *ngIf="!this.addAirline.get('luggageInfo')['controls'][i].get('weight').valid && this.addAirline.get('luggageInfo')['controls'][i].get('weight').touched">
-                                        <span *ngIf="this.addAirline.get('luggageInfo')['controls'][i].get('weight').errors['required']">Weight must be entered!</span>
-                                        <span *ngIf="this.addAirline.get('luggageInfo')['controls'][i].get('weight').errors['pattern']">Only numbers from 0-9 are allowed!</span>
-                                    </span> -->
+                                    <span class="red-span" *ngIf="!this.formSeat.get('seats')['controls'][i].get('fullname').valid && this.formSeat.get('seats')['controls'][i].get('fullname').touched">
+                                        <span *ngIf="this.formSeat.get('seats')['controls'][i].get('fullname').errors['required']">Fullname must be entered!</span>
+                                        <span *ngIf="this.formSeat.get('seats')['controls'][i].get('fullname').errors['minlength']">Fullname must contain atleast 4 characters!</span>
+                                    </span>
                                 </div>
                                 <div class="col-md-4">
                                     <input title="Passport number" type="text" class="form-control" formControlName="passportNumber" placeholder="Passport number">
-                                    <!-- <span *ngIf="!this.addAirline.get('luggageInfo')['controls'][i].get('price').valid && this.addAirline.get('luggageInfo')['controls'][i].get('price').touched">
-                                        <span *ngIf="this.addAirline.get('luggageInfo')['controls'][i].get('price').errors['required']">Price must be entered!</span>
-                                        <span *ngIf="this.addAirline.get('luggageInfo')['controls'][i].get('price').errors['pattern']">Only numbers from 0-9 are allowed!</span>
-                                    </span> -->
+                                    <span class="red-span" *ngIf="!this.formSeat.get('seats')['controls'][i].get('passportNumber').valid && this.formSeat.get('seats')['controls'][i].get('passportNumber').touched">
+                                        <span *ngIf="this.formSeat.get('seats')['controls'][i].get('passportNumber').errors['required']">Passport number must be entered!</span>
+                                        <span *ngIf="this.formSeat.get('seats')['controls'][i].get('passportNumber').errors['pattern']">Passport number must contain 9 digits!</span>
+                                    </span>
                                 </div>
                             </div>
                             <div class="row" *ngIf="formSeat.get('seats')['controls'][i].get('seatFor').value === 'Friend'">

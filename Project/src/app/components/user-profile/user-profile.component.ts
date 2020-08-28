@@ -29,6 +29,7 @@ export class UserProfile implements OnInit {
 			'fullname': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'username': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'email': new FormControl(null, [Validators.required, Validators.email]),
+			'passportNumber': new FormControl(null),
 			'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'number': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')])
 		});
@@ -39,6 +40,7 @@ export class UserProfile implements OnInit {
 					'fullname': res.Fullname,
 					'username': res.Username,
 					'email': res.Email,
+					'passportNumber': res.PassportNumber,
 					'address': res.Address,
 					'number': res.Number
 				});

@@ -1,0 +1,26 @@
+<div class="container justify-content-center" *ngIf="flightService.flight">
+    <h3 class="text-center p-3">Choose seat(s) for quick reservation tickets</h3>
+    <div class="row justify-content-center ml-4" *ngFor="let row of flightService.flight.Rows; let i = index">
+        <div *ngFor="let seat of row.Seats; let j = index" [ngClass]="{'mr-5': j % 3 === 2}">
+            <label>
+                <span>
+                    <input id={{row.Id}}+{{seat.Id}} type="checkbox" (change)="checked(row.Id, seat.Id, i, j)"/>
+                    <span class="seatButtonFree" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
+                    <span class="seatButtonFree" *ngIf="i === 0">0{{ j + 1}}</span>
+                </span>
+            </label>
+        </div>
+    </div>
+    <form [formGroup]="formSeat" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="col-md-8" formArrayName="seats">
+            <div class="form-group" *ngFor="let seat of formSeat.get('seats')['controls']; let i = index">
+                <div [formGroupName]="i">
+                    <input type="hidden" [id]="formSeat.get('seats')['controls'][i].get('seatNumber').value" [value]="i">
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-success" [disabled]="!formSeat.valid" type="submit"> Confirm </button>
+        </div>
+    </form>
+</div>

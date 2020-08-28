@@ -13,6 +13,7 @@ namespace ProjectService.Models.Flight
         [Key]
         public int Id { get; set; }
         public int FlightId { get; set; }
+        public string Destination { get; set; }
         public List<Passenger> Passengers { get; set; }
     }
 }

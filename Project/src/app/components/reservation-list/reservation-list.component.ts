@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from '../server.service';
+import { FlightService } from '../flight.service';
+import { ReservedFlight } from 'src/app/models/flight/reserved-flight.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-reservation-list',
@@ -8,10 +11,28 @@ import { ServerService } from '../server.service';
 })
 export class ReservationListComponent implements OnInit {
 
-  constructor(public serverService: ServerService) { }
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    public flightService: FlightService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.serverService.getUserProfile().subscribe();
+    this.flightService.getReservedFlight().subscribe();
   }
 
+  onReservedFlightDetails(flight: ReservedFlight){
+    this.flightService.passengers = flight.Passengers;
+    this.router.navigate(['flight', flight.FlightId], {relativeTo: this.route})
+  }
+
+  onReservedFlightCancel(flight: ReservedFlight){
+    this.flightService.cancelReservation(flight.FlightId).subscribe(
+      res => { 
+        this.toastr.success(res['message'], 'Reservation');
+      },
+      err => {
+        this.toastr.error(err.error['message'], 'Reservation');
+      }
+    );
+  }
 }

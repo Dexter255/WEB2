@@ -1,7 +1,7 @@
 import { UserType } from './user-type.model';
 import { Friend } from './friend.model';
 import { ReservedFlight } from '../flight/reserved-flight.model';
-import { Flight } from '../flight/flight.model';
+import { FlightInvitation } from '../flight/flight-invitation.model';
 
 export class User
 {
@@ -16,8 +16,8 @@ export class User
     Friends: Friend[];
     FriendRequests: Friend[];
     FriendRequestsSent: Friend[];
-    ReservedFlight: ReservedFlight[];
-    FlightInvitations: Flight[];
+    ReservedFlights: ReservedFlight[];
+    FlightInvitations: FlightInvitation[];
 
     constructor(fullname: string, username: string, email: string, address: string, number: string, password: string, type: UserType, passportNumber?: string){
         this.Fullname = fullname;

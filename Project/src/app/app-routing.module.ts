@@ -44,6 +44,11 @@ import { FlightListNicerComponent } from './components/flight-list-nicer/flight-
 import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 import { FlightReserveComponent } from './components/flight-list-nicer/flight-reserve/flight-reserve.component';
 import { ReservationListComponent } from './components/reservation-list/reservation-list.component';
+import { ReservedFlightDetailsComponent } from './components/reservation-list/reserved-flight-details/reserved-flight-details.component';
+import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
+import { InvitationDetailsComponent } from './components/invitation-list/invitation-details/invitation-details.component';
+import { AddQuickReservationTicketsComponent } from './components/admin-panel/ap-airlines/flights/add-quick-reservation-tickets/add-quick-reservation-tickets.component';
+// import { FlightInvitationDetailsComponent } from './components/invitation-list/flight-invitation-details/flight-invitation-details.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -53,8 +58,12 @@ const routes: Routes = [
   { path: "friends", component: FriendsComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
     { path: "details/:username", component: FriendDetailsComponent }
   ] },
-  { path: "reservations", component: ReservationListComponent, canActivate: [AuthGuard], data: { roles: ['User'] } },
-  // { path: "invitations", component: UserProfile, canActivate: [AuthGuard], data: { roles: ['User'] } },
+  { path: "reservations", component: ReservationListComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
+    { path: "flight/:id", component: ReservedFlightDetailsComponent }
+  ] },
+  { path: "invitations", component: InvitationListComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
+    { path: "flight/:id", component: InvitationDetailsComponent }
+  ] },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent },
     { path: ":id/vehicles", component: VehicleListNicerComponent, children: [
@@ -93,7 +102,8 @@ const routes: Routes = [
         { path: "", component: FlightListComponent },
         { path:"add", component: AddFlightComponent },
         { path:"details/:id", component: FlightDetailsComponent },
-        { path:"edit/:id", component: AddFlightComponent }
+        { path:"edit/:id", component: AddFlightComponent },
+        { path: "add-seats/:id", component: AddQuickReservationTicketsComponent }
       ]},
       { path: ":id/tickets", component: TicketsComponent, children: [
         { path: "", component: TicketListComponent },

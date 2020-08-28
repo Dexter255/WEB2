@@ -7,6 +7,7 @@ import { Friend } from '../models/korisnik/friend.model';
 import { tap } from 'rxjs/operators';
 import { ReservedFlight } from '../models/flight/reserved-flight.model';
 import { Flight } from '../models/flight/flight.model';
+import { FlightInvitation } from '../models/flight/flight-invitation.model';
 
 @Injectable({
     providedIn: 'root'
@@ -17,8 +18,6 @@ export class ServerService {
     public friends: Friend[];
     public friendRequests: Friend[];
     public friendRequestsSent: Friend[];
-    public reservedFlights: ReservedFlight[];
-    public flightInvitations: Flight[];
 
     constructor(private http: HttpClient,
         private router: Router) {
@@ -48,8 +47,6 @@ export class ServerService {
                         this.friends = res.Friends;
                         this.friendRequests = res.FriendRequests;
                         this.friendRequestsSent = res.FriendRequestsSent;
-                        this.reservedFlights = res.ReservedFlight;
-                        this.flightInvitations = res.FlightInvitations;
                     }
                 )
             );

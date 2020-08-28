@@ -113,10 +113,6 @@ namespace ProjectService.Controllers
                 .Include(x => x.Friends)
                 .Include(x => x.FriendRequests)
                 .Include(x => x.FriendRequestsSent)
-                .Include(x => x.ReservedFlights)
-                    .ThenInclude(y => y.Passengers)
-                .Include(x => x.FlightInvitations)
-                    .ThenInclude(y => y.Locations)
                 .FirstOrDefaultAsync(x => x.Id == userId);
 
             user.Friends.ForEach(x => x.AreFriends = true);
@@ -126,13 +122,12 @@ namespace ProjectService.Controllers
                 Fullname = user.Fullname,
                 Username = user.UserName,
                 Email = user.Email,
+                PassportNumber = user.PassportNumber,
                 Address = user.Address,
                 Number = user.PhoneNumber,
                 Friends = user.Friends,
                 FriendRequests = user.FriendRequests,
                 FriendRequestsSent = user.FriendRequestsSent,
-                ReservedFlights = user.ReservedFlights,
-                FlightInvitations = user.FlightInvitations
             };
         }
 

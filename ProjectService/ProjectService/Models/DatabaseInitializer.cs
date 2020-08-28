@@ -33,8 +33,6 @@ namespace ProjectService.Models
                 }
             }
 
-            //await _context.SaveChangesAsync();
-
             var user = new ApplicationUser()
             {
                 UserName = "Dexter",
