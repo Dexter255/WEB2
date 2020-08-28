@@ -1,7 +1,7 @@
-<div class="row ml-3">
+<!-- <div class="row ml-3">
     <h6 class="ml-3">Search flights by:</h6>
     <div class="col-md-12">
-        <form class="form-inline" [formGroup]="searchTickets" (ngSubmit)="onSearch()">
+        <form class="form-inline" [formGroup]="searchFlights" (ngSubmit)="onSearch()">
             <div class="form-row">
                 <div class="col">
                     <input formControlName="startDestination" type="text" class="form-control" placeholder="Start destination" title="Start destination">
@@ -31,26 +31,28 @@
             </div>
         </form>
     </div>
-</div>
-<div class="ml-3 mr-3">
+</div> -->
+<!-- <div class="ml-3 mr-3">
     <hr style="border-color: cadetblue;">
-</div>
+</div> -->
 <div class="row ml-3">
     <div class="col-md-4">
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <div class="col-md-6">
                 <select #sortBy class="custom-select" (change)="onSortChange(sortBy.value)">
                     <option selected="true" disabled>Sort by</option>    
-                    <option value="0">Price &uarr;</option>
-                    <option value="1">Price &darr;</option>
+                    <option value="0">Price &uarr; </option>
+                    <option value="1">Price &darr; </option>
+                    <option value="2">Duration &uarr; </option>
+                    <option value="3">Duration &darr; </option>
                 </select>
             </div>
-        </div>
+        </div> -->
         <div class="list-group" *ngIf="ticketService.tickets.length !== 0 else empty">
             <a type="button" class="list-group-item list-group-item-action"
                 *ngFor="let ticket of ticketService.tickets" [routerLink]="['details', ticket.Id]"
                 routerLinkActive="active">
-                {{ ticket.StartDestination }}, {{ ticket.EndDestination }}, {{ ticket.TicketPrice }}&euro;
+                {{ ticket.StartDestination }}, {{ ticket.EndDestination }}, {{ ticket.Hours }}, {{ ticket.TicketPrice }}&euro;
             </a>
         </div>
         <ng-template #empty>

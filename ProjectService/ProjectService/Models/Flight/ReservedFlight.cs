@@ -12,8 +12,14 @@ namespace ProjectService.Models.Flight
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
         public int FlightId { get; set; }
+
+        [Required]
         public string Destination { get; set; }
+
+        [Required]
         public List<Passenger> Passengers { get; set; }
     }
 }

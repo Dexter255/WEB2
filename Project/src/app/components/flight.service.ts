@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Flight } from '../models/flight/flight.model';
 import { tap } from 'rxjs/operators';
-import { SeatModel } from '../models/flight/seat-model.model';
 import { ReservedFlight } from '../models/flight/reserved-flight.model';
 import { Passenger } from '../models/flight/passenger.model';
 import { FlightInvitation } from '../models/flight/flight-invitation.model';
@@ -17,6 +16,7 @@ export class FlightService {
     public passengers: Passenger[];
     public flightInvitations: FlightInvitation[];
     public invitationFromUser: string;
+    public areTickets: boolean;
     private readonly BaseURI = 'https://localhost:44305/api';
 
     constructor(private http: HttpClient) {
@@ -24,6 +24,7 @@ export class FlightService {
         this.reservedFlights = [];
         this.passengers = [];
         this.flightInvitations = [];
+        this.areTickets = false;
     }
 
     checkFlightId(companyId: number, vehicleId: number) {
@@ -55,12 +56,12 @@ export class FlightService {
         return this.http.delete(this.BaseURI + '/Flight/' + flightId);
     }
 
-    addFlight(airlineId: number, flight: Flight) {
-        return this.http.post(this.BaseURI + '/Flight/AddFlight/' + airlineId, flight);
+    addFlight(airlineId: number, xSeats: number, ySeats: number, flight: Flight) {
+        return this.http.post(this.BaseURI + '/Flight/AddFlight/' + airlineId + '/' + xSeats + '/' + ySeats, flight);
     }
 
-    addSeatsForQuickReservationTickets(flightId: number, seats: SeatModel[]){
-        return this.http.post(this.BaseURI + '/Flight/AddSeatsForQuickReservationTickets/' + flightId, seats);
+    addSeatsForQuickReservationTickets(flightId: number, passengers: Passenger[]){
+        return this.http.post(this.BaseURI + '/Flight/AddSeatsForQuickReservationTickets/' + flightId, passengers);
     }
     
     searchFlights(airlineId: number, body: any){
@@ -70,8 +71,8 @@ export class FlightService {
         );
     }
 
-    reserveFlight(flightId: number, body: SeatModel[]){
-        return this.http.post(this.BaseURI + '/Flight/ReserveFlight/' + flightId, body);
+    reserveFlight(flightId: number, passengers: Passenger[]){
+        return this.http.post(this.BaseURI + '/Flight/ReserveFlight/' + flightId, passengers);
     }
 
     getReservedFlight(){

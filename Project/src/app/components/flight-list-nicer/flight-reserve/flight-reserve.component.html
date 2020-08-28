@@ -1,8 +1,9 @@
 <div class="container justify-content-center" *ngIf="flightService.flight">
-    <h3 class="text-center p-3">Choose seat(s)</h3>
+    <h3 class="text-center p-3" *ngIf="!flightService.areTickets">Choose seat(s)</h3>
+    <h3 class="text-center p-3" *ngIf="flightService.areTickets">Choose seat</h3>
     <div class="row justify-content-center ml-4" *ngFor="let row of flightService.flight.Rows; let i = index">
         <div *ngFor="let seat of row.Seats; let j = index" [ngClass]="{'mr-5': j % 3 === 2}">
-            <label>
+            <label *ngIf="!flightService.areTickets">
                 <span *ngIf="convertEnum(seat.Type) === 'Taken'">
                     <input type="checkbox" checked disabled/>
                     <span class="seatButtonTaken" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
@@ -14,7 +15,24 @@
                     <span class="seatButtonFree" *ngIf="i === 0">0{{ j + 1}}</span>
                 </span>
                 <span *ngIf="convertEnum(seat.Type) === 'QuickReservation'">
+                    <input type="checkbox" disabled/>
+                    <span class="seatButtonTicket" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
+                    <span class="seatButtonTicket" *ngIf="i === 0">0{{ j + 1}}</span>
+                </span>
+            </label>
+            <label *ngIf="flightService.areTickets">
+                <span *ngIf="convertEnum(seat.Type) === 'Taken'">
                     <input type="checkbox" checked disabled/>
+                    <span class="seatButtonTaken" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
+                    <span class="seatButtonTaken" *ngIf="i === 0">0{{ j + 1}}</span>
+                </span>
+                <span *ngIf="convertEnum(seat.Type) === 'Free'">
+                    <input type="checkbox" disabled/>
+                    <span class="seatButtonFree" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
+                    <span class="seatButtonFree" *ngIf="i === 0">0{{ j + 1}}</span>
+                </span>
+                <span *ngIf="convertEnum(seat.Type) === 'QuickReservation'">
+                    <input [disabled]="formSeat.get('seats')['controls'].length >= 1" id={{row.Id}}+{{seat.Id}} type="checkbox" (change)="checked(row.Id, seat.Id, i, j)"/>
                     <span class="seatButtonTicket" *ngIf="i !== 0">{{ i * 9 + j + 1}}</span>
                     <span class="seatButtonTicket" *ngIf="i === 0">0{{ j + 1}}</span>
                 </span>
@@ -26,7 +44,7 @@
     </div>
     <div class="container">
         <form [formGroup]="formSeat" (ngSubmit)="onSubmit()" autocomplete="off">
-            <div class="form-group row">
+            <div class="form-group row" *ngIf="!flightService.areTickets">
                 <div class="col-md-8" formArrayName="seats">
                     <div class="form-group" *ngFor="let seat of formSeat.get('seats')['controls']; let i = index">
                         <div [formGroupName]="i">
@@ -72,6 +90,9 @@
             </div>
             <div class="text-center">
                 <button class="btn btn-success" [disabled]="!formSeat.valid" type="submit"> Confirm </button>
+            </div>
+            <div class="text-center mt-1" *ngIf="flightService.areTickets">
+                <button class="btn btn-danger" type="button" (click)="onChooseNewSeat()"> Choose new seat </button>
             </div>
         </form>
     <div>

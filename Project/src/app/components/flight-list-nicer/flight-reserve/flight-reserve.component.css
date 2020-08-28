@@ -24,6 +24,10 @@ input:checked + .seatButtonFree {
     background: yellow;
 }
 
+input:checked + .seatButtonTicket {
+    background: yellow;
+}
+
 input.ng-invalid.ng-touched{
     border: 2px solid red;
 }

@@ -42,21 +42,17 @@ import { FlightListComponent } from './components/admin-panel/ap-airlines/flight
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { UserProfile } from './components/user-profile/user-profile.component';
 import { FlightDetailsComponent } from './components/admin-panel/ap-airlines/flights/flight-details/flight-details.component';
-import { TicketsComponent } from './components/admin-panel/ap-airlines/tickets/tickets.component';
-import { TicketListComponent } from './components/admin-panel/ap-airlines/tickets/ticket-list/ticket-list.component';
-import { AddTicketComponent } from './components/admin-panel/ap-airlines/tickets/add-ticket/add-ticket.component';
-import { TicketDetailsComponent } from './components/admin-panel/ap-airlines/tickets/ticket-details/ticket-details.component';
 import { AirlineBusinessComponent } from './components/admin-panel/ap-airlines/airline-business/airline-business.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { FriendDetailsComponent } from './components/friends/friend-details/friend-details.component';
 import { FlightListNicerComponent } from './components/flight-list-nicer/flight-list-nicer.component';
-import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 import { FlightReserveComponent } from './components/flight-list-nicer/flight-reserve/flight-reserve.component';
 import { ReservationListComponent } from './components/reservation-list/reservation-list.component';
 import { ReservedFlightDetailsComponent } from './components/reservation-list/reserved-flight-details/reserved-flight-details.component';
 import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
 import { InvitationDetailsComponent } from './components/invitation-list/invitation-details/invitation-details.component';
 import { AddQuickReservationTicketsComponent } from './components/admin-panel/ap-airlines/flights/add-quick-reservation-tickets/add-quick-reservation-tickets.component';
+import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 
 @NgModule({
   declarations: [
@@ -93,21 +89,17 @@ import { AddQuickReservationTicketsComponent } from './components/admin-panel/ap
     FlightListComponent,
     ForbiddenComponent,
     FlightDetailsComponent,
-    TicketsComponent,
-    TicketListComponent,
-    AddTicketComponent,
-    TicketDetailsComponent,
     AirlineBusinessComponent,
     FriendsComponent,
     FriendDetailsComponent,
     FlightListNicerComponent,
-    TicketListNicerComponent,
     FlightReserveComponent,
     ReservationListComponent,
     ReservedFlightDetailsComponent,
     InvitationListComponent,
     InvitationDetailsComponent,
-    AddQuickReservationTicketsComponent
+    AddQuickReservationTicketsComponent,
+    TicketListNicerComponent
   ],
   imports: [
     CommonModule,

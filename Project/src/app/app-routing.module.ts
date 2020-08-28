@@ -33,28 +33,23 @@ import { LoginRegisterGuard } from './auth/login-register.guard';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { UserProfile } from './components/user-profile/user-profile.component';
 import { FlightDetailsComponent } from './components/admin-panel/ap-airlines/flights/flight-details/flight-details.component';
-import { TicketsComponent } from './components/admin-panel/ap-airlines/tickets/tickets.component';
-import { TicketListComponent } from './components/admin-panel/ap-airlines/tickets/ticket-list/ticket-list.component';
-import { AddTicketComponent } from './components/admin-panel/ap-airlines/tickets/add-ticket/add-ticket.component';
-import { TicketDetailsComponent } from './components/admin-panel/ap-airlines/tickets/ticket-details/ticket-details.component';
 import { AirlineBusinessComponent } from './components/admin-panel/ap-airlines/airline-business/airline-business.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { FriendDetailsComponent } from './components/friends/friend-details/friend-details.component';
 import { FlightListNicerComponent } from './components/flight-list-nicer/flight-list-nicer.component';
-import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 import { FlightReserveComponent } from './components/flight-list-nicer/flight-reserve/flight-reserve.component';
 import { ReservationListComponent } from './components/reservation-list/reservation-list.component';
 import { ReservedFlightDetailsComponent } from './components/reservation-list/reserved-flight-details/reserved-flight-details.component';
 import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
 import { InvitationDetailsComponent } from './components/invitation-list/invitation-details/invitation-details.component';
 import { AddQuickReservationTicketsComponent } from './components/admin-panel/ap-airlines/flights/add-quick-reservation-tickets/add-quick-reservation-tickets.component';
-// import { FlightInvitationDetailsComponent } from './components/invitation-list/flight-invitation-details/flight-invitation-details.component';
+import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "login", component: LoginComponent, canActivate: [LoginRegisterGuard] },
   { path: "register", component: RegisterComponent, canActivate: [LoginRegisterGuard] },
-  { path: "user-profile", component: UserProfile, canActivate: [AuthGuard] },
+  { path: "user-profile", component: UserProfile, canActivate: [AuthGuard], data: { roles: ['User', 'Admin', 'Admin_RentACarCompanies', 'Admin_Airlines'] } },
   { path: "friends", component: FriendsComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
     { path: "details/:username", component: FriendDetailsComponent }
   ] },
@@ -64,12 +59,6 @@ const routes: Routes = [
   { path: "invitations", component: InvitationListComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
     { path: "flight/:id", component: InvitationDetailsComponent }
   ] },
-  { path: "rac-companies", component: RentACarCompaniesComponent, children: [
-    { path: "details/:id", component: RentACarCompanyDetailsComponent },
-    { path: ":id/vehicles", component: VehicleListNicerComponent, children: [
-      { path: "details/:id", component: VehicleDetailsComponent }
-    ]},
-  ]},
   { path: "airlines", component: AirlinesComponent, children: [
     { path: "details/:id", component: AirlineDetailsComponent }
   ] },
@@ -78,8 +67,15 @@ const routes: Routes = [
     { path: "reserve/:id", component: FlightReserveComponent, canActivate: [AuthGuard], data: { roles: ['User'] } }
   ] },
   { path: "tickets/:id", component: TicketListNicerComponent, children: [
-    { path: "details/:id", component: TicketDetailsComponent }
+    { path: "details/:id", component: FlightDetailsComponent },
+    { path: "reserve/:id", component: FlightReserveComponent, canActivate: [AuthGuard], data: { roles: ['User'] } }
   ] },
+  { path: "rac-companies", component: RentACarCompaniesComponent, children: [
+    { path: "details/:id", component: RentACarCompanyDetailsComponent },
+    { path: ":id/vehicles", component: VehicleListNicerComponent, children: [
+      { path: "details/:id", component: VehicleDetailsComponent }
+    ]},
+  ]},
   { path: "admin-panel", component: AdminPanelComponent, canActivate: [AuthGuard], data: { roles: ['Admin', 'Admin_RentACarCompanies', 'Admin_Airlines'] }, children: [
     { path: "airline-admins", component: AdminsComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] }, children: [
       { path: "", component: AdminListComponent },
@@ -104,12 +100,6 @@ const routes: Routes = [
         { path:"details/:id", component: FlightDetailsComponent },
         { path:"edit/:id", component: AddFlightComponent },
         { path: "add-seats/:id", component: AddQuickReservationTicketsComponent }
-      ]},
-      { path: ":id/tickets", component: TicketsComponent, children: [
-        { path: "", component: TicketListComponent },
-        { path: "add", component: AddTicketComponent },
-        { path: "edit/:id", component: AddTicketComponent },
-        { path: "details/:id", component: TicketDetailsComponent }
       ]},
       { path: ":id/income", component: AirlineBusinessComponent },
     ] },

@@ -3,9 +3,9 @@ import { FlightService } from '../../flight.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ServerService } from '../../server.service';
-import { SeatModel } from 'src/app/models/flight/seat-model.model';
 import { SeatType } from 'src/app/models/flight/seat-type.model';
 import { ToastrService } from 'ngx-toastr';
+import { Passenger } from 'src/app/models/flight/passenger.model';
 
 @Component({
   selector: 'app-flight-reserve',
@@ -23,6 +23,11 @@ export class FlightReserveComponent implements OnInit {
     public serverService: ServerService) { }
 
   ngOnInit(): void {
+    if(this.route.snapshot['_routerState'].url.split('/')[1] === 'tickets')
+      this.flightService.areTickets = true;
+    else
+      this.flightService.areTickets = false;
+
     this.formSeat = new FormGroup({
       'seats': new FormArray([])
     });
@@ -49,6 +54,14 @@ export class FlightReserveComponent implements OnInit {
       'passportNumber': new FormControl(null, [Validators.required, Validators.pattern('^(?!0{3})[0-9]{9}$')])
     });
 
+    if(this.flightService.areTickets){
+      formGroup.patchValue({
+        'friendUsername': 'for me',
+        'fullname': 'null',
+        'passportNumber': '001000000'
+      });
+    }
+    
     (<FormArray>this.formSeat.get('seats')).push(formGroup);
   }
 
@@ -98,10 +111,10 @@ export class FlightReserveComponent implements OnInit {
   }
 
   onSubmit() {
-    let seats: SeatModel[] = [];
+    let passengers: Passenger[] = [];
 
     this.formSeat.get('seats')['controls'].forEach(element => {
-      seats.push(new SeatModel(
+      passengers.push(new Passenger(
         element.get('rowId').value,
         element.get('seatId').value,
         element.get('friendUsername').value,
@@ -110,13 +123,26 @@ export class FlightReserveComponent implements OnInit {
       ));
     });
 
-    if(seats.length !== 0){
-      this.flightService.reserveFlight(this.flightId, seats).subscribe(
+    if(passengers.length !== 0){
+      this.flightService.reserveFlight(this.flightId, passengers).subscribe(
         res => {
           this.toastr.success('Flight reservation successfully made', 'Reservation');
           this.router.navigate(['reservations']);
         }
       );
     }
+  }
+
+  onChooseNewSeat(){
+    let formControl = this.formSeat.get('seats')['controls'][0];
+    let rowId = formControl.get('rowId').value;
+    let seatId = formControl.get('seatId').value;
+
+    let input = <HTMLInputElement>document.getElementById(rowId + '+' + seatId);
+    input.checked = false;
+    
+    this.formSeat = new FormGroup({
+      'seats': new FormArray([])
+    });
   }
 }

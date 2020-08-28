@@ -12,9 +12,14 @@ namespace ProjectService.Models.Flight
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
         public SeatType Type { get; set; }
+
         public string User_Username { get; set; }
+
         public string User_Fullname { get; set; }
+
         public string User_PassportNumber { get; set; }
     }
 }

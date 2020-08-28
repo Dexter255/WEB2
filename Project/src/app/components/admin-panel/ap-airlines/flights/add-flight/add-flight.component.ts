@@ -49,6 +49,7 @@ export class AddFlightComponent implements OnInit {
       'distance': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
       'locations': new FormArray([]),
       'ticketPrice': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+      'discount': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
       'xSeats': new FormControl('9', [Validators.required, Validators.pattern('^[0-9]*$')]),
       'ySeats': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')])
     });
@@ -75,6 +76,7 @@ export class AddFlightComponent implements OnInit {
                 'distance': res.Distance,
                 'locations': [],
                 'ticketPrice': res.TicketPrice,
+                'discount': res.Discount,
                 'xSeats': res.Rows[0].Seats.length,
                 'ySeats': res.Rows.length,
               });
@@ -186,13 +188,14 @@ export class AddFlightComponent implements OnInit {
       hours,
       this.addFlight.get('distance').value,
       locations,
-      this.addFlight.get('ticketPrice').value,
-      this.addFlight.get('xSeats').value,
-      this.addFlight.get('ySeats').value
+      this.addFlight.get('ticketPrice').value
     );
 
+    let xSeats = this.addFlight.get('xSeats').value
+    let ySeats = this.addFlight.get('ySeats').value
+    
     if (this.addFlight.get('flightId').value === 0) {
-      this.flightService.addFlight(this.addFlight.get('airlineId').value, flight).subscribe(
+      this.flightService.addFlight(this.addFlight.get('airlineId').value, xSeats, ySeats, flight).subscribe(
         res => {
           this.toastr.success('Flight successfully added', 'Flight');
           this.router.navigate(['../add-seats', res['Id']], { relativeTo: this.route });

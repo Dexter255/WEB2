@@ -66,7 +66,6 @@ namespace ProjectService.Controllers
             var airline = await _context.Airlines
                             .Include(x => x.Destinations)
                             .Include(x => x.Flights)
-                            .Include(x => x.QuickReservationTickets)
                             .Include(x => x.LuggageInfo)
                             .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -81,9 +80,6 @@ namespace ProjectService.Controllers
 
             foreach (var destination in airline.Destinations)
                 _context.Destinations.Remove(destination);
-
-            foreach (var qrt in airline.QuickReservationTickets)
-                _context.QuickReservationTickets.Remove(qrt);
 
             foreach (var luggage in airline.LuggageInfo)
                 _context.Luggages.Remove(luggage);

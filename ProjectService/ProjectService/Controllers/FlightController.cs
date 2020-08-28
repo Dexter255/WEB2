@@ -61,10 +61,10 @@ namespace ProjectService.Controllers
         }
 
         // POST: api/Flight
-        [HttpPost("{airlineId}")]
-        [Route("AddFlight/{airlineId}")]
+        [HttpPost("{airlineId}/{xSeats}/{ySeats}")]
+        [Route("AddFlight/{airlineId}/{xSeats}/{ySeats}")]
         [Authorize(Roles = "Admin_Airlines")]
-        public async Task<ActionResult<Airline>> PostFlight(int airlineId, Flight flight)
+        public async Task<ActionResult<Airline>> PostFlight(int airlineId, int xSeats, int ySeats, Flight flight)
         {
             var airline = _context.Airlines
                 .Include(x => x.Flights)
@@ -72,10 +72,10 @@ namespace ProjectService.Controllers
 
             flight.StartDateAndTime = flight.StartDateAndTime.AddHours(2);
             flight.EndDateAndTime = flight.EndDateAndTime.AddHours(2);
-            for (int row = 0; row < flight.ySeats; row++)
+            for (int row = 0; row < ySeats; row++)
             {
                 Row rowObj = new Row();
-                for (int seat = 0; seat < flight.xSeats; seat++)
+                for (int seat = 0; seat < xSeats; seat++)
                 {
                     rowObj.Seats.Add(new Seat());
                 }
@@ -92,17 +92,21 @@ namespace ProjectService.Controllers
         [HttpPost("{flightId}")]
         [Route("AddSeatsForQuickReservationTickets/{flightId}")]
         [Authorize(Roles = "Admin_Airlines")]
-        public async Task<IActionResult> AddSeatsForQuickReservationTickets(int flightId, List<SeatModel> seats)
+        public async Task<IActionResult> AddSeatsForQuickReservationTickets(int flightId, List<Passenger> passengers)
         {
             var flight = await _context.Flights
                 .Include(x => x.Rows)
                     .ThenInclude(y => y.Seats)
                 .FirstOrDefaultAsync(x => x.Id == flightId);
 
-            foreach(var seat in seats)
+            flight.QuickReservationTicketCount = passengers.Count;
+
+            foreach(var passenger in passengers)
             {
-                flight.Rows.FirstOrDefault(x => x.Id == seat.RowId)
-                    .Seats.FirstOrDefault(x => x.Id == seat.SeatId).Type = SeatType.QuickReservation;
+                flight
+                    .Rows.FirstOrDefault(x => x.Id == passenger.RowId)
+                    .Seats.FirstOrDefault(x => x.Id == passenger.SeatId)
+                    .Type = SeatType.QuickReservation;
             }
 
             await _context.SaveChangesAsync();
@@ -236,7 +240,7 @@ namespace ProjectService.Controllers
         [HttpPost("{flightId}")]
         [Route("ReserveFlight/{flightId}")]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> ReserveFlight(int flightId, List<SeatModel> seats)
+        public async Task<IActionResult> ReserveFlight(int flightId, List<Passenger> passengers)
         {
             string userId = User.Claims.First(x => x.Type == "UserID").Value;
             var loggedUser = await _context.ApplicationUsers
@@ -249,16 +253,16 @@ namespace ProjectService.Controllers
                     .ThenInclude(y => y.Seats)
                 .FirstOrDefaultAsync(x => x.Id == flightId);
 
-            List<Passenger> passengers = new List<Passenger>();
-            foreach (var seat in seats)
+            List<Passenger> passengersTemp = new List<Passenger>();
+            foreach (var passenger in passengers)
             {
                 var seatTemp = flight.Rows
-                    .FirstOrDefault(x => x.Id == seat.RowId)
+                    .FirstOrDefault(x => x.Id == passenger.RowId)
                     .Seats
-                    .FirstOrDefault(x => x.Id == seat.SeatId);
+                    .FirstOrDefault(x => x.Id == passenger.SeatId);
 
                 // dodaje se osoba koja je napravila rezervaciju
-                if (!String.IsNullOrEmpty(seat.User_Username) && seat.User_Username.Equals("for me"))
+                if (!String.IsNullOrEmpty(passenger.User_Username) && passenger.User_Username.Equals("for me"))
                 {
                     seatTemp.User_Fullname = loggedUser.Fullname;
                     seatTemp.User_PassportNumber = loggedUser.PassportNumber;
@@ -268,28 +272,28 @@ namespace ProjectService.Controllers
                     // dodaje se kao putnik samo zbog RowId, SeatId
                     // kako bi u slucaju otkazivanja moglo da se 
                     // oslobodi sediste koje je rezervisao
-                    passengers.Add(new Passenger()
+                    passengersTemp.Add(new Passenger()
                     {
                         User_Fullname = loggedUser.Fullname,
                         User_PassportNumber = loggedUser.PassportNumber,
                         User_Username = loggedUser.UserName,
-                        RowId = seat.RowId,
-                        SeatId = seat.SeatId
+                        RowId = passenger.RowId,
+                        SeatId = passenger.SeatId
                     });
                 }
                 // dodaje se osoba koja nije korisnik aplikacije
-                else if (String.IsNullOrEmpty(seat.User_Username))
+                else if (String.IsNullOrEmpty(passenger.User_Username))
                 {
-                    seatTemp.User_Fullname = seat.User_Fullname;
-                    seatTemp.User_PassportNumber = seat.User_PassportNumber;
+                    seatTemp.User_Fullname = passenger.User_Fullname;
+                    seatTemp.User_PassportNumber = passenger.User_PassportNumber;
                     seatTemp.Type = SeatType.Taken;
 
-                    passengers.Add(new Passenger()
+                    passengersTemp.Add(new Passenger()
                     {
-                        User_Fullname = seat.User_Fullname,
-                        User_PassportNumber = seat.User_PassportNumber,
-                        RowId = seat.RowId,
-                        SeatId = seat.SeatId
+                        User_Fullname = passenger.User_Fullname,
+                        User_PassportNumber = passenger.User_PassportNumber,
+                        RowId = passenger.RowId,
+                        SeatId = passenger.SeatId
                     });
                 }
                 // poziva se postojeci user
@@ -297,7 +301,7 @@ namespace ProjectService.Controllers
                 {
                     var user = await _context.ApplicationUsers
                         .Include(x => x.FlightInvitations)
-                        .FirstOrDefaultAsync(x => x.UserName == seat.User_Username);
+                        .FirstOrDefaultAsync(x => x.UserName == passenger.User_Username);
 
                     user.FlightInvitations.Add(new FlightInvitation()
                     {
@@ -312,13 +316,13 @@ namespace ProjectService.Controllers
                     seatTemp.User_Username = user.UserName;
                     seatTemp.Type = SeatType.Taken;
 
-                    passengers.Add(new Passenger()
+                    passengersTemp.Add(new Passenger()
                     {
                         User_Fullname = user.Fullname,
                         User_PassportNumber = user.PassportNumber,
                         User_Username = user.UserName,
-                        RowId = seat.RowId,
-                        SeatId = seat.SeatId
+                        RowId = passenger.RowId,
+                        SeatId = passenger.SeatId
                     });
                 }
             }
@@ -327,7 +331,7 @@ namespace ProjectService.Controllers
             {
                 FlightId = flight.Id,
                 Destination = flight.StartDestination + " - " + flight.EndDestination,
-                Passengers = passengers
+                Passengers = passengersTemp
             });
 
             await _context.SaveChangesAsync();

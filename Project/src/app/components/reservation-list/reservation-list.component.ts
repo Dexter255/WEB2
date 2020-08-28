@@ -29,6 +29,7 @@ export class ReservationListComponent implements OnInit {
     this.flightService.cancelReservation(flight.FlightId).subscribe(
       res => { 
         this.toastr.success(res['message'], 'Reservation');
+        this.flightService.getReservedFlight().subscribe();
       },
       err => {
         this.toastr.error(err.error['message'], 'Reservation');

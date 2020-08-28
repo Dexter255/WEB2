@@ -32,9 +32,6 @@ namespace ProjectService.Models.Flight
         public List<Flight> Flights { get; set; }
 
         [Required]
-        public List<QuickReservationTicket> QuickReservationTickets { get; set; }
-
-        [Required]
         public List<Luggage> LuggageInfo { get; set; }
 
         [Required]

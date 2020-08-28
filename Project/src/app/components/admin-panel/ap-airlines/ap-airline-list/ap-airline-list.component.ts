@@ -12,8 +12,7 @@ export class ApAirlineListComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    public airlineService: AirlineService,
-    private serverService: ServerService) { }
+    public airlineService: AirlineService) { }
 
   ngOnInit(): void {
     this.airlineService.getAirlines().subscribe(
@@ -56,10 +55,6 @@ export class ApAirlineListComponent implements OnInit {
     this.router.navigate([airlineId, 'flights'], { relativeTo: this.route });
   }
 
-  onSeeTickets(airlineId: number){
-    this.router.navigate([airlineId, 'tickets'], { relativeTo: this.route });
-  }
-  
   onSeeIncome(airlineId: number){
     this.router.navigate([airlineId, 'income'], { relativeTo: this.route });    
   }

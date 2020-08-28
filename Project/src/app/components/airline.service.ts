@@ -4,6 +4,7 @@ import { pipe } from 'rxjs';
 import { tap } from 'rxjs/operators'
 
 import { Airline } from '../models/flight/airline.model';
+import { Flight } from '../models/flight/flight.model';
 
 @Injectable({
     providedIn: 'root'

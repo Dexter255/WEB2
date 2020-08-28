@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectService.Models;
 
 namespace ProjectService.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200828074219_QRTRemoved")]
+    partial class QRTRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,8 +243,6 @@ namespace ProjectService.Migrations
 
                     b.Property<int?>("AirlineId");
 
-                    b.Property<int>("Discount");
-
                     b.Property<int>("Distance");
 
                     b.Property<DateTime>("EndDateAndTime");
@@ -252,8 +252,6 @@ namespace ProjectService.Migrations
 
                     b.Property<string>("Hours")
                         .IsRequired();
-
-                    b.Property<int>("QuickReservationTicketCount");
 
                     b.Property<int>("Rating");
 
@@ -279,13 +277,11 @@ namespace ProjectService.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<string>("Destination")
-                        .IsRequired();
+                    b.Property<string>("Destination");
 
                     b.Property<int>("FlightId");
 
-                    b.Property<string>("InvitationFromUser")
-                        .IsRequired();
+                    b.Property<string>("InvitationFromUser");
 
                     b.Property<int>("Option");
 
@@ -327,11 +323,9 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("SeatId");
 
-                    b.Property<string>("User_Fullname")
-                        .IsRequired();
+                    b.Property<string>("User_Fullname");
 
-                    b.Property<string>("User_PassportNumber")
-                        .IsRequired();
+                    b.Property<string>("User_PassportNumber");
 
                     b.Property<string>("User_Username");
 
@@ -350,8 +344,7 @@ namespace ProjectService.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<string>("Destination")
-                        .IsRequired();
+                    b.Property<string>("Destination");
 
                     b.Property<int>("FlightId");
 
@@ -387,11 +380,9 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("Type");
 
-                    b.Property<string>("User_Fullname")
-                        .IsRequired();
+                    b.Property<string>("User_Fullname");
 
-                    b.Property<string>("User_PassportNumber")
-                        .IsRequired();
+                    b.Property<string>("User_PassportNumber");
 
                     b.Property<string>("User_Username");
 
