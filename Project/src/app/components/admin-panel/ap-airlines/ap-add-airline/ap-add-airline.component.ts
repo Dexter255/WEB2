@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { AirlineService } from 'src/app/components/airline.service';
-import { Destination } from 'src/app/models/flight/destination.model';
-import { Luggage } from 'src/app/models/flight/luggage.model';
+import { ToastrService } from 'ngx-toastr';
+
 import { Airline } from 'src/app/models/flight/airline.model';
+import { Luggage } from 'src/app/models/flight/luggage.model';
+import { Destination } from 'src/app/models/flight/destination.model';
+import { AirlineService } from 'src/app/components/airline.service';
 
 @Component({
 	selector: 'app-ap-add-airline',
@@ -19,19 +21,21 @@ export class ApAddAirlineComponent implements OnInit {
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
+		private toastr: ToastrService,
 		private airlineService: AirlineService) { }
 
 	ngOnInit(): void {
+		this.addAirline = new FormGroup({
+			'id': new FormControl(0),
+			'name': new FormControl(null, [Validators.required, Validators.minLength(4)]),
+			'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
+			'description': new FormControl(null, [Validators.required, Validators.minLength(4)]),
+			'destinations': new FormArray([]),
+			'luggageInfo': new FormArray([])
+		});
+		
 		switch (this.route.snapshot['_routerState'].url.split('/')[3]) {
 			case 'add':
-				this.addAirline = new FormGroup({
-					'id': new FormControl(0),
-					'name': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-					'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-					'description': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-					'destinations': new FormArray([]),
-					'luggageInfo': new FormArray([])
-				});
 				this.show = true;
 				break;
 
@@ -43,13 +47,13 @@ export class ApAddAirlineComponent implements OnInit {
 
 					this.airlineService.getAirline(airlineId).subscribe(
 						(res: Airline) => {
-							this.addAirline = new FormGroup({
-								'id': new FormControl(airlineId),
-								'name': new FormControl(res.CompanyName, [Validators.required, Validators.minLength(4)]),
-								'address': new FormControl(res.Address, [Validators.required, Validators.minLength(4)]),
-								'description': new FormControl(res.Description, [Validators.required, Validators.minLength(4)]),
-								'destinations': new FormArray([]),
-								'luggageInfo': new FormArray([])
+							this.addAirline.setValue({
+								'id': airlineId,
+								'name': res.CompanyName,
+								'address': res.Address,
+								'description': res.Description,
+								'destinations': [],
+								'luggageInfo': []
 							});
 
 							res.Destinations.forEach(element => {
@@ -111,29 +115,25 @@ export class ApAddAirlineComponent implements OnInit {
 			this.addAirline.get('address').value,
 			this.addAirline.get('description').value,
 			destinations,
-			[],
-			[],
 			luggageInfo,
-			0);
+			[]);
 
 		if (this.edit) {
 			this.airlineService.updateAirline(airline).subscribe(
 				res => {
+					this.toastr.success('Airline was successfully edited.', 'Airline');
 					this.router.navigate(['../../'], { relativeTo: this.route });
 				},
-				err => {
-					console.log(err);
-				}
+				err => {}
 			);
 		}
 		else {
 			this.airlineService.addAirline(airline).subscribe(
 				res => {
+					this.toastr.success('Airline was successfully added.', 'Airline');
 					this.router.navigate(['../'], { relativeTo: this.route });
 				},
-				err => {
-					console.log(err);
-				}
+				err => {}
 			);
 		}
 	}

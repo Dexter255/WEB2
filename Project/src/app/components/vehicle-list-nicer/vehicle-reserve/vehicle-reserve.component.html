@@ -1,0 +1,34 @@
+<div class="row justify-content-center">
+	<form [formGroup]="reserveForm" (ngSubmit)="onReserve()" autocomplete="off">
+		<h3>Enter reservation data</h3>
+		<div class="form-group">
+			<input formControlName="pickupDate" type="date" class="form-control" title="Vehicle pick-up date">
+			<span *ngIf="!reserveForm.get('pickupDate').valid && reserveForm.get('pickupDate').touched">
+				Pick up date is required
+			</span>
+		</div>
+		<div class="form-group">
+			<input formControlName="getInCity" type="text" class="form-control" title="Get vehicle in city"
+				placeholder="Get vehicle in city">
+			<span *ngIf="!reserveForm.get('getInCity').valid && reserveForm.get('getInCity').touched">
+				Get vehicle in city is required
+			</span>
+		</div>
+		<div class="form-group">
+			<input formControlName="returnDate" type="date" class="form-control" title="Vehicle return date">
+			<span *ngIf="!reserveForm.get('returnDate').valid && reserveForm.get('returnDate').touched">
+				Return date is required
+			</span>
+		</div>
+		<div class="form-group">
+			<input formControlName="returnToCity" type="text" class="form-control" title="Return vehicle to city"
+				placeholder="Return vehicle to city">
+			<span *ngIf="!reserveForm.get('returnToCity').valid && reserveForm.get('returnToCity').touched">
+				Return vehicle to coty is required
+			</span>
+		</div>
+		<div class="text-center">
+			<button class="btn btn-success" [disabled]="!reserveForm.valid" type="submit">Reserve vehicle</button>
+		</div>
+	</form>
+</div>

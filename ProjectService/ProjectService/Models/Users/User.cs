@@ -1,4 +1,5 @@
 ﻿using ProjectService.Models.Flight;
+using ProjectService.Models.RentACar;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,7 @@ namespace ProjectService.Models.Users
         public List<Friend> FriendRequestsSent { get; set; }
         public List<ReservedFlight> ReservedFlights { get; set; }
         public List<FlightInvitation> FlightInvitations { get; set; }
+        public List<ReservedVehicle> ReservedVehicles { get; set; }
         #endregion
 
         #region Constructors

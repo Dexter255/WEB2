@@ -32,14 +32,10 @@ import { VehiclesComponent } from './components/admin-panel/rac-companies/vehicl
 import { VehicleListComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-list/vehicle-list.component';
 import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-details/vehicle-details.component';
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
-import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
-import { RentACarCompanySearchComponent } from './components/rent-a-car-companies/rent-a-car-company-search/rent-a-car-company-search.component';
-import { VehicleSearchComponent } from './components/rent-a-car-companies/vehicle-search/vehicle-search.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/flights.component';
 import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
 import { FlightListComponent } from './components/admin-panel/ap-airlines/flights/flight-list/flight-list.component';
-import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { UserProfile } from './components/user-profile/user-profile.component';
 import { FlightDetailsComponent } from './components/admin-panel/ap-airlines/flights/flight-details/flight-details.component';
 import { AirlineBusinessComponent } from './components/admin-panel/ap-airlines/airline-business/airline-business.component';
@@ -53,6 +49,11 @@ import { InvitationListComponent } from './components/invitation-list/invitation
 import { InvitationDetailsComponent } from './components/invitation-list/invitation-details/invitation-details.component';
 import { AddQuickReservationTicketsComponent } from './components/admin-panel/ap-airlines/flights/add-quick-reservation-tickets/add-quick-reservation-tickets.component';
 import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { AdminPasswordComponent } from './components/verify-email/admin-password/admin-password.component';
+import { VehicleListNicerComponent } from './components/vehicle-list-nicer/vehicle-list-nicer.component';
+import { VehicleReserveComponent } from './components/vehicle-list-nicer/vehicle-reserve/vehicle-reserve.component';
+import { ReservedVehicleDetailsComponent } from './components/reservation-list/reserved-vehicle-details/reserved-vehicle-details.component';
 
 @NgModule({
   declarations: [
@@ -81,13 +82,9 @@ import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-
     VehicleListComponent,
     VehicleDetailsComponent,
     AddVehicleComponent,
-    VehicleListNicerComponent,
-    RentACarCompanySearchComponent,
-    VehicleSearchComponent,
     FlightsComponent,
     AddFlightComponent,
     FlightListComponent,
-    ForbiddenComponent,
     FlightDetailsComponent,
     AirlineBusinessComponent,
     FriendsComponent,
@@ -99,7 +96,12 @@ import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-
     InvitationListComponent,
     InvitationDetailsComponent,
     AddQuickReservationTicketsComponent,
-    TicketListNicerComponent
+    TicketListNicerComponent,
+    VerifyEmailComponent,
+    AdminPasswordComponent,
+    VehicleListNicerComponent,
+    VehicleReserveComponent,
+    ReservedVehicleDetailsComponent
   ],
   imports: [
     CommonModule,

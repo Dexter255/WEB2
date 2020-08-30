@@ -46,8 +46,7 @@ namespace ProjectService.Models.RentACar
         [Required]
         public List<FreeDate> FreeDates { get; set; }
 
-        [Required]
-        public bool Reserved { get; set; }
+        public int Reserved { get; set; }
         #endregion
 
         #region Constructors
@@ -69,7 +68,6 @@ namespace ProjectService.Models.RentACar
             Kilometers = kilometers;
             Rating = 0;
             FreeDates = freeDates;
-            Reserved = false;
         }
         #endregion
     }

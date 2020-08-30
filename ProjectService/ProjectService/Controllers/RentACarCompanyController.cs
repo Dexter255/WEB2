@@ -112,15 +112,6 @@ namespace ProjectService.Controllers
 
             // Kada se vrsi azuriranje RentACarCompany-je, Vehicle se samo dodaje
             #region Vehicles
-            // remove or update child collection items
-            //foreach (var vehicle in vehicles)
-            //{
-            //    var v = rentACarCompany.Vehicles.SingleOrDefault(x => x.Id == vehicle.Id);
-            //    if (v != null)
-            //        _context.Entry(vehicle).CurrentValues.SetValues(v);
-            //    else
-            //        _context.Remove(vehicle);
-            //}
             var vehicles = racCompany.Vehicles.ToList();
             // add the new items
             foreach (var vehicle in rentACarCompany.Vehicles)
@@ -176,7 +167,12 @@ namespace ProjectService.Controllers
 
             if (rentACarCompany == null)
             {
-                return NotFound();
+                return NotFound(new { message = "Rent a car company does not exist." });
+            }
+
+            if(rentACarCompany.Vehicles.Any(x => x.Reserved > 0))
+            {
+                return BadRequest(new { message = "Unable to delete because one or more vehicles are reserved." });
             }
 
             foreach (var service in rentACarCompany.Services)
@@ -198,6 +194,59 @@ namespace ProjectService.Controllers
             await _context.SaveChangesAsync();
 
             return rentACarCompany;
+        }
+
+        // POST: api/RentACarCompany/SearchRacCompanies
+        [HttpPost]
+        [Route("SearchRacCompanies")]
+        public async Task<ActionResult<IEnumerable<RentACarCompany>>> SearchRacCompanies(SearchRacCompanyModel racCompany)
+        {
+            var racCompanies = await _context.RentACarCompanies
+                .Include(x => x.Vehicles)
+                    .ThenInclude(y => y.FreeDates)
+                .ToListAsync();
+
+            if (!String.IsNullOrEmpty(racCompany.CompanyName))
+                racCompanies = racCompanies.FindAll(x => x.CompanyName.ToLower().Contains(racCompany.CompanyName.ToLower()));
+
+            if (!String.IsNullOrEmpty(racCompany.Address))
+                racCompanies = racCompanies.FindAll(x => x.Address.ToLower().Contains(racCompany.Address.ToLower()));
+
+            if (racCompany.VehicleNeededFrom.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d") &&
+                racCompany.VehicleNeededTo.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d"))
+            {
+                racCompanies = racCompanies.FindAll(x => x.Vehicles.Any(
+                    y => CheckDates(y.FreeDates, racCompany.VehicleNeededFrom, racCompany.VehicleNeededTo)
+                    ));
+            }
+            else if(racCompany.VehicleNeededFrom.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d"))
+            {
+                racCompanies = racCompanies.FindAll(x => x.Vehicles.Any(
+                    y => y.FreeDates.Any(z => z.Date.ToString("d") == racCompany.VehicleNeededFrom.ToString("d"))
+                    ));
+            }
+            else if (racCompany.VehicleNeededTo.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d"))
+            {
+                racCompanies = racCompanies.FindAll(x => x.Vehicles.Any(
+                    y => y.FreeDates.Any(z => z.Date.ToString("d") == racCompany.VehicleNeededTo.ToString("d"))
+                    ));
+            }
+
+            return racCompanies;
+        }
+
+        private bool CheckDates(List<FreeDate> freeDates, DateTime neededFrom, DateTime neededTo)
+        {
+            while(neededFrom <= neededTo)
+            {
+                if(!freeDates.Any(x => x.Date.ToString("d") == neededFrom.ToString("d"))){
+                    return false;
+                }
+
+                neededFrom = neededFrom.AddDays(1);
+            }
+
+            return true;
         }
 
         private bool RentACarCompanyExists(int id)

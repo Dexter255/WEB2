@@ -1,42 +1,38 @@
 <div class="row ml-3 mr-3 mt-3">
-    <button [disabled]="notAllowed" [ngClass]="{'not-allowed': notAllowed}" class="btn btn-success mb-2"
-        (click)="onAddRacCompany()" [title]="notAllowed ? 'Not allowed' : ''">
-        Add rent a car company
-    </button>
-    <table class="table table-dark" *ngIf="racCompanyService.racCompanies.length !== 0 else empty">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">Company name</th>
-                <th scope="col">Address</th>
-                <th scope="col">Description</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Vehicles</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="text-center" *ngFor="let racCompany of racCompanyService.racCompanies">
-                <td> {{ racCompany.CompanyName }} </td>
-                <td> {{ racCompany.Address }} </td>
-                <td> {{ racCompany.Description }} </td>
-                <td> {{ racCompany.Rating }} </td>
-                <td> 
-                    <button class="btn btn-info" (click)="onSeeVehicles(racCompany.Id)">See vehicles</button> 
-                </td>
-                <td>
-                    <span>
-                        <button class="btn btn-info mr-2" (click)="onDetailsRacCompany(racCompany.Id)">Details</button>
-                        <button class="btn btn-secondary mr-2" (click)="onEditRacCompany(racCompany.Id)">Edit</button>
-                        <button [disabled]="notAllowed" [ngClass]="{'not-allowed': notAllowed}" class="btn btn-danger"
-                            (click)="onDeleteRacCompany(racCompany.Id)" [title]="notAllowed ? 'Not allowed' : ''">Delete</button>
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <ng-template #empty>
-        <div class="row ml-3 mt-1">
-            <p class="text-info">There is no companies available!</p>
-        </div>
-    </ng-template>
+	<button class="btn btn-success mb-2" (click)="onAddRacCompany()"> Add rent a car company </button>
+	<table class="table table-dark" *ngIf="racCompanyService.racCompanies.length !== 0 else empty">
+		<thead>
+			<tr class="text-center">
+				<th scope="col">Company name</th>
+				<th scope="col">Address</th>
+				<th scope="col">Description</th>
+				<th scope="col">Rating</th>
+				<th scope="col">Vehicles</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-center" *ngFor="let racCompany of racCompanyService.racCompanies">
+				<td> {{ racCompany.CompanyName }} </td>
+				<td> {{ racCompany.Address }} </td>
+				<td> {{ racCompany.Description }} </td>
+				<td> {{ racCompany.Rating }} </td>
+				<td>
+					<button class="btn btn-info" (click)="onSeeVehicles(racCompany.Id)">See vehicles</button>
+				</td>
+				<td>
+					<span>
+						<button class="btn btn-info mr-2" (click)="onDetailsRacCompany(racCompany.Id)">Details</button>
+						<button class="btn btn-secondary mr-2" (click)="onEditRacCompany(racCompany.Id)">Edit</button>
+						<button class="btn btn-danger" (click)="onDeleteRacCompany(racCompany.Id)">Delete</button>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<ng-template #empty>
+		<div class="row ml-3 mt-1">
+			<p class="text-info">There is no companies available!</p>
+		</div>
+	</ng-template>
 </div>

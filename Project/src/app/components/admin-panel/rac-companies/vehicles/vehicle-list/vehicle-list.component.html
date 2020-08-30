@@ -1,45 +1,38 @@
 <div class="row ml-3 mr-3 mt-3">
-    <button [disabled]="notAllowed" [ngClass]="{'not-allowed': notAllowed}" class="btn btn-success mb-2"
-        (click)="onAddVehicle()" [title]="notAllowed ? 'Not allowed' : ''">
-        Add vehicle
-    </button>
-    <table class="table table-dark" *ngIf="vehicleService.vehicles.length !== 0 else empty">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">Brand</th>
-                <th scope="col">Model</th>
-                <th scope="col">Type</th>
-                <th scope="col">Cubic capacity</th>
-                <th scope="col">Horse power</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="text-center" *ngFor="let vehicle of vehicleService.vehicles">
-                <td> {{ vehicle.Brand }} </td>
-                <td> {{ vehicle.Model }} </td>
-                <td> {{ getType(vehicle.Type) }} </td>
-                <td> {{ vehicle.CubicCapacity }} </td>
-                <td> {{ vehicle.HorsePower }} </td>
-                <td> {{ vehicle.Rating }} </td>
-                <td>
-                    <span>
-                        <button class="btn btn-info mr-2" (click)="onDetailsVehicle(vehicle.Id)">Details</button>
-                        <button [disabled]="notAllowed || vehicle.Reserved" [ngClass]="{'not-allowed': notAllowed || vehicle.Reserved}"
-                            class="btn btn-secondary mr-2" (click)="onEditVehicle(vehicle.Id)"
-                            [title]="notAllowed ? 'Not allowed' : ''">Edit</button>
-                        <button [disabled]="notAllowed || vehicle.Reserved" [ngClass]="{'not-allowed': notAllowed}"
-                            class="btn btn-danger" (click)="onDeleteVehicle(vehicle.Id)"
-                            [title]="notAllowed ? 'Not allowed' : ''">Delete</button>
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <ng-template #empty>
-        <div class="row ml-3 mt-1">
-            <span class="text-info" style="font-size: large;">There is no vehicles available!</span>
-        </div>
-    </ng-template>
+	<button class="btn btn-success mb-2" (click)="onAddVehicle()"> Add vehicle </button>
+	<table class="table table-dark" *ngIf="vehicleService.vehicles.length !== 0 else empty">
+		<thead>
+			<tr class="text-center">
+				<th scope="col">Brand</th>
+				<th scope="col">Model</th>
+				<th scope="col">Type</th>
+				<th scope="col">Cubic capacity</th>
+				<th scope="col">Horse power</th>
+				<th scope="col">Rating</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-center" *ngFor="let vehicle of vehicleService.vehicles">
+				<td> {{ vehicle.Brand }} </td>
+				<td> {{ vehicle.Model }} </td>
+				<td> {{ getType(vehicle.Type) }} </td>
+				<td> {{ vehicle.CubicCapacity }} </td>
+				<td> {{ vehicle.HorsePower }} </td>
+				<td> {{ vehicle.Rating }} </td>
+				<td>
+					<span>
+						<button class="btn btn-info mr-2" (click)="onDetailsVehicle(vehicle.Id)">Details</button>
+						<button class="btn btn-secondary mr-2" (click)="onEditVehicle(vehicle.Id)">Edit</button>
+						<button class="btn btn-danger" (click)="onDeleteVehicle(vehicle.Id)">Delete</button>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<ng-template #empty>
+		<div class="row ml-3 mt-1">
+			<span class="text-info" style="font-size: large;">There is no vehicles available!</span>
+		</div>
+	</ng-template>
 </div>

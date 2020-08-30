@@ -1,0 +1,110 @@
+<h5>Informations about reservation</h5>
+<div class="container" style="background-color: white;" *ngIf="vehicleService.reservedVehicle">
+	<div class="row">
+		<div class="col-md-4">
+			<label> Pickup date: </label>
+		</div>
+		<div class="col-md-4">
+			<label> {{ convertDate(vehicleService.reservedVehicle.PickupDate) }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<label> Get in city: </label>
+		</div>
+		<div class="col-md-4">
+			<label> {{ vehicleService.reservedVehicle.GetInCity }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<label> Return date: </label>
+		</div>
+		<div class="col-md-4">
+			<label> {{ convertDate(vehicleService.reservedVehicle.ReturnDate) }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<label> Return to city: </label>
+		</div>
+		<div class="col-md-4">
+			<label> {{ vehicleService.reservedVehicle.ReturnToCity }} </label>
+		</div>
+	</div>
+</div>
+<h5>Informations about vehicle</h5>
+<div class="container" style="background-color: white;" *ngIf="vehicleService.vehicle">
+	<div class="row">
+        <div class="col-md-4">
+            <label> Brand </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ vehicleService.vehicle.Brand }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Model: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ vehicleService.vehicle.Model }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Type: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ getType(vehicleService.vehicle.Type) }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Cubic capacity: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ vehicleService.vehicle.CubicCapacity }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Power (HP): </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ vehicleService.vehicle.HorsePower }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Year of production: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ vehicleService.vehicle.YearOfProduction }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Kilometer: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ vehicleService.vehicle.Kilometers }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Number of seats: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ vehicleService.vehicle.NumberOfSeats }} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label> Rating: </label>
+        </div>
+        <div class="col-md-3">
+            <label> {{ vehicleService.vehicle.Rating }} </label>
+        </div>
+    </div>
+</div>

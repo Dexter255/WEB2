@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
@@ -24,13 +25,10 @@ import { VehiclesComponent } from './components/admin-panel/rac-companies/vehicl
 import { VehicleListComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-list/vehicle-list.component';
 import { VehicleDetailsComponent } from './components/admin-panel/rac-companies/vehicles/vehicle-details/vehicle-details.component';
 import { AddVehicleComponent } from './components/admin-panel/rac-companies/vehicles/add-vehicle/add-vehicle.component';
-import { VehicleListNicerComponent } from './components/rent-a-car-companies/vehicle-list-nicer/vehicle-list-nicer.component';
-import { AuthGuard } from './auth/auth.guard';
 import { FlightsComponent } from './components/admin-panel/ap-airlines/flights/flights.component';
 import { FlightListComponent } from './components/admin-panel/ap-airlines/flights/flight-list/flight-list.component';
 import { AddFlightComponent } from './components/admin-panel/ap-airlines/flights/add-flight/add-flight.component';
 import { LoginRegisterGuard } from './auth/login-register.guard';
-import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { UserProfile } from './components/user-profile/user-profile.component';
 import { FlightDetailsComponent } from './components/admin-panel/ap-airlines/flights/flight-details/flight-details.component';
 import { AirlineBusinessComponent } from './components/admin-panel/ap-airlines/airline-business/airline-business.component';
@@ -44,17 +42,26 @@ import { InvitationListComponent } from './components/invitation-list/invitation
 import { InvitationDetailsComponent } from './components/invitation-list/invitation-details/invitation-details.component';
 import { AddQuickReservationTicketsComponent } from './components/admin-panel/ap-airlines/flights/add-quick-reservation-tickets/add-quick-reservation-tickets.component';
 import { TicketListNicerComponent } from './components/ticket-list-nicer/ticket-list-nicer.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { AdminPasswordComponent } from './components/verify-email/admin-password/admin-password.component';
+import { VehicleListNicerComponent } from './components/vehicle-list-nicer/vehicle-list-nicer.component';
+import { VehicleReserveComponent } from './components/vehicle-list-nicer/vehicle-reserve/vehicle-reserve.component';
+import { ReservedVehicleDetailsComponent } from './components/reservation-list/reserved-vehicle-details/reserved-vehicle-details.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "login", component: LoginComponent, canActivate: [LoginRegisterGuard] },
   { path: "register", component: RegisterComponent, canActivate: [LoginRegisterGuard] },
+  { path: "verify-email/:id", component: VerifyEmailComponent, canActivate: [LoginRegisterGuard], children: [
+    { path: 'admin-password', component: AdminPasswordComponent }
+  ] },
   { path: "user-profile", component: UserProfile, canActivate: [AuthGuard], data: { roles: ['User', 'Admin', 'Admin_RentACarCompanies', 'Admin_Airlines'] } },
   { path: "friends", component: FriendsComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
     { path: "details/:username", component: FriendDetailsComponent }
   ] },
   { path: "reservations", component: ReservationListComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
-    { path: "flight/:id", component: ReservedFlightDetailsComponent }
+    { path: "flight/:id", component: ReservedFlightDetailsComponent },
+    { path: "vehicle/:id", component: ReservedVehicleDetailsComponent }
   ] },
   { path: "invitations", component: InvitationListComponent, canActivate: [AuthGuard], data: { roles: ['User'] }, children: [
     { path: "flight/:id", component: InvitationDetailsComponent }
@@ -72,9 +79,10 @@ const routes: Routes = [
   ] },
   { path: "rac-companies", component: RentACarCompaniesComponent, children: [
     { path: "details/:id", component: RentACarCompanyDetailsComponent },
-    { path: ":id/vehicles", component: VehicleListNicerComponent, children: [
-      { path: "details/:id", component: VehicleDetailsComponent }
-    ]},
+  ]},
+  { path: 'vehicles/:id', component: VehicleListNicerComponent, children: [
+    { path: 'details/:id', component: VehicleDetailsComponent },
+    { path: "reserve/:id", component: VehicleReserveComponent }
   ]},
   { path: "admin-panel", component: AdminPanelComponent, canActivate: [AuthGuard], data: { roles: ['Admin', 'Admin_RentACarCompanies', 'Admin_Airlines'] }, children: [
     { path: "airline-admins", component: AdminsComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] }, children: [
@@ -96,9 +104,9 @@ const routes: Routes = [
       { path: "edit/:id", component: ApAddAirlineComponent },
       { path: ":id/flights", component: FlightsComponent, children: [
         { path: "", component: FlightListComponent },
-        { path:"add", component: AddFlightComponent },
-        { path:"details/:id", component: FlightDetailsComponent },
-        { path:"edit/:id", component: AddFlightComponent },
+        { path: "add", component: AddFlightComponent },
+        { path: "details/:id", component: FlightDetailsComponent },
+        { path: "edit/:id", component: AddFlightComponent },
         { path: "add-seats/:id", component: AddQuickReservationTicketsComponent }
       ]},
       { path: ":id/income", component: AirlineBusinessComponent },
@@ -117,7 +125,6 @@ const routes: Routes = [
     ] }
   ] },
   { path: "error", component: ErrorPageComponent},
-  { path: "forbidden", component: ForbiddenComponent},
   { path: "**", redirectTo: 'error' }
 ];
 

@@ -1,7 +1,6 @@
 <div class="container mt-3 ml-5" *ngIf="show">
     <h3>{{ header }}</h3>
     <form [formGroup]="addRacCompany" (ngSubmit)="onSubmit()" autocomplete="off">
-        <input type="hidden" formControlName="id">
         <div class="form-group row">
             <label for="companyName" class="col-md-2 col-form-label">Company name</label>
             <div class="col-md-3">
@@ -9,8 +8,8 @@
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addRacCompany.get('companyName').valid && addRacCompany.get('companyName').touched">
-                    <span *ngIf="addRacCompany.get('companyName').errors['required']">Company name must be entered!</span>
-                    <span *ngIf="addRacCompany.get('companyName').errors['minlength']">Company name must be atleast 4 characters!</span>
+                    <span *ngIf="addRacCompany.get('companyName').errors['required']">Company name must be entered</span>
+                    <span *ngIf="addRacCompany.get('companyName').errors['minlength']">Company name must be atleast 4 characters</span>
                 </span>
             </div>
         </div>
@@ -21,8 +20,8 @@
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addRacCompany.get('address').valid && addRacCompany.get('address').touched">
-                    <span *ngIf="addRacCompany.get('address').errors['required']">Address must be entered!</span>
-                    <span *ngIf="addRacCompany.get('address').errors['minlength']">Address must be atleast 4 characters!</span>
+                    <span *ngIf="addRacCompany.get('address').errors['required']">Address must be entered</span>
+                    <span *ngIf="addRacCompany.get('address').errors['minlength']">Address must be atleast 4 characters</span>
                 </span>
             </div>
         </div>
@@ -33,8 +32,8 @@
             </div>
             <div class="col-md-7">
                 <span *ngIf="!addRacCompany.get('description').valid && addRacCompany.get('description').touched">
-                    <span *ngIf="addRacCompany.get('description').errors['required']">Description must be entered!</span>
-                    <span *ngIf="addRacCompany.get('description').errors['minlength']">Description must be atleast 4 characters!</span>
+                    <span *ngIf="addRacCompany.get('description').errors['required']">Description must be entered</span>
+                    <span *ngIf="addRacCompany.get('description').errors['minlength']">Description must be atleast 4 characters</span>
                 </span>
             </div>
         </div>
@@ -50,15 +49,15 @@
                             <div class="col-md-5">
                                 <input title="Description" type="text" class="form-control" formControlName="description" placeholder="Service">
                                 <span *ngIf="!this.addRacCompany.get('services')['controls'][i].get('description').valid && this.addRacCompany.get('services')['controls'][i].get('description').touched">
-                                    <span *ngIf="this.addRacCompany.get('services')['controls'][i].get('description').errors['required']">Service must be entered!</span>
-                                    <span *ngIf="this.addRacCompany.get('services')['controls'][i].get('description').errors['minlength']">Service must be atlest 4 characters!</span>
+                                    <span *ngIf="this.addRacCompany.get('services')['controls'][i].get('description').errors['required']">Service must be entered</span>
+                                    <span *ngIf="this.addRacCompany.get('services')['controls'][i].get('description').errors['minlength']">Service must be atlest 4 characters</span>
                                 </span>
                             </div>
                             <div class="col-md-5">
                                 <input title="Price in euros" type="text" class="form-control" formControlName="price" placeholder="Price in euros">
                                 <span *ngIf="!this.addRacCompany.get('services')['controls'][i].get('price').valid && this.addRacCompany.get('services')['controls'][i].get('price').touched">
-                                    <span *ngIf="this.addRacCompany.get('services')['controls'][i].get('price').errors['required']">Price must be entered!</span>
-                                    <span *ngIf="this.addRacCompany.get('services')['controls'][i].get('price').errors['pattern']">Only numbers from 0-9 are allowed!</span>
+                                    <span *ngIf="this.addRacCompany.get('services')['controls'][i].get('price').errors['required']">Price must be entered</span>
+                                    <span *ngIf="this.addRacCompany.get('services')['controls'][i].get('price').errors['pattern']">Only numbers from 0-9 are allowed</span>
                                 </span>
                             </div>
                             <div>
@@ -80,8 +79,8 @@
                         <div class="col-md-5">
                             <input title="Address" type="text" class="form-control" [formControlName]="i" placeholder="Address">
                             <span *ngIf="!this.addRacCompany.get('branches')['controls'][i].valid && this.addRacCompany.get('branches')['controls'][i].touched">
-                                <span *ngIf="this.addRacCompany.get('branches')['controls'][i].errors['required']">Address must be entered!</span>
-                                <span *ngIf="this.addRacCompany.get('branches')['controls'][i].errors['minlength']">Address must be atlest 4 characters!</span>
+                                <span *ngIf="this.addRacCompany.get('branches')['controls'][i].errors['required']">Address must be entered</span>
+                                <span *ngIf="this.addRacCompany.get('branches')['controls'][i].errors['minlength']">Address must be atlest 4 characters</span>
                             </span>
                         </div>
                         <div>

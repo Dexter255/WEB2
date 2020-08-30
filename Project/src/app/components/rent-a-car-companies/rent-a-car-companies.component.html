@@ -1,36 +1,65 @@
 <div class="row ml-3">
-    <h6 class="ml-3">Search rent a car companies by:</h6>
-    <div class="col-md-12">
-        <app-rent-a-car-company-search (search)="onSearch()" (reset)="onReset()"></app-rent-a-car-company-search>
-    </div>
+	<h6 class="ml-3">Search rent a car companies by:</h6>
+	<div class="col-md-12">
+		<form [formGroup]="searchRacCompany" (ngSubmit)="onSearch()">
+			<div class="form-row">
+				<div class="col-md-2">
+					<input formControlName="companyName" type="text" class="form-control" placeholder="Company name"
+						title="Company name">
+				</div>
+				<div class="col-md-2">
+					<input formControlName="address" type="text" class="form-control" placeholder="Address"
+						title="Address">
+				</div>
+			</div>
+			<div class="mt-1">
+				<h6>Additional criterias for vehicles:</h6>
+				<div class="form-row">
+					<div class="col-md-2">
+						<input formControlName="fromDate" type="date" class="form-control" title="Vehicle needed from">
+					</div>
+					<div class="col-md-2">
+						<input formControlName="toDate" type="date" class="form-control" title="Vehicle needed to">
+					</div>
+					<div class="ml-1">
+						<button class="btn btn-success" type="submit">Search</button>
+					</div>
+					<div class="ml-2">
+						<button class="btn btn-danger" type="button" (click)="onReset()">Reset</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 <div class="ml-3 mr-3">
-    <hr style="border-color: cadetblue;">
+	<hr style="border-color: cadetblue;">
 </div>
 <div class="row ml-3 mt-3">
-    <div class="col-md-4">
-        <div class="form-group row">
-            <div class="col-md-6">
-                <select #sortBy class="custom-select" (change)="onSortChange(sortBy.value)">
-                    <option selected="true" disabled>Sort by</option>    
-                    <option value="0">Name ascending</option>
-                    <option value="1">Name descending</option>
-                    <option value="2">City ascending</option>
-                    <option value="3">City descending</option>
-                </select>
-            </div>
-        </div>
-        <div class="list-group" *ngIf="racCompanyService.racCompanies.length !== 0 else empty">
-            <a type="button" class="list-group-item list-group-item-action" 
-            *ngFor="let racCompany of racCompanyService.racCompanies" [routerLink]="['details', racCompany.Id]" routerLinkActive="active"> 
-                {{ racCompany.CompanyName }}
-            </a>
-        </div>
-        <ng-template #empty>
-            <p class="text-info">There is no companies available!</p>
-        </ng-template>
-    </div>
-    <div class="col-md-8">
-        <router-outlet></router-outlet>
-    </div>
+	<div class="col-md-4">
+		<div class="form-group row">
+			<div class="col-md-6">
+				<select #sortBy class="custom-select" (change)="onSortChange(sortBy.value)">
+					<option selected="true" disabled>Sort by</option>
+					<option value="0">Name &uarr; </option>
+					<option value="1">Name &darr; </option>
+					<option value="2">City &uarr; </option>
+					<option value="3">City &darr; </option>
+				</select>
+			</div>
+		</div>
+		<div class="list-group" *ngIf="racCompanyService.racCompanies.length !== 0 else empty">
+			<a type="button" class="list-group-item list-group-item-action"
+				*ngFor="let racCompany of racCompanyService.racCompanies" [routerLink]="['details', racCompany.Id]"
+				routerLinkActive="active">
+				{{ racCompany.CompanyName }}
+			</a>
+		</div>
+		<ng-template #empty>
+			<p class="text-info">There is no companies available!</p>
+		</ng-template>
+	</div>
+	<div class="col-md-7">
+		<router-outlet></router-outlet>
+	</div>
 </div>

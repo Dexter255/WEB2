@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { ServerService } from '../server.service';
-import { Friend } from 'src/app/models/korisnik/friend.model';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-friends',
@@ -15,6 +15,7 @@ export class FriendsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService,
     public serverService: ServerService) { }
 
   ngOnInit(): void {
@@ -25,26 +26,9 @@ export class FriendsComponent implements OnInit {
     });
   }
 
-  // onSortChange(sortBy: string){
-  //   if(sortBy === '0'){
-  //     this.serverService.friends = this.serverService.friends.sort((a, b) => (a.Username > b.Username) ? 1 : -1);
-  //   }
-  //   else if(sortBy === '1'){
-  //     this.serverService.friends = this.serverService.friends.sort((a, b) => (a.Username > b.Username) ? -1 : 1);
-  //   }
-  // }
-
-  //#region Friend
   onSearch() {
     if (this.searchUser.get("username").value !== null) {
-      this.serverService.searchUsers(this.searchUser.get("username").value).subscribe(
-        (res: Friend[]) => {
-          this.serverService.friends = res;
-        },
-        err => {
-          console.log(err);
-        }
-      )
+      this.serverService.searchUsers(this.searchUser.get("username").value).subscribe();
     }
   }
 
@@ -60,31 +44,50 @@ export class FriendsComponent implements OnInit {
   }
 
   onSendFriendRequest(username: string) {
-    this.serverService.sendFriendRequest(username).subscribe();
+    this.serverService.sendFriendRequest(username).subscribe(
+      res => {
+        this.toastr.success('Request was successfuly sent.', 'Friend');
+      }
+    );
     this.resetForm();
   }
 
   onCancelFriendRequest(username: string) {
-    this.serverService.cancelFriendRequest(username).subscribe();
+    this.serverService.cancelFriendRequest(username).subscribe(
+      res => {
+        this.toastr.info('Request was successfuly canceled.', 'Friend');
+      }
+    );
     this.resetForm();
   }
 
   onAcceptFriendRequest(username: string) {
-    this.serverService.acceptFriendRequest(username).subscribe();
+    this.serverService.acceptFriendRequest(username).subscribe(
+      res => {
+        this.toastr.success('Request was successfuly accepted.', 'Friend');
+      }
+    );
     this.resetForm();
   }
 
   onDeclineFriendRequest(username: string) {
-    this.serverService.declineFriendRequest(username).subscribe();
+    this.serverService.declineFriendRequest(username).subscribe(
+      res => {
+        this.toastr.success('Request was successfuly declined.', 'Friend');
+      }
+    );
   }
 
   onDeleteFriend(username: string) {
-    this.serverService.deleteFriend(username).subscribe();
+    this.serverService.deleteFriend(username).subscribe(
+      res => {
+        this.toastr.success('Friend was successfuly deleted.', 'Friend');
+      }
+    );
     this.resetForm();
   }
 
   onDetailsFriend(username: string){
     this.router.navigate(['details', username], {relativeTo: this.route});
   }
-  //#endregion
 }

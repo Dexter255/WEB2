@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 import { User } from '../models/korisnik/user.model';
 import { Friend } from '../models/korisnik/friend.model';
-import { tap } from 'rxjs/operators';
-import { ReservedFlight } from '../models/flight/reserved-flight.model';
-import { Flight } from '../models/flight/flight.model';
-import { FlightInvitation } from '../models/flight/flight-invitation.model';
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +22,7 @@ export class ServerService {
         this.friendRequests = [];
         this.friendRequestsSent = [];
     }
-
+    
     login(body: any) {
         return this.http.post(this.BaseURI + '/ApplicationUser/Login', body);
     }
@@ -39,6 +36,18 @@ export class ServerService {
         return this.http.post(this.BaseURI + '/ApplicationUser/Register', user);
     }
 
+    verityEmail(id: number) {
+        return this.http.get(this.BaseURI + '/ApplicationUser/VerifyEmail/' + id);
+    }
+
+    getRole(id: number){
+        return this.http.get(this.BaseURI + '/ApplicationUser/GetRole/' + id);
+    }
+    
+    SetNewPasswordForAdmin(body: any){
+        return this.http.post(this.BaseURI + '/ApplicationUser/SetNewPasswordForAdmin', body);
+    }
+    
     getUserProfile() {
         return this.http.get(this.BaseURI + '/ApplicationUser/GetUserProfile')
             .pipe(
@@ -57,39 +66,40 @@ export class ServerService {
     }
 
     getUserType() {
-        if(localStorage.getItem('token') !== null){
+        if (localStorage.getItem('token') !== null) {
             let token = localStorage.getItem('token');
-            
+
             let jwtData = token.split('.')[1];
             let decodedJwtJsonData = window.atob(jwtData);
             let decodedJwtData = JSON.parse(decodedJwtJsonData);
-            
+
             return decodedJwtData.role;
         }
 
         return null;
     }
 
-    getUserId() {
-        let token = localStorage.getItem('token');
-
-        let jwtData = token.split('.')[1];
-        let decodedJwtJsonData = window.atob(jwtData);
-        let decodedJwtData = JSON.parse(decodedJwtJsonData);
-
-        return decodedJwtData.UserID;
-    }
-
     updateUser(user: User) {
         return this.http.put(this.BaseURI + '/ApplicationUser/UpdateUser/' + user.Username, user);
     }
 
+    changePassword(body: any) {
+        return this.http.put(this.BaseURI + '/ApplicationUser/ChangePassword', body);
+    }
+    
     searchUsers(username: string) {
-        return this.http.get(this.BaseURI + '/ApplicationUser/SearchUsers/' + username);
+        return this.http.get(this.BaseURI + '/ApplicationUser/SearchUsers/' + username)
+            .pipe(
+                tap(
+                    (res: Friend[]) => {
+                        this.friends = res;
+                    }
+                )
+            );
     }
 
     sendFriendRequest(username: string) {
-        return this.http.get(this.BaseURI + '/ApplicationUser/SendFriendRequest/' + this.getUserId() + '/' + username)
+        return this.http.get(this.BaseURI + '/ApplicationUser/SendFriendRequest/' + username)
             .pipe(
                 tap(
                     (res: User) => {
@@ -102,7 +112,7 @@ export class ServerService {
     }
 
     cancelFriendRequest(username: string) {
-        return this.http.get(this.BaseURI + '/ApplicationUser/CancelFriendRequest/' + this.getUserId() + '/' + username)
+        return this.http.get(this.BaseURI + '/ApplicationUser/CancelFriendRequest/' + username)
             .pipe(
                 tap(
                     (res: User) => {
@@ -115,7 +125,7 @@ export class ServerService {
     }
 
     acceptFriendRequest(username: string) {
-        return this.http.get(this.BaseURI + '/ApplicationUser/AcceptFriendRequest/' + this.getUserId() + '/' + username)
+        return this.http.get(this.BaseURI + '/ApplicationUser/AcceptFriendRequest/' + username)
             .pipe(
                 tap(
                     (res: User) => {
@@ -128,7 +138,7 @@ export class ServerService {
     }
 
     declineFriendRequest(username) {
-        return this.http.get(this.BaseURI + '/ApplicationUser/DeclineFriendRequest/' + this.getUserId() + '/' + username)
+        return this.http.get(this.BaseURI + '/ApplicationUser/DeclineFriendRequest/' + username)
             .pipe(
                 tap(
                     (res: User) => {
@@ -141,7 +151,7 @@ export class ServerService {
     }
 
     deleteFriend(username) {
-        return this.http.get(this.BaseURI + '/ApplicationUser/DeleteFriend/' + this.getUserId() + '/' + username)
+        return this.http.get(this.BaseURI + '/ApplicationUser/DeleteFriend/' + username)
             .pipe(
                 tap(
                     (res: User) => {
@@ -162,9 +172,5 @@ export class ServerService {
                     }
                 )
             );
-    }
-
-    changePassword(body: any){
-        return this.http.put(this.BaseURI + '/ApplicationUser/ChangePassword/' + this.getUserId(), body);
     }
 }

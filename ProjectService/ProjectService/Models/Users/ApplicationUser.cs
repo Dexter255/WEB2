@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ProjectService.Models.Flight;
+using ProjectService.Models.RentACar;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,11 +15,13 @@ namespace ProjectService.Models.Users
         public string Fullname { get; set; }
         public string Address { get; set; }
         public string PassportNumber { get; set; }
+        public string IdForVerification { get; set; }
         public List<Friend> Friends { get; set; }
         public List<Friend> FriendRequests { get; set; }
         public List<Friend> FriendRequestsSent { get; set; }
         public List<ReservedFlight> ReservedFlights { get; set; }
         public List<FlightInvitation> FlightInvitations { get; set; }
+        public List<ReservedVehicle> ReservedVehicles { get; set; }
         #endregion
     }
 }

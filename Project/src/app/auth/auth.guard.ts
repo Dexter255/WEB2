@@ -1,5 +1,7 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+
 import { ServerService } from '../components/server.service';
 
 @Injectable({
@@ -8,6 +10,7 @@ import { ServerService } from '../components/server.service';
 export class AuthGuard implements CanActivate{
 
     constructor(private router: Router,
+        private toastr: ToastrService,
         private serverService: ServerService) {}
     
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean{
@@ -19,7 +22,8 @@ export class AuthGuard implements CanActivate{
                 }
                 else{
                     //     FORBIDDEN
-                    this.router.navigateByUrl('forbidden', {skipLocationChange: true});
+                    this.toastr.error("You do not have permission to access this resource!", 'Forbidden');
+                    this.router.navigate(['']);
                     return false;
                 }
             }

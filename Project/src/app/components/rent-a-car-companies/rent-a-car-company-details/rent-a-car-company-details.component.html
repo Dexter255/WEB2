@@ -1,66 +1,52 @@
-<div class="container" style="background-color: white;" *ngIf="racCompany">
-    <div class="row">
-        <div class="col-md-3">
-            <label> Company name: </label>
-        </div>
-        <div class="col-md-9">
-            <label> {{ racCompany.CompanyName }} </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Address: </label>
-        </div>
-        <div class="col-md-9">
-            <label> {{ racCompany.Address }} </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Description: </label>
-        </div>
-        <div class="col-md-9">
-            <label> {{ racCompany.Description }} </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Services: </label>
-        </div>
-        <div class="col-md-9" *ngIf="racCompany.Services.length !== 0 else servicesEmpty">
-            <ul class="row ml-2" *ngFor="let service of racCompany.Services">
-                <li> {{ service.Description }}, {{ service.Price }} </li>
-            </ul>
-        </div>
-        <ng-template #servicesEmpty>
-            <div class="col-md-9">
-                <div class="row ml-2">
-                    <p>There is no services available!</p>
-                </div>
-            </div>
-        </ng-template>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Branches: </label>
-        </div>
-        <div class="col-md-9" *ngIf="racCompany.Branches.length !== 0 else branchesEmpty">
-            <ul class="row ml-2" *ngFor="let branch of racCompany.Branches">
-                <li> {{ branch.Address }} </li>
-            </ul>
-        </div>
-        <ng-template #branchesEmpty>
-            <div class="col-md-9">
-                <div class="row ml-2">
-                    <p>There is no branches available!</p>
-                </div>
-            </div>
-        </ng-template>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Vehicles: </label>
-        </div>
-        <button class="btn btn-info ml-3" (click)="onSeeVehicles(racCompany.Id)">See vehicles</button>
-    </div>
+<div class="container" style="background-color: white;" *ngIf="racCompanyService.racCompany">
+	<div class="row">
+		<div class="col-md-3">
+			<label> Company name: </label>
+		</div>
+		<div class="col-md-9">
+			<label> {{ racCompanyService.racCompany.CompanyName }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Address: </label>
+		</div>
+		<div class="col-md-9">
+			<label> {{ racCompanyService.racCompany.Address }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Description: </label>
+		</div>
+		<div class="col-md-9">
+			<label> {{ racCompanyService.racCompany.Description }} </label>
+		</div>
+	</div>
+	<div class="row" *ngIf="racCompanyService.racCompany.Services.length !== 0">
+		<div class="col-md-3">
+			<label> Services: </label>
+		</div>
+		<div class="col-md-9">
+			<ul class="row ml-2" *ngFor="let service of racCompanyService.racCompany.Services">
+				<li> {{ service.Description }}, {{ service.Price }} </li>
+			</ul>
+		</div>
+	</div>
+	<div class="row" *ngIf="racCompanyService.racCompany.Branches.length !== 0">
+		<div class="col-md-3">
+			<label> Branches: </label>
+		</div>
+		<div class="col-md-9">
+			<ul class="row ml-2" *ngFor="let branch of racCompanyService.racCompany.Branches">
+				<li> {{ branch.Address }} </li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Vehicles: </label>
+		</div>
+		<button class="btn btn-info ml-3" (click)="onSeeVehicles(racCompanyService.racCompany.Id)">See vehicles</button>
+	</div>
 </div>

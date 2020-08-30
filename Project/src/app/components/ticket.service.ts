@@ -6,18 +6,25 @@ import { tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class TicketService{
+export class TicketService {
+    private readonly BaseURI = 'https://localhost:44305/api';
     public tickets: Flight[];
 
-    private readonly BaseURI = 'https://localhost:44305/api';
-
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient) {
         this.tickets = [];
     }
-    getTickets(airlineId: number){
+
+    getTickets(airlineId: number) {
         return this.http.get(this.BaseURI + '/Ticket/GetTickets/' + airlineId)
-        .pipe(
-            tap((res: Flight[]) => this.tickets = res)
-        );
+            .pipe(
+                tap((res: Flight[]) => this.tickets = res)
+            );
+    }
+
+    searchTickets(airlineId: number, body: any) {
+        return this.http.post(this.BaseURI + '/Ticket/SearchTickets/' + airlineId, body)
+            .pipe(
+                tap((res: Flight[]) => this.tickets = res)
+            );
     }
 }

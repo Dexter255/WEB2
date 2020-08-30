@@ -23,7 +23,7 @@ namespace ProjectService.Controllers
             _userManager = userManager;
         }
 
-        // GET: api/GetAdmins
+        // GET: api/GetAdmins/adminOf
         [HttpGet("{adminOf}")]
         [Route("GetAdmins/{adminOf}")]
         [Authorize(Roles = "Admin")]
@@ -116,7 +116,6 @@ namespace ProjectService.Controllers
             }
 
             adminDB.Fullname = admin.Fullname;
-            adminDB.Email = admin.Email;
             adminDB.Address = admin.Address;
             adminDB.PhoneNumber = admin.Number;
 
@@ -145,7 +144,6 @@ namespace ProjectService.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<User>> DeleteAdmin(string username)
         {
-
             var admin = await _userManager.FindByNameAsync(username);
 
 

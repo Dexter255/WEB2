@@ -14,8 +14,7 @@ export class Vehicle {
     public NumberOfSeats: number;
     public Rating: number;
     public FreeDates: FreeDate[];
-    // dodato
-    public Reserved: boolean;
+    public Reserved: number;
 
     constructor(id: number, brand: string, model: string, type: VehicleType, cubicCapacity: number, horsePower: number, yearOfProduction: number,
         kilometers: number, numberOfSeats: number, freeDates: FreeDate[]) {
@@ -30,7 +29,6 @@ export class Vehicle {
         this.NumberOfSeats = numberOfSeats;
         this.Rating = 0;
         this.FreeDates = freeDates;
-        this.Reserved = false;
     }
 
     // getType(){

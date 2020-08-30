@@ -26,3 +26,6 @@ D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectServi
 D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.dll
 D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.pdb
 D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.csprojAssemblyReference.cache
+D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\EmailService.dll
+D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\bin\Debug\netcoreapp2.2\EmailService.pdb
+D:\Predmeti\VIII semestar\Programiranje u Smart Grid sistemima\WEB2\ProjectService\ProjectService\obj\Debug\netcoreapp2.2\ProjectService.csproj.CopyComplete

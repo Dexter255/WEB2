@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthInterceptor implements HttpInterceptor{
 
-    constructor(private router: Router) {}
+    constructor(private router: Router,
+        private toastr: ToastrService) {}
     
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
         if(localStorage.getItem('token') !== null){
@@ -30,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor{
                                 this.router.navigate(['']);
                             }
                             else if(err.status === 403){
-                                this.router.navigateByUrl('forbidden', {skipLocationChange: true});
+                                this.toastr.error("You do not have permission to access this resource!", 'Forbidden');
                             }
                             else if(err.status === 404){
                                 this.router.navigateByUrl('error', {skipLocationChange: true});

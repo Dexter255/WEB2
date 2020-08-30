@@ -327,11 +327,9 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("SeatId");
 
-                    b.Property<string>("User_Fullname")
-                        .IsRequired();
+                    b.Property<string>("User_Fullname");
 
-                    b.Property<string>("User_PassportNumber")
-                        .IsRequired();
+                    b.Property<string>("User_PassportNumber");
 
                     b.Property<string>("User_Username");
 
@@ -387,11 +385,9 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("Type");
 
-                    b.Property<string>("User_Fullname")
-                        .IsRequired();
+                    b.Property<string>("User_Fullname");
 
-                    b.Property<string>("User_PassportNumber")
-                        .IsRequired();
+                    b.Property<string>("User_PassportNumber");
 
                     b.Property<string>("User_Username");
 
@@ -459,6 +455,39 @@ namespace ProjectService.Migrations
                     b.ToTable("RentACarCompanies");
                 });
 
+            modelBuilder.Entity("ProjectService.Models.RentACar.ReservedVehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Brand")
+                        .IsRequired();
+
+                    b.Property<string>("GetInCity")
+                        .IsRequired();
+
+                    b.Property<string>("Model")
+                        .IsRequired();
+
+                    b.Property<DateTime>("PickupDate");
+
+                    b.Property<DateTime>("ReturnDate");
+
+                    b.Property<string>("ReturnToCity")
+                        .IsRequired();
+
+                    b.Property<int>("VehicleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("ReservedVehicles");
+                });
+
             modelBuilder.Entity("ProjectService.Models.RentACar.Service", b =>
                 {
                     b.Property<int>("Id")
@@ -503,7 +532,7 @@ namespace ProjectService.Migrations
 
                     b.Property<int?>("RentACarCompanyId");
 
-                    b.Property<bool>("Reserved");
+                    b.Property<int>("Reserved");
 
                     b.Property<int>("Type");
 
@@ -561,6 +590,8 @@ namespace ProjectService.Migrations
                     b.Property<string>("Address");
 
                     b.Property<string>("Fullname");
+
+                    b.Property<string>("IdForVerification");
 
                     b.Property<string>("PassportNumber");
 
@@ -684,6 +715,13 @@ namespace ProjectService.Migrations
                     b.HasOne("ProjectService.Models.RentACar.Vehicle")
                         .WithMany("FreeDates")
                         .HasForeignKey("VehicleId");
+                });
+
+            modelBuilder.Entity("ProjectService.Models.RentACar.ReservedVehicle", b =>
+                {
+                    b.HasOne("ProjectService.Models.Users.ApplicationUser")
+                        .WithMany("ReservedVehicles")
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("ProjectService.Models.RentACar.Service", b =>

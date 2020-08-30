@@ -40,6 +40,7 @@ namespace ProjectService.Models
                 Fullname = "Mihajlo Rohalj",
                 Email = "mihajlorohalj97@gmail.com",
                 NormalizedEmail = "MIHAJLOROHALJ97@GMAIL.COM",
+                EmailConfirmed = true,
                 Address = "Sremska Mitrovica",
                 PhoneNumber = "0640551693",
                 LockoutEnabled = false,

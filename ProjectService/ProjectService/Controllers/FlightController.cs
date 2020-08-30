@@ -185,7 +185,15 @@ namespace ProjectService.Controllers
 
             if (flight == null)
             {
-                return NotFound();
+                return NotFound(new { message = "Flight does not exist." });
+            }
+
+            foreach(var row in flight.Rows)
+            {
+                if(row.Seats.Any(x => x.Type == SeatType.Taken))
+                {
+                    return BadRequest(new { message = "Unable to delete because one or more seats are reserved." });
+                }
             }
 
             foreach (var location in flight.Locations)
@@ -480,7 +488,6 @@ namespace ProjectService.Controllers
 
             return Ok();
         }
-
 
         private bool FlightExists(int id)
         {

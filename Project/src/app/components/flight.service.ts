@@ -10,6 +10,7 @@ import { FlightInvitation } from '../models/flight/flight-invitation.model';
     providedIn: 'root'
 })
 export class FlightService {
+    private readonly BaseURI = 'https://localhost:44305/api';
     public flights: Flight[];
     public flight: Flight;
     public reservedFlights: ReservedFlight[];
@@ -17,7 +18,6 @@ export class FlightService {
     public flightInvitations: FlightInvitation[];
     public invitationFromUser: string;
     public areTickets: boolean;
-    private readonly BaseURI = 'https://localhost:44305/api';
 
     constructor(private http: HttpClient) {
         this.flights = [];
@@ -25,13 +25,6 @@ export class FlightService {
         this.passengers = [];
         this.flightInvitations = [];
         this.areTickets = false;
-    }
-
-    checkFlightId(companyId: number, vehicleId: number) {
-        // if(this.vehicles.find(x => x.Id === companyId).Vehicles.find(x => x.id === vehicleId) === undefined)
-        //     return false
-
-        return true;
     }
 
     getFlights(airlineId: number) {

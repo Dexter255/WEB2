@@ -8,18 +8,14 @@ import { User } from '../models/korisnik/user.model';
     providedIn: 'root'
 })
 export class AdminService{
-    admins: User[];
     private readonly BaseURI = 'https://localhost:44305/api';
+    admins: User[];
+    admin: User;
 
     constructor(private http: HttpClient) {
         this.admins = [];
     }
 
-    checkAdminId(id: number){
-        //return this.http.get(this.BaseURI + '/Admin/RacCompanyAdmins');
-        return false;
-    }
-    
     getRacCompanyAdmins(){
         return this.http.get(this.BaseURI + '/Admin/GetAdmins/racCompany')
         .pipe(
@@ -35,12 +31,12 @@ export class AdminService{
     }
     
     getAdmin(username: string){
-        return this.http.get(this.BaseURI + '/Admin/GetAdmin/' + username);
-    }
-
-    // umesto ove funkcije poziva se Register u ServerService
-    addAdmin(admin: User){
-        return this.http.post(this.BaseURI + '/Admin', admin);
+        return this.http.get(this.BaseURI + '/Admin/GetAdmin/' + username)
+        .pipe(
+            tap(
+                (res: User) => this.admin = res
+            )
+        )
     }
 
     updateAdmin(admin: User){

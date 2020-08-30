@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from '../../server.service';
 import { ActivatedRoute, Params } from '@angular/router';
+
+import { ServerService } from '../../server.service';
 
 @Component({
   selector: 'app-friend-details',

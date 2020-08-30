@@ -1,82 +1,79 @@
 <div class="container" style="background-color: white;" *ngIf="flightService.flight">
-    <div class="row">
-        <div class="col-md-3">
-            <label> Take off destination: </label>
-        </div>
-        <div class="col-md-3">
-            <label> {{ flightService.flight.StartDestination }} </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Landing destination: </label>
-        </div>
-        <div class="col-md-3">
-            <label> {{ flightService.flight.EndDestination }} </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Take off date: </label>
-        </div>
-        <div class="col-md-3">
-            <label> {{ convertDate(flightService.flight.StartDateAndTime) }} </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Landing date: </label>
-        </div>
-        <div class="col-md-3">
-            <label> {{ convertDate(flightService.flight.EndDateAndTime) }} </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Duration: </label>
-        </div>
-        <div class="col-md-3">
-            <label> {{ flightService.flight.Hours }} </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Distance: </label>
-        </div>
-        <div class="col-md-3">
-            <label> {{ flightService.flight.Distance }} km </label>
-        </div>
-    </div>
-    <div class="row" *ngIf="flightService.flight.Locations.length !== 0">
-        <div class="col-md-3">
-            <label> Flight transfer(s): </label>
-        </div>
-        <ol class="row ml-2" *ngFor="let location of flightService.flight.Locations" start="1">
-            <li> {{ location.City }} </li>
-        </ol>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Ticket price: </label>
-        </div>
-        <div class="col-md-3">
-            <label> {{ flightService.flight.TicketPrice }} &euro; </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label> Rating: </label>
-        </div>
-        <div class="col-md-3">
-            <label> {{ flightService.flight.Rating }} </label>
-        </div>
-    </div>
-    <div class="row" *ngIf="serverService.getUserType() === 'User'">
-        <div class="col-md-12">
-            <!-- <button class="btn btn-success" [disabled]="vehicle.reserved"
-                [title]="vehicle.reserved ? 'Already reserved' : ''"
-                (click)="onReserve()">Reserve - PREPRAVITI</button> -->
-            <button class="btn btn-success" (click)="onReserve()">Reserve</button>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Take off destination: </label>
+		</div>
+		<div class="col-md-3">
+			<label> {{ flightService.flight.StartDestination }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Landing destination: </label>
+		</div>
+		<div class="col-md-3">
+			<label> {{ flightService.flight.EndDestination }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Take off date: </label>
+		</div>
+		<div class="col-md-3">
+			<label> {{ convertDate(flightService.flight.StartDateAndTime) }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Landing date: </label>
+		</div>
+		<div class="col-md-3">
+			<label> {{ convertDate(flightService.flight.EndDateAndTime) }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Duration: </label>
+		</div>
+		<div class="col-md-3">
+			<label> {{ flightService.flight.Hours }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Distance: </label>
+		</div>
+		<div class="col-md-3">
+			<label> {{ flightService.flight.Distance }} km </label>
+		</div>
+	</div>
+	<div class="row" *ngIf="flightService.flight.Locations.length !== 0">
+		<div class="col-md-3">
+			<label> Flight transfer(s): </label>
+		</div>
+		<ol class="row ml-2" *ngFor="let location of flightService.flight.Locations" start="1">
+			<li> {{ location.City }} </li>
+		</ol>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Ticket price: </label>
+		</div>
+		<div class="col-md-3">
+			<label> {{ flightService.flight.TicketPrice }} &euro; </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label> Rating: </label>
+		</div>
+		<div class="col-md-3">
+			<label> {{ flightService.flight.Rating }} </label>
+		</div>
+	</div>
+	<div class="row" *ngIf="serverService.getUserType() === 'User'">
+		<div class="col-md-12">
+			<button class="btn btn-success" (click)="onReserve(flightService.flight.Id)">Reserve</button>
+		</div>
+	</div>
 </div>

@@ -1,38 +1,38 @@
 <div class="row ml-3 mr-3 mt-3">
-    <button class="btn btn-success mb-2" (click)="onAddFlight()">
-        Add flight
-    </button>
-    <table class="table table-dark" *ngIf="flightService.flights.length !== 0 else empty">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">Start destination</th>
-                <th scope="col">End destination</th>
-                <th scope="col">Flight duration</th>
-                <th scope="col">Ticket price</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="text-center" *ngFor="let flight of flightService.flights">
-                <td> {{ flight.StartDestination }} </td>
-                <td> {{ flight.EndDestination }} </td>
-                <td> {{ flight.Hours }} </td>
-                <td> {{ flight.TicketPrice }} </td>
-                <td> {{ flight.Rating }} </td>
-                <td>
-                    <span>
-                        <button class="btn btn-info mr-2" (click)="onDetailsFlight(flight.Id)">Details</button>
-                        <button class="btn btn-secondary mr-2" (click)="onEditFlight(flight.Id)">Edit</button>
-                        <button class="btn btn-danger" (click)="onDeleteFlight(flight.Id)">Delete</button>
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <ng-template #empty>
-        <div class="row ml-3 mt-1">
-            <span class="text-info" style="font-size: large;">There is no flights available!</span>
-        </div>
-    </ng-template>
+	<button class="btn btn-success mb-2" (click)="onAddFlight()">
+		Add flight
+	</button>
+	<table class="table table-dark" *ngIf="flightService.flights.length !== 0 else empty">
+		<thead>
+			<tr class="text-center">
+				<th scope="col">Start destination</th>
+				<th scope="col">End destination</th>
+				<th scope="col">Flight duration</th>
+				<th scope="col">Ticket price</th>
+				<th scope="col">Rating</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-center" *ngFor="let flight of flightService.flights">
+				<td> {{ flight.StartDestination }} </td>
+				<td> {{ flight.EndDestination }} </td>
+				<td> {{ flight.Hours }} </td>
+				<td> {{ flight.TicketPrice }} </td>
+				<td> {{ flight.Rating }} </td>
+				<td>
+					<span>
+						<button class="btn btn-info mr-2" (click)="onDetailsFlight(flight.Id)">Details</button>
+						<button class="btn btn-secondary mr-2" (click)="onEditFlight(flight.Id)">Edit</button>
+						<button class="btn btn-danger" (click)="onDeleteFlight(flight.Id)">Delete</button>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<ng-template #empty>
+		<div class="row ml-3 mt-1">
+			<span class="text-info" style="font-size: large;">There is no flights available!</span>
+		</div>
+	</ng-template>
 </div>

@@ -1,38 +1,93 @@
-import { Vehicle } from '../models/rent-a-car/vehicle.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
+
+import { Vehicle } from '../models/rent-a-car/vehicle.model';
+import { ReservedVehicle } from '../models/rent-a-car/reserved-vehicle.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class VehicleService{
-    vehicles: Vehicle[];
+export class VehicleService {
     private readonly BaseURI = 'https://localhost:44305/api';
+    vehicles: Vehicle[];
+    vehicle: Vehicle;
+    reservedVehicles: ReservedVehicle[];
+    reservedVehicle: ReservedVehicle;
 
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient) {
         this.vehicles = [];
+        this.reservedVehicles = [];
     }
 
-    checkVehicleId(companyId: number, vehicleId: number) {
-        // if(this.vehicles.find(x => x.Id === companyId).Vehicles.find(x => x.id === vehicleId) === undefined)
-        //     return false
-
-        return true;
+    getVehicles(companyId: number) {
+        return this.http.get(this.BaseURI + '/Vehicle/' + 'all/' + companyId)
+            .pipe(
+                tap(
+                    (res: Vehicle[]) => {
+                        this.vehicles = res;
+                    }
+                )
+            );
     }
 
-    getVehicles(companyId: number){
-        return this.http.get(this.BaseURI + '/Vehicle/' + 'all/' + companyId);
-    }
-    
-    getVehicle(vehicleId: number){
-        return this.http.get(this.BaseURI + '/Vehicle/' + vehicleId);
+    getVehicle(vehicleId: number) {
+        return this.http.get(this.BaseURI + '/Vehicle/GetVehicle/' + vehicleId)
+            .pipe(
+                tap(
+                    (res: Vehicle) => {
+                        this.vehicle = res;
+                    }
+                )
+            )
     }
 
-    updateVehicle(vehicle: Vehicle){
+    updateVehicle(vehicle: Vehicle) {
         return this.http.put(this.BaseURI + '/Vehicle/' + vehicle.Id, vehicle);
     }
-    
-    deleteVehicle(vehicleId: number){
+
+    deleteVehicle(vehicleId: number) {
         return this.http.delete(this.BaseURI + '/Vehicle/' + vehicleId);
+    }
+
+    searchVehicles(companyId: number, body: any) {
+        return this.http.post(this.BaseURI + '/Vehicle/SearchVehicles/' + companyId, body)
+            .pipe(
+                tap(
+                    ((res: Vehicle[]) => {
+                        this.vehicles = res;
+                    })
+                )
+            )
+    }
+
+    reserveVehicle(body: any) {
+        return this.http.post(this.BaseURI + '/Vehicle/ReserveVehicle', body);
+    }
+
+    getReservedVehicles() {
+        return this.http.get(this.BaseURI + '/Vehicle/GetReservedVehicles')
+            .pipe(
+                tap(
+                    ((res: ReservedVehicle[]) => {
+                        this.reservedVehicles = res;
+                    })
+                )
+            );
+    }
+
+    cancelReservation(vehicleId: number){
+        return this.http.get(this.BaseURI + '/Vehicle/CancelReservation/' + vehicleId);
+    }
+
+    getReservedVehicle(vehicleId: number){
+        return this.http.get(this.BaseURI + '/Vehicle/GetReservedVehicle/' + vehicleId)
+        .pipe(
+            tap(
+                ((res: ReservedVehicle) => {
+                    this.reservedVehicle = res;
+                })
+            )
+        )
     }
 }

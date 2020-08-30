@@ -1,0 +1,71 @@
+<div class="row ml-3">
+	<h6 class="ml-3">Search vehicles by:</h6>
+	<div class="col-md-12">
+		<form [formGroup]="searchVehicles" (ngSubmit)="onSearch()" autocomplete="off">
+			<div class="form-row mb-2">
+				<div class="col-md-2">
+					<input formControlName="fromDate" type="date" class="form-control" title="Vehicle needed from">
+				</div>
+				<div class="col-md-2">
+					<input formControlName="toDate" type="date" class="form-control" title="Vehicle needed to">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-md-2">
+					<input formControlName="brand" type="text" class="form-control" title="Brand" placeholder="Brand">
+				</div>
+				<div class="col-md-2">
+					<select class="form-control browser-default custom-select" id="type" formControlName="type"
+						title="Type">
+						<option *ngFor="let type of types; let i = index" [value]="i">{{type}}</option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<select class="form-control browser-default custom-select" id="seat" formControlName="seat"
+						title="Number of seats">
+						<option *ngFor="let seat of seats" [value]="seat">{{seat}}</option>
+					</select>
+				</div>
+				<div class="ml-1">
+					<button class="btn btn-success" type="submit">Search</button>
+				</div>
+				<div class="ml-2">
+					<button class="btn btn-danger ml-2" type="button" (click)="onReset()">Reset</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ml-3 mr-3">
+	<hr style="border-color: cadetblue;">
+</div>
+<div class="row ml-3 mr-3">
+	<div class="col-md-4">
+		<div class="form-group row">
+			<div class="col-md-6">
+				<select #sortBy class="custom-select" (change)="onSortChange(sortBy.value)">
+					<option selected="true" disabled>Sort by</option>
+					<option value="0">Brand &uarr; </option>
+					<option value="1">Brand &darr; </option>
+					<option value="0">Horse power &uarr; </option>
+					<option value="1">Horse power &darr; </option>
+					<option value="2">Year of production &uarr; </option>
+					<option value="3">Year of production &darr; </option>
+				</select>
+			</div>
+		</div>
+		<div class="list-group" *ngIf="vehicleService.vehicles.length !== 0 else empty">
+			<a type="button" class="list-group-item list-group-item-action"
+				*ngFor="let vehicle of vehicleService.vehicles" [routerLink]="['details', vehicle.Id]"
+				routerLinkActive="active">
+				{{ vehicle.Brand}} {{ vehicle.Model }}, {{ getType(vehicle.Type) }}
+			</a>
+		</div>
+		<ng-template #empty>
+			<p class="text-info">There is no vehicles available!</p>
+		</ng-template>
+	</div>
+	<div class="col-md-7">
+		<router-outlet></router-outlet>
+	</div>
+</div>

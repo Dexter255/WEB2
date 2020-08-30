@@ -1,82 +1,86 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightService } from 'src/app/components/flight.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+
+import { FlightService } from 'src/app/components/flight.service';
 import { Passenger } from 'src/app/models/flight/passenger.model';
 
 @Component({
-  selector: 'app-add-quick-reservation-tickets',
-  templateUrl: './add-quick-reservation-tickets.component.html',
-  styleUrls: ['./add-quick-reservation-tickets.component.css']
+	selector: 'app-add-quick-reservation-tickets',
+	templateUrl: './add-quick-reservation-tickets.component.html',
+	styleUrls: ['./add-quick-reservation-tickets.component.css']
 })
 export class AddQuickReservationTicketsComponent implements OnInit {
-  flightId: number;
-  formSeat: FormGroup;
-  
-  constructor(private route: ActivatedRoute,
-    private router: Router,
-    private toastr: ToastrService,
-    public flightService: FlightService) { }
+	flightId: number;
+	formSeat: FormGroup;
 
-  ngOnInit(): void {
-    this.formSeat = new FormGroup({
-      'seats': new FormArray([])
-    });
-    
-    this.route.params.subscribe((params: Params) => {
-      this.flightId = +params['id'];
-      this.flightService.getFlight(this.flightId).subscribe();
-    });
-  }
+	constructor(private route: ActivatedRoute,
+		private router: Router,
+		private toastr: ToastrService,
+		public flightService: FlightService) { }
 
-  checked(rowId: number, seatId: number, i: number, j: number) {
-    let element: HTMLInputElement = <HTMLInputElement>document.getElementById(rowId.toString() + '+' + seatId.toString());
-    if (element.checked) {
-      this.onAddSeat(rowId, seatId, i * 9 + j + 1);
-    }
-    else {
-      this.onDeleteSeat(i * 9 + j + 1);
-    }
-  }
+	ngOnInit(): void {
+		this.formSeat = new FormGroup({
+			'seats': new FormArray([])
+		});
 
-  onAddSeat(rowId: number, seatId: number, seatNumber: number) {
-    let formGroup = new FormGroup({
-      'seatNumber': new FormControl(seatNumber),
-      'rowId': new FormControl(rowId),
-      'seatId': new FormControl(seatId),
-    });
+		this.route.params.subscribe((params: Params) => {
+			this.flightId = +params['id'];
+			this.flightService.getFlight(this.flightId).subscribe(
+				res => {},
+				err => {}
+			);
+		});
+	}
 
-    (<FormArray>this.formSeat.get('seats')).push(formGroup);
-  }
+	checked(rowId: number, seatId: number, i: number, j: number) {
+		let element: HTMLInputElement = <HTMLInputElement>document.getElementById(rowId.toString() + '+' + seatId.toString());
+		if (element.checked) {
+			this.onAddSeat(rowId, seatId, i * 9 + j + 1);
+		}
+		else {
+			this.onDeleteSeat(i * 9 + j + 1);
+		}
+	}
 
-  onDeleteSeat(seatNumber: number) {
-    let index: number;
-    this.formSeat.get('seats')['controls'].forEach(element => {
-      if (element.get('seatNumber').value === seatNumber) {
-        index = +(<HTMLInputElement>document.getElementById(element.get('seatNumber').value)).value;
-      }
-    });
-    (<FormArray>this.formSeat.get('seats')).removeAt(index);
-  }
+	onAddSeat(rowId: number, seatId: number, seatNumber: number) {
+		let formGroup = new FormGroup({
+			'seatNumber': new FormControl(seatNumber),
+			'rowId': new FormControl(rowId),
+			'seatId': new FormControl(seatId),
+		});
 
-  onSubmit() {
-    let passengers: Passenger[] = [];
+		(<FormArray>this.formSeat.get('seats')).push(formGroup);
+	}
 
-    this.formSeat.get('seats')['controls'].forEach(element => {
-      passengers.push(new Passenger(
-        element.get('rowId').value,
-        element.get('seatId').value
-      ));
-    });
+	onDeleteSeat(seatNumber: number) {
+		let index: number;
+		this.formSeat.get('seats')['controls'].forEach(element => {
+			if (element.get('seatNumber').value === seatNumber) {
+				index = +(<HTMLInputElement>document.getElementById(element.get('seatNumber').value)).value;
+			}
+		});
+		(<FormArray>this.formSeat.get('seats')).removeAt(index);
+	}
 
-    if(passengers.length !== 0){
-      this.flightService.addSeatsForQuickReservationTickets(this.flightId, passengers).subscribe(
-        res => {
-          this.toastr.success('Seats for quick reservation tickets successfully added.', 'Quick reservation tickets');
-          //this.router.navigate(['reservations']);
-        }
-      );
-    }
-  }
+	onSubmit() {
+		let passengers: Passenger[] = [];
+
+		this.formSeat.get('seats')['controls'].forEach(element => {
+			passengers.push(new Passenger(
+				element.get('rowId').value,
+				element.get('seatId').value
+			));
+		});
+
+		if (passengers.length !== 0) {
+			this.flightService.addSeatsForQuickReservationTickets(this.flightId, passengers).subscribe(
+				res => {
+					this.toastr.success('Seats for quick reservation tickets successfully added.', 'Quick reservation tickets');
+					this.router.navigate(['../../'], {relativeTo: this.route});
+				}
+			);
+		}
+	}
 }

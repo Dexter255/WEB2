@@ -6,14 +6,14 @@ import { Injectable } from '@angular/core';
 })
 export class LoginRegisterGuard implements CanActivate{
 
-    constructor(private route: Router) {}
+    constructor(private router: Router) {}
     
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean{
         if(localStorage.getItem('token') === null){
             return true;
         }
         else{
-            this.route.navigate(['']);
+            this.router.navigate(['']);
             return false;
         }
     }

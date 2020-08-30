@@ -70,9 +70,7 @@ export class AirlinesComponent implements OnInit {
           'flightStartDate': null,
         });
       },
-      err => {
-        console.log(err);
-      }
+      err => {}
     );
   }
 

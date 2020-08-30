@@ -10,19 +10,12 @@ import { Flight } from '../models/flight/flight.model';
     providedIn: 'root'
 })
 export class AirlineService {
+    private readonly BaseURI = 'https://localhost:44305/api';
     public airlines: Airline[];
     public airline: Airline;
-    private readonly BaseURI = 'https://localhost:44305/api';
 
     constructor(private http: HttpClient) {
         this.airlines = [];
-    }
-
-    checkAirlineId(index: number) {
-        if (this.airlines.length > index)
-            return true;
-
-        return false;
     }
 
     getAirlines() {

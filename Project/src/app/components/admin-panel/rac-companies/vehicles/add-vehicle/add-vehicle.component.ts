@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { RacCompanyService } from 'src/app/components/rac-company.service';
 import { VehicleType } from 'src/app/models/rent-a-car/vehicle-type.model';
@@ -10,225 +11,207 @@ import { FreeDate } from 'src/app/models/rent-a-car/free-date.model';
 import { RentACarCompany } from 'src/app/models/rent-a-car/rac-company.model';
 
 @Component({
-  selector: 'app-add-vehicle',
-  templateUrl: './add-vehicle.component.html',
-  styleUrls: ['./add-vehicle.component.css']
+	selector: 'app-add-vehicle',
+	templateUrl: './add-vehicle.component.html',
+	styleUrls: ['./add-vehicle.component.css']
 })
 export class AddVehicleComponent implements OnInit {
-  addVehicle: FormGroup;
-  show: boolean = false;
+	addVehicle: FormGroup;
+	show: boolean = false;
+	header: string = 'Add vehicle';
 
-  types: string[] = ['Cabriolet', 'Caravan', 'Saloon', 'Hatchback', 'Coupe', 'Miniven', 'SUV'];
-  seats: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+	types: string[] = ['Cabriolet', 'Caravan', 'Saloon', 'Hatchback', 'Coupe', 'Miniven', 'SUV'];
+	seats: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
-  header: string = 'Add vehicle';
+	constructor(private route: ActivatedRoute,
+		private router: Router,
+		private toastr: ToastrService,
+		private vehicleService: VehicleService,
+		private racCompanyService: RacCompanyService) { }
 
-  constructor(private route: ActivatedRoute,
-    private router: Router,
-    private vehicleService: VehicleService,
-    private racCompanyService: RacCompanyService) { }
+	ngOnInit(): void {
+		let companyId = +this.route.parent.snapshot.params['id'];
 
-  ngOnInit(): void {
-    switch (this.route.snapshot['_routerState'].url.split('/')[5]) {
-      case 'add':
-        let companyId = +this.route.parent.snapshot.params['id'];
+		switch (this.route.snapshot['_routerState'].url.split('/')[5]) {
+			case 'add':
+				this.addVehicle = new FormGroup({
+					'companyId': new FormControl(companyId),
+					'vehicleId': new FormControl(0),
+					'brand': new FormControl(null, [Validators.required, Validators.minLength(2)]),
+					'model': new FormControl(null, [Validators.required, Validators.minLength(2)]),
+					'type': new FormControl(null, Validators.required),
+					'cubicCapacity': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+					'horsePower': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+					'yearOfProduction': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+					'kilometer': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+					'seat': new FormControl(null, Validators.required),
+					'date': new FormGroup({
+						'freeFrom': new FormControl(null, [Validators.required, this.checkDate]),
+						'freeTo': new FormControl(null, [Validators.required, this.checkDate])
+					}, this.compareDates)
+				});
 
-        this.addVehicle = new FormGroup({
-          'companyId': new FormControl(companyId),
-          'vehicleId': new FormControl(0),
-          'brand': new FormControl(null, [Validators.required, Validators.minLength(2)]),
-          'model': new FormControl(null, [Validators.required, Validators.minLength(2)]),
-          'type': new FormControl(null, Validators.required),
-          'cubicCapacity': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
-          'horsePower': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
-          'yearOfProduction': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
-          'kilometer': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
-          'seat': new FormControl(null, Validators.required),
-          'freeFrom': new FormControl(null, [Validators.required, this.compareDates, this.checkDate]),
-          'freeTo': new FormControl(null, [Validators.required, this.compareDates, this.checkDate])
-        });
-        this.show = true;
-        break;
+				this.show = true;
+				break;
 
-      case 'edit':
-        this.route.params.subscribe((params: Params) => {
-          this.header = "Edit vehicle";
-          let vehicleId = +params['id'];
-          let companyId = +this.route.parent.snapshot.params['id'];
+			case 'edit':
+				this.route.params.subscribe((params: Params) => {
+					this.header = "Edit vehicle";
+					let vehicleId = +params['id'];
 
-          let vehicle;
-          this.vehicleService.getVehicle(vehicleId).subscribe(
-            res => {
-              vehicle = res as Vehicle;
+					let vehicle;
+					this.vehicleService.getVehicle(vehicleId).subscribe(
+						res => {
+							vehicle = res as Vehicle;
 
-              this.addVehicle = new FormGroup({
-                'companyId': new FormControl(companyId),
-                'vehicleId': new FormControl(vehicleId),
-                'brand': new FormControl(vehicle.Brand, [Validators.required, Validators.minLength(2)]),
-                'model': new FormControl(vehicle.Model, [Validators.required, Validators.minLength(2)]),
-                'type': new FormControl(VehicleType[vehicle.Type], Validators.required),
-                'cubicCapacity': new FormControl(vehicle.CubicCapacity.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
-                'horsePower': new FormControl(vehicle.HorsePower.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
-                'yearOfProduction': new FormControl(vehicle.YearOfProduction.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
-                'kilometer': new FormControl(vehicle.Kilometers.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
-                'seat': new FormControl(vehicle.NumberOfSeats.toString(), Validators.required),
-                'freeDates': new FormArray([])
-              });
+							this.addVehicle = new FormGroup({
+								'companyId': new FormControl(companyId),
+								'vehicleId': new FormControl(vehicleId),
+								'brand': new FormControl(vehicle.Brand, [Validators.required, Validators.minLength(2)]),
+								'model': new FormControl(vehicle.Model, [Validators.required, Validators.minLength(2)]),
+								'type': new FormControl(VehicleType[vehicle.Type], Validators.required),
+								'cubicCapacity': new FormControl(vehicle.CubicCapacity.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
+								'horsePower': new FormControl(vehicle.HorsePower.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
+								'yearOfProduction': new FormControl(vehicle.YearOfProduction.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
+								'kilometer': new FormControl(vehicle.Kilometers.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
+								'seat': new FormControl(vehicle.NumberOfSeats.toString(), Validators.required),
+								'freeDates': new FormArray([])
+							});
 
-              vehicle.FreeDates.forEach(element => {
-                let date = this.formatDate(element.Date.split('T')[0]);
-                this.onAddDate(date);
-              });
-              this.show = true;
-            },
-            err => {
-              console.log(err);
-            }
-          )
-        });
-        break;
-    }
-  }
+							vehicle.FreeDates.forEach(element => {
+								// let date = this.formatDate(element.Date.split('T')[0]);
+								this.onAddDate(element.Date.split('T')[0]);
+							});
+							this.show = true;
+						},
+						err => {
+							console.log(err);
+						}
+					)
+				});
+				break;
+		}
+	}
 
-  compareDates(control: FormControl): { [error: string]: boolean } {
-    let free: string[];
-    let to: string[];
-    try {
-      let freeFrom = control.parent.get('freeFrom').value;
-      let freeTo = control.parent.get('freeTo').value;
+	checkDate(control: FormControl): { [error: string]: boolean } {
+		let currentDate = new Date();
 
-      if (freeFrom !== null && freeTo !== null) {
-        let freeFromDate = new Date(freeFrom);
-        let freeToDate = new Date(freeTo)
+		if (control.value !== null) {
+			let date = new Date(control.value);
 
-        if (freeFromDate > freeToDate)
-          return { 'notValid': true };
+			if (date < currentDate) {
+				return { 'currentDate': true };
+			}
+			else {
+				return null;
+			}
+		}
 
-        return null;
-      }
-    }
-    catch (Error) {
+		return null;
+	}
 
-    }
+	compareDates(formGroup: FormGroup): { [error: string]: boolean } {
+		if (formGroup.get('freeFrom').value !== null && formGroup.get('freeTo').value !== null) {
+			if (new Date(formGroup.get('freeFrom').value) > new Date(formGroup.get('freeTo').value)) {
+				return { 'freeFromGreater': true };
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  checkDate(control: FormControl): { [error: string]: boolean } {
-    let currentDate = new Date();
+	// formatDate(dateString: string): string {
+	// 	var temp = dateString.split('-');
+	// 	// var date = new Date(+temp[0], +temp[1], +temp[2]);
 
-    try {
-      let freeDate = control.value;
+	// 	// let month: string = date.getMonth() < 10 ? '0' + date.getMonth().toString() : date.getMonth().toString();
+	// 	// let day: string;
+	// 	// if(date.getDate() == 31)
+	// 	// 	day= (date.getDate() - 1) < 10 ? '0' + date.getDate().toString() : date.getDate().toString();
+	// 	// else
+	// 	// 	day = date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate().toString();
 
-      if (freeDate !== null) {
-        let date = new Date(freeDate);
+	// 	let a = temp[0] + '-' + temp[1] + '-' + temp[2];
+	// 	return a;
+	// }
 
-        if (new Date(date.toDateString()) < new Date(currentDate.toDateString()))
-          return { 'currentDate': true };
+	onAddDate(freeDate: string = null) {
+		let date = new FormControl(freeDate, Validators.required);
 
-        return null;
-      }
-    }
-    catch (Error) {
+		(<FormArray>this.addVehicle.get('freeDates')).push(date);
+	}
 
-    }
+	onDeleteDate(index: number) {
+		(<FormArray>this.addVehicle.get('freeDates')).removeAt(index);
+	}
 
-    return null;
-  }
+	onSubmit() {
+		if (this.addVehicle.get('vehicleId').value !== 0) {
+			let freeDates: FreeDate[] = [];
 
-  formatDate(dateString: string): string {
-    var temp = dateString.split('-');
-    var date = new Date(+temp[0], +temp[1], +temp[2]);
+			this.addVehicle.get('freeDates').value.forEach(element => {
+				freeDates.push(new FreeDate(0, new Date(element)));
+			});
 
-    let month: string = date.getMonth() < 10 ? '0' + date.getMonth().toString() : date.getMonth().toString();
-    let day: string = date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate().toString();
+			let vehicle = new Vehicle(
+				this.addVehicle.get('vehicleId').value,
+				this.addVehicle.get('brand').value.trim(),
+				this.addVehicle.get('model').value.trim(),
+				+VehicleType[this.addVehicle.get('type').value],
+				this.addVehicle.get('cubicCapacity').value,
+				this.addVehicle.get('horsePower').value,
+				this.addVehicle.get('yearOfProduction').value,
+				this.addVehicle.get('kilometer').value,
+				this.addVehicle.get('seat').value,
+				freeDates);
 
-    let a = date.getFullYear() + '-' + month + '-' + day;
-    return a;
-  }
+			this.vehicleService.updateVehicle(vehicle).subscribe(
+				res => {
+					this.toastr.success('Vehicle was successfully edited.', 'Vehicle');
+					this.router.navigate(['../../'], { relativeTo: this.route });
+				},
+				err => { }
+			);
+		}
+		else {
+			this.racCompanyService.getRacCompany(this.addVehicle.get('companyId').value).subscribe(
+				res => {
+					let racCompany = res as RentACarCompany;
 
-  onAddDate(freeDate: string = null) {
-    let date = new FormControl(freeDate, Validators.required);
+					let freeDates: FreeDate[] = [];
+					let freeFromDate = new Date(this.addVehicle.get('date').get('freeFrom').value);
+					let freeToDate = new Date(this.addVehicle.get('date').get('freeTo').value);
 
-    (<FormArray>this.addVehicle.get('freeDates')).push(date);
-  }
+					freeFromDate.setDate(freeFromDate.getDate() + 1);
+					freeToDate.setDate(freeToDate.getDate() + 1);
+					while (freeFromDate <= freeToDate) {
+						freeDates.push(new FreeDate(0, new Date(freeFromDate.toDateString())));
+						freeFromDate.setDate(freeFromDate.getDate() + 1);
+					}
 
-  onDeleteDate(index: number) {
-    (<FormArray>this.addVehicle.get('freeDates')).removeAt(index);
-  }
+					let vehicle = new Vehicle(
+						this.addVehicle.get('vehicleId').value,
+						this.addVehicle.get('brand').value.trim(),
+						this.addVehicle.get('model').value.trim(),
+						+VehicleType[this.addVehicle.get('type').value],
+						this.addVehicle.get('cubicCapacity').value,
+						this.addVehicle.get('horsePower').value,
+						this.addVehicle.get('yearOfProduction').value,
+						this.addVehicle.get('kilometer').value,
+						this.addVehicle.get('seat').value,
+						freeDates);
 
-  onSubmit() {
-    if (this.addVehicle.get('vehicleId').value !== 0) {
-      let freeDates: FreeDate[] = [];
-
-      this.addVehicle.get('freeDates').value.forEach(element => {
-        freeDates.push(new FreeDate(0, new Date(element)));
-      });
-
-      let vehicle = new Vehicle(
-        this.addVehicle.get('vehicleId').value,
-        this.addVehicle.get('brand').value.trim(),
-        this.addVehicle.get('model').value.trim(),
-        +VehicleType[this.addVehicle.get('type').value],
-        this.addVehicle.get('cubicCapacity').value,
-        this.addVehicle.get('horsePower').value,
-        this.addVehicle.get('yearOfProduction').value,
-        this.addVehicle.get('kilometer').value,
-        this.addVehicle.get('seat').value,
-        freeDates);
-
-      this.vehicleService.updateVehicle(vehicle).subscribe(
-        res => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    }
-    else {
-      this.racCompanyService.getRacCompany(this.addVehicle.get('companyId').value).subscribe(
-        res => {
-          let racCompany = res as RentACarCompany;
-
-          let freeDates: FreeDate[] = [];
-
-          let freeFromDate = new Date(this.addVehicle.get('freeFrom').value);
-          let freeToDate = new Date(this.addVehicle.get('freeTo').value);
-
-          freeFromDate.setDate(freeFromDate.getDate() + 1);
-          freeToDate.setDate(freeToDate.getDate() + 1);
-          while (freeFromDate <= freeToDate) {
-            freeDates.push(new FreeDate(0, new Date(freeFromDate.toDateString())));
-            freeFromDate.setDate(freeFromDate.getDate() + 1);
-          }
-
-          let vehicle = new Vehicle(
-            this.addVehicle.get('vehicleId').value,
-            this.addVehicle.get('brand').value.trim(),
-            this.addVehicle.get('model').value.trim(),
-            +VehicleType[this.addVehicle.get('type').value],
-            this.addVehicle.get('cubicCapacity').value,
-            this.addVehicle.get('horsePower').value,
-            this.addVehicle.get('yearOfProduction').value,
-            this.addVehicle.get('kilometer').value,
-            this.addVehicle.get('seat').value,
-            freeDates);
-
-          racCompany.Vehicles.push(vehicle);
-          this.racCompanyService.updateRacCompany(racCompany).subscribe(
-            res => {
-              this.router.navigate(['../'], { relativeTo: this.route });
-            },
-            err => {
-              console.log(err);
-            }
-          )
-        },
-        err => {
-          console.log(err);
-        }
-      )
-    }
-  }
+					racCompany.Vehicles.push(vehicle);
+					this.racCompanyService.updateRacCompany(racCompany).subscribe(
+						res => {
+							this.toastr.success('Vehicle was successfully added.', 'Vehicle');
+							this.router.navigate(['../'], { relativeTo: this.route });
+						},
+						err => { }
+					)
+				},
+				err => { }
+			)
+		}
+	}
 }

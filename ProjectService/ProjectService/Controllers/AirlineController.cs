@@ -61,21 +61,34 @@ namespace ProjectService.Controllers
         // DELETE: api/Airline/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin_Airlines")]
-        public async Task<ActionResult<Airline>> DeleteAirline(int id)
+        public async Task<IActionResult> DeleteAirline(int id)
         {
             var airline = await _context.Airlines
                             .Include(x => x.Destinations)
                             .Include(x => x.Flights)
+                                .ThenInclude(y => y.Rows)
+                                    .ThenInclude(z => z.Seats)
                             .Include(x => x.LuggageInfo)
                             .FirstOrDefaultAsync(x => x.Id == id);
 
             if (airline == null)
             {
-                return NotFound();
+                return NotFound(new { message = "Airline does not exist." });
             }
 
             // PROVERITI DA LI JE NEKI OD LETOVA REZERVISAN
             foreach (var flight in airline.Flights)
+            {
+                foreach(var row in flight.Rows)
+                {
+                    if(row.Seats.Any(x => x.Type == SeatType.Taken))
+                    {
+                        return BadRequest(new { message = "Unable to delete because one or more flights are reserved." });
+                    }
+                }
+            }
+
+            foreach(var flight in airline.Flights)
                 _context.Flights.Remove(flight);
 
             foreach (var destination in airline.Destinations)
@@ -87,7 +100,7 @@ namespace ProjectService.Controllers
             _context.Airlines.Remove(airline);
             await _context.SaveChangesAsync();
 
-            return airline;
+            return Ok();
         }
 
         // PUT: api/Airline/5
@@ -106,11 +119,9 @@ namespace ProjectService.Controllers
                 .Include(x => x.Flights)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            // update properties on the parent
             _context.Entry(airlineDb).CurrentValues.SetValues(airline);
 
-            // remove or update child collection items
-            // destinations
+            // Destinations
             var destinations = airlineDb.Destinations.ToList();
             foreach (var destination in destinations)
             {
@@ -147,16 +158,6 @@ namespace ProjectService.Controllers
                     airlineDb.LuggageInfo.Add(luggage);
                 }
             }
-
-            //var flights = airlineDb.Flights.ToList();
-            //// add the new items
-            //foreach (var flight in airline.Flights)
-            //{
-            //    if (flights.All(i => i.Id != flight.Id))
-            //    {
-            //        airlineDb.Flights.Add(flight);
-            //    }
-            //}
 
             try
             {

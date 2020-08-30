@@ -22,8 +22,9 @@
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="fullname" formControlName="fullname">
                     <span *ngIf="!editUser.get('fullname').valid && editUser.get('fullname').touched">
-                        <span *ngIf="editUser.get('fullname').errors['required']">Fullname must be entered!</span>
-                        <span *ngIf="editUser.get('fullname').errors['minlength']">Fullname must be atleast 4 characters!</span>
+                        <span *ngIf="editUser.get('fullname').errors['required']">Fullname must be entered</span>
+                        <span *ngIf="editUser.get('fullname').errors['minlength']">Fullname must be atleast 4
+                            characters</span>
                     </span>
                 </div>
             </div>
@@ -36,16 +37,19 @@
             <div class="form-group row">
                 <label for="email" class="col-md-3 col-form-label">Email</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="email" formControlName="email">
-                    <span *ngIf="!editUser.get('email').valid && editUser.get('email').touched">
-                        <span *ngIf="editUser.get('email').errors['required']">Email must be entered!</span>
-                    </span>
+                    <input type="text" class="form-control" id="email" formControlName="email" readonly>
                 </div>
             </div>
             <div class="form-group row" *ngIf="serverService.getUserType() === 'User'">
                 <label for="passportNumber" class="col-md-3 col-form-label">Passport number</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="passportNumber" formControlName="passportNumber" readonly>
+                    <input type="text" class="form-control" id="passportNumber" formControlName="passportNumber">
+                    <span *ngIf="!editUser.get('passportNumber').valid && editUser.get('passportNumber').touched">
+                        <span *ngIf="editUser.get('passportNumber').errors['required']">Passport number must be
+                            entered</span>
+                        <span *ngIf="editUser.get('passportNumber').errors['pattern']">Passport number must contain 9
+                            digits</span>
+                    </span>
                 </div>
             </div>
             <div class="form-group row">
@@ -53,7 +57,7 @@
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="address" formControlName="address">
                     <span *ngIf="!editUser.get('address').valid && editUser.get('address').touched">
-                        <span *ngIf="editUser.get('address').errors['required']">Address must be entered!</span>
+                        <span *ngIf="editUser.get('address').errors['required']">Address must be entered</span>
                     </span>
                 </div>
             </div>
@@ -62,8 +66,8 @@
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="number" formControlName="number">
                     <span *ngIf="!editUser.get('number').valid && editUser.get('number').touched">
-                        <span *ngIf="editUser.get('number').errors['required']">Number must be entered!</span>
-                        <span *ngIf="editUser.get('number').errors['pattern']">Only numbers from 0-9 are allowed! </span>
+                        <span *ngIf="editUser.get('number').errors['required']">Number must be entered</span>
+                        <span *ngIf="editUser.get('number').errors['pattern']">Only numbers from 0-9 are allowed</span>
                     </span>
                 </div>
             </div>
@@ -81,7 +85,8 @@
                 <div class="col-md-8">
                     <input type="password" class="form-control" id="oldPassword" formControlName="oldPassword">
                     <span *ngIf="!editPassword.get('oldPassword').valid && editPassword.get('oldPassword').touched">
-                        <span *ngIf="editPassword.get('oldPassword').errors['required']">Old passwords must be entered!</span>
+                        <span *ngIf="editPassword.get('oldPassword').errors['required']">Old passwords must be
+                            entered</span>
                     </span>
                 </div>
             </div>
@@ -89,19 +94,24 @@
                 <label for="newPassword" class="col-md-4 col-form-label">New password</label>
                 <div class="col-md-8">
                     <input type="password" class="form-control" id="newPassword" formControlName="newPassword">
-                    <span *ngIf="!editPassword.get('passwordGroup').get('newPassword').valid && editPassword.get('passwordGroup').get('newPassword').touched">
-                        <span *ngIf="editPassword.get('passwordGroup').get('newPassword').errors['required']">New password must be entered!</span>
-                        <span *ngIf="editPassword.get('passwordGroup').get('newPassword').errors['minlength']">New password must be atleast 6 characters!</span>
+                    <span
+                        *ngIf="!editPassword.get('passwordGroup').get('newPassword').valid && editPassword.get('passwordGroup').get('newPassword').touched">
+                        <span *ngIf="editPassword.get('passwordGroup').get('newPassword').errors['required']">New
+                            password must be entered</span>
+                        <span *ngIf="editPassword.get('passwordGroup').get('newPassword').errors['minlength']">New
+                            password must be atleast 6 characters</span>
                     </span>
                 </div>
                 <label for="reentered" class="col-md-4 col-form-label mt-3">Re-enter</label>
                 <div class="col-md-8 mt-3">
                     <input type="password" class="form-control" id="reentered" formControlName="reentered">
-                    <span *ngIf="!editPassword.get('passwordGroup').get('reentered').valid && editPassword.get('passwordGroup').get('reentered').touched">
-                        <span *ngIf="editPassword.get('passwordGroup').get('reentered').errors['required']">Password must be entered!</span>
+                    <span
+                        *ngIf="!editPassword.get('passwordGroup').get('reentered').valid && editPassword.get('passwordGroup').get('reentered').touched">
+                        <span *ngIf="editPassword.get('passwordGroup').get('reentered').errors['required']">Password
+                            must be entered</span>
                     </span>
                     <span *ngIf="editPassword.get('passwordGroup').errors !== null">
-                        <span *ngIf="editPassword.get('passwordGroup').errors['notMatch']">Passwords must match!</span>
+                        <span *ngIf="editPassword.get('passwordGroup').errors['notMatch']">Passwords must match</span>
                     </span>
                 </div>
             </div>

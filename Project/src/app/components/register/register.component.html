@@ -4,36 +4,39 @@
         <div class="form-group">
             <input class="form-control" type="text" placeholder="Fullname" formControlName="fullname" id="fullname">
             <span *ngIf="!registerForm.get('fullname').valid && registerForm.get('fullname').touched">
-                <span class="p-2" *ngIf="registerForm.get('fullname').errors['required']"> Fullname must be entered!</span>
-                <span class="p-2" *ngIf="registerForm.get('fullname').errors['minlength']"> Fullname must be atleast 4 character!</span>
+                <span class="p-2" *ngIf="registerForm.get('fullname').errors['required']"> Fullname must be
+                    entered</span>
+                <span class="p-2" *ngIf="registerForm.get('fullname').errors['minlength']"> Fullname must be atleast 4
+                    character</span>
             </span>
         </div>
         <div class="form-group">
             <input class="form-control" type="text" placeholder="Username" formControlName="username" id="username">
             <span *ngIf="!registerForm.get('username').valid && registerForm.get('username').touched">
-                <span class="p-2" *ngIf="registerForm.get('username').errors['required']"> Username must be entered!</span>
-                <span class="p-2" *ngIf="registerForm.get('username').errors['minlength']"> Username must be atleast 4 character!</span>
+                <span class="p-2" *ngIf="registerForm.get('username').errors['required']"> Username must be
+                    entered</span>
+                <span class="p-2" *ngIf="registerForm.get('username').errors['minlength']"> Username must be atleast 4
+                    character</span>
             </span>
         </div>
         <div class="form-group">
             <input class="form-control" type="email" placeholder="Email address" formControlName="email" id="email">
             <span *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
-                <span class="p-2" *ngIf="registerForm.get('email').errors['email'] || registerForm.get('email').errors['required']">
-                    Email must be entered!
-                </span>
-                <span class="p-2" *ngIf="registerForm.get('email').errors['emailIsInvalid']">
-                    Email is invalid!
+                <span class="p-2"
+                    *ngIf="registerForm.get('email').errors['email'] || registerForm.get('email').errors['required']">
+                    Email must be entered
                 </span>
             </span>
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Passport number" formControlName="passportNumber" id="passportNumber">
+            <input class="form-control" type="text" placeholder="Passport number" formControlName="passportNumber"
+                id="passportNumber">
             <span *ngIf="!registerForm.get('passportNumber').valid && registerForm.get('passportNumber').touched">
                 <span class="p-2" *ngIf="registerForm.get('passportNumber').errors['required']">
-                    Passport number must be entered!
+                    Passport number must be entered
                 </span>
                 <span class="p-2" *ngIf="registerForm.get('passportNumber').errors['pattern']">
-                    Passport number must contains 9 digits!
+                    Passport number must contains 9 digits
                 </span>
             </span>
         </div>
@@ -41,10 +44,10 @@
             <input class="form-control" type="text" placeholder="Address" formControlName="address" id="address">
             <span *ngIf="!registerForm.get('address').valid && registerForm.get('address').touched">
                 <span class="p-2" *ngIf="registerForm.get('address').errors['required']">
-                    Address must be entered!
+                    Address must be entered
                 </span>
                 <span class="p-2" *ngIf="registerForm.get('address').errors['minlength']">
-                    Address must be atleast 4 characters!
+                    Address must be atleast 4 characters
                 </span>
             </span>
         </div>
@@ -52,36 +55,33 @@
             <input class="form-control" type="text" placeholder="Number" formControlName="number" id="number">
             <span *ngIf="!registerForm.get('number').valid && registerForm.get('number').touched">
                 <span class="p-2" *ngIf="registerForm.get('number').errors['required']">
-                    Number must be entered!
+                    Number must be entered
                 </span>
                 <span class="p-2" *ngIf="registerForm.get('number').errors['pattern']">
-                    Only numbers from 0-9 are allowed!
+                    Only numbers from 0-9 are allowed
                 </span>
             </span>
         </div>
-        <div class="form-group">
-            <input class="form-control" type="password" placeholder="Password" formControlName="password" id="password">
-            <span *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
-                <span class="p-2" *ngIf="registerForm.get('password').errors['required']">
-                    Password must be entered!
-                </span>
-                <span class="p-2 " *ngIf="registerForm.get('password').errors['minlength']">
-                    Password must be atleast 6 character!
-                </span>
-                <span class="p-2" *ngIf="registerForm.get('password').errors['notMatch']">
-                    Passwords must be the same!
-                </span>
+        <div class="form-group" formGroupName="passwords">
+            <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
+            <span
+                *ngIf="!registerForm.get('passwords').get('password').valid && registerForm.get('passwords').get('password').touched">
+                <span *ngIf="registerForm.get('passwords').get('password').errors['required']">Password must be
+                    entered</span>
+                <span *ngIf="registerForm.get('passwords').get('password').errors['minlength']">Password must be atleast
+                    6 characters</span>
             </span>
         </div>
-        <div class="form-group">
-            <input class="form-control" type="password" placeholder="Confirm password" formControlName="passwordConfirmed" id="passwordConfirmed">
-            <span *ngIf="!registerForm.get('passwordConfirmed').valid && registerForm.get('passwordConfirmed').touched">
-                <span class="p-2" *ngIf="registerForm.get('passwordConfirmed').errors['required']">
-                    Passwords must be entered!
-                </span>
-                <span class="p-2" *ngIf="registerForm.get('passwordConfirmed').errors['notMatch']">
-                    Passwords must be the same!
-                </span>
+        <div class="form-group" formGroupName="passwords">
+            <input type="password" class="form-control" id="passwordConfirmed" formControlName="passwordConfirmed"
+                placeholder="Confim password">
+            <span
+                *ngIf="!registerForm.get('passwords').get('passwordConfirmed').valid && registerForm.get('passwords').get('passwordConfirmed').touched">
+                <span *ngIf="registerForm.get('passwords').get('passwordConfirmed').errors['required']">Password must be
+                    entered</span>
+            </span>
+            <span *ngIf="registerForm.get('passwords').errors !== null">
+                <span *ngIf="registerForm.get('passwords').errors['notMatch']">Passwords must match</span>
             </span>
         </div>
         <div class="text-center">
