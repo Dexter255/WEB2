@@ -33,5 +33,14 @@ namespace ProjectService.Models.RentACar
 
         [Required]
         public string ReturnToCity { get; set; }
+
+        [Required]
+        public bool Returned { get; set; }
+
+        [Required]
+        public bool Rated { get; set; }
+
+        [Required]
+        public int Rating { get; set; }
     }
 }

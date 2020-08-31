@@ -101,7 +101,7 @@ namespace ProjectService.Controllers
 
             flight.QuickReservationTicketCount = passengers.Count;
 
-            foreach(var passenger in passengers)
+            foreach (var passenger in passengers)
             {
                 flight
                     .Rows.FirstOrDefault(x => x.Id == passenger.RowId)
@@ -188,9 +188,9 @@ namespace ProjectService.Controllers
                 return NotFound(new { message = "Flight does not exist." });
             }
 
-            foreach(var row in flight.Rows)
+            foreach (var row in flight.Rows)
             {
-                if(row.Seats.Any(x => x.Type == SeatType.Taken))
+                if (row.Seats.Any(x => x.Type == SeatType.Taken))
                 {
                     return BadRequest(new { message = "Unable to delete because one or more seats are reserved." });
                 }
@@ -206,6 +206,20 @@ namespace ProjectService.Controllers
                     _context.Seats.Remove(seat);
                 }
                 _context.Rows.Remove(row);
+            }
+
+            var reservedFlights = await _context.ReservedFlights.ToListAsync();
+
+            foreach (var reservedFlight in reservedFlights)
+            {
+                if (reservedFlight.FlightId == flight.Id)
+                {
+                    foreach (var passenger in reservedFlight.Passengers)
+                    {
+                        _context.Passengers.Remove(passenger);
+                    }
+                    _context.ReservedFlights.Remove(reservedFlight);
+                }
             }
 
             _context.Flights.Remove(flight);
@@ -359,7 +373,42 @@ namespace ProjectService.Controllers
                     .ThenInclude(y => y.Passengers)
                 .FirstOrDefaultAsync(x => x.Id == userId);
 
+            var currentDateTime = DateTime.Now;
+            foreach (var reservedFlight in loggedUser.ReservedFlights)
+            {
+                if (!reservedFlight.Landed)
+                {
+                    var flight = await _context.Flights.FirstOrDefaultAsync(x => x.Id == reservedFlight.FlightId);
+                    var flightStart = flight.StartDateAndTime.AddHours(-3);
+
+                    if (currentDateTime.Date > flightStart.Date ||
+                        (currentDateTime.Date == flightStart.Date &&
+                        currentDateTime.TimeOfDay > flightStart.TimeOfDay))
+                    {
+                        reservedFlight.Landed = true;
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
             return loggedUser.ReservedFlights;
+        }
+
+        // GET: api/Flight/GerReservedFlight
+        [HttpGet("{flightId}")]
+        [Route("GetReservedFlight/{flightId}")]
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult<ReservedFlight>> GetReservedFlight(int flightId)
+        {
+            var reservedFlight = await _context.ReservedFlights
+                .Include(x => x.Passengers)
+                .FirstOrDefaultAsync(x => x.Id == flightId);
+
+            if (reservedFlight == null)
+                return NotFound();
+
+            return reservedFlight;
         }
 
         [HttpGet("{flightId}")]
@@ -418,6 +467,34 @@ namespace ProjectService.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Reservation successfully canceled." });
+        }
+
+        [HttpGet("{flightId}/{companyRating}/{rating}")]
+        [Route("RateReservedFlight/{flightId}/{companyRating}/{rating}")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> RateReservedFlight(int flightId, int companyRating, int rating)
+        {
+            var reservedFlight = await _context.ReservedFlights.FirstOrDefaultAsync(x => x.Id == flightId);
+            var flight = await _context.Flights.FirstOrDefaultAsync(x => x.Id == reservedFlight.FlightId);
+            var airline = await _context.Airlines.FirstOrDefaultAsync(x => x.Flights.Any(y => y.Id == flight.Id));
+
+            if (reservedFlight == null)
+                return NotFound();
+
+            reservedFlight.Rated = true;
+            reservedFlight.Rating = rating;
+
+            airline.RatedCount++;
+            airline.Rating += companyRating;
+            airline.Rating /= airline.RatedCount;
+
+            flight.RatedCount++;
+            flight.Rating += rating;
+            flight.Rating /= flight.RatedCount;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Airline and flight was successfully rated." });
         }
 
         // GET: api/Flight/GetFlightInvitations

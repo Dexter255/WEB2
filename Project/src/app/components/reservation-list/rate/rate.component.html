@@ -1,0 +1,27 @@
+<div class="row justify-content-center">
+    <form class="w-25 p-3" [formGroup]="rateForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <select class="custom-select" formControlName="companyRating" title="Company rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <span *ngIf="!rateForm.get('companyRating').valid && rateForm.get('companyRating').touched">
+            Company rating must be choosed
+        </span>
+        <select class="custom-select mt-2" formControlName="rating" [title]="title">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <span *ngIf="!rateForm.get('rating').valid && rateForm.get('rating').touched">
+            Rating must be choosed
+        </span>
+        <div class="text-center mt-2">
+            <button class="btn btn-success" [disabled]="!rateForm.valid" type="submit">Rate</button>
+        </div>
+    </form>
+</div>

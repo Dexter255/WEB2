@@ -7,6 +7,9 @@ export class ReservedVehicle{
     public GetInCity: string;
     public ReturnDate: Date;
     public ReturnToCity: string;
+    public Returned: boolean;
+    public Rated: boolean;
+    public Rating: number;
     
     constructor(vehicleId: number, pickupDate: Date, getInCity: string, returnDate: Date, returnToCity: string){
         this.VehicleId = vehicleId;

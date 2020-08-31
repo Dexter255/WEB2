@@ -76,20 +76,35 @@ namespace ProjectService.Controllers
                 return NotFound(new { message = "Airline does not exist." });
             }
 
-            // PROVERITI DA LI JE NEKI OD LETOVA REZERVISAN
             foreach (var flight in airline.Flights)
             {
-                foreach(var row in flight.Rows)
+                foreach (var row in flight.Rows)
                 {
-                    if(row.Seats.Any(x => x.Type == SeatType.Taken))
+                    if (row.Seats.Any(x => x.Type == SeatType.Taken))
                     {
                         return BadRequest(new { message = "Unable to delete because one or more flights are reserved." });
                     }
                 }
             }
 
-            foreach(var flight in airline.Flights)
+            var reservedFlights = await _context.ReservedFlights.ToListAsync();
+
+            foreach (var flight in airline.Flights)
+            {
+                foreach (var reservedFlight in reservedFlights)
+                {
+                    if (reservedFlight.FlightId == flight.Id)
+                    {
+                        foreach (var passenger in reservedFlight.Passengers)
+                        {
+                            _context.Passengers.Remove(passenger);
+                        }
+                        _context.ReservedFlights.Remove(reservedFlight);
+                    }
+                }
+
                 _context.Flights.Remove(flight);
+            }
 
             foreach (var destination in airline.Destinations)
                 _context.Destinations.Remove(destination);

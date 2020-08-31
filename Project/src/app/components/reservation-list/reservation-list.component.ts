@@ -21,20 +21,19 @@ export class ReservationListComponent implements OnInit {
 		public vehicleService: VehicleService) { }
 
 	ngOnInit(): void {
-		this.flightService.getReservedFlight().subscribe();
+		this.flightService.getReservedFlights().subscribe();
 		this.vehicleService.getReservedVehicles().subscribe();
 	}
 
 	onReservedFlightDetails(flight: ReservedFlight) {
-		this.flightService.passengers = flight.Passengers;
-		this.router.navigate(['flight', flight.FlightId], { relativeTo: this.route })
+		this.router.navigate(['flight', flight.Id], { relativeTo: this.route })
 	}
 
 	onReservedFlightCancel(flight: ReservedFlight) {
 		this.flightService.cancelReservation(flight.FlightId).subscribe(
 			res => {
 				this.toastr.success(res['message'], 'Reservation');
-				this.flightService.getReservedFlight().subscribe();
+				this.flightService.getReservedFlights().subscribe();
 			},
 			err => {
 				this.toastr.error(err.error['message'], 'Reservation');
@@ -42,8 +41,12 @@ export class ReservationListComponent implements OnInit {
 		);
 	}
 
+	onReservedFlightRate(flight: ReservedFlight){
+		this.router.navigate(['flight/rate', flight.Id], { relativeTo: this.route });
+	}
+
 	onReservedVehicleDetails(vehicle: ReservedVehicle) {
-		this.router.navigate(['vehicle', vehicle.Id], { relativeTo: this.route })
+		this.router.navigate(['vehicle', vehicle.Id], { relativeTo: this.route });
 	}
 
 	onReservedVehicleCancel(vehicle: ReservedVehicle) {
@@ -56,5 +59,9 @@ export class ReservationListComponent implements OnInit {
 				this.toastr.error(err.error['message'], 'Reservation');
 			}
 		);
+	}
+
+	onReservedVehicleRate(vehicle: ReservedVehicle){
+		this.router.navigate(['vehicle/rate', vehicle.Id], { relativeTo: this.route });
 	}
 }

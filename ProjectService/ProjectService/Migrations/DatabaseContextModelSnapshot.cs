@@ -204,6 +204,8 @@ namespace ProjectService.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
+                    b.Property<int>("RatedCount");
+
                     b.Property<int>("Rating");
 
                     b.HasKey("Id");
@@ -254,6 +256,8 @@ namespace ProjectService.Migrations
                         .IsRequired();
 
                     b.Property<int>("QuickReservationTicketCount");
+
+                    b.Property<int>("RatedCount");
 
                     b.Property<int>("Rating");
 
@@ -353,6 +357,12 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("FlightId");
 
+                    b.Property<bool>("Landed");
+
+                    b.Property<bool>("Rated");
+
+                    b.Property<int>("Rating");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
@@ -448,6 +458,8 @@ namespace ProjectService.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
+                    b.Property<int>("RatedCount");
+
                     b.Property<int>("Rating");
 
                     b.HasKey("Id");
@@ -474,10 +486,16 @@ namespace ProjectService.Migrations
 
                     b.Property<DateTime>("PickupDate");
 
+                    b.Property<bool>("Rated");
+
+                    b.Property<int>("Rating");
+
                     b.Property<DateTime>("ReturnDate");
 
                     b.Property<string>("ReturnToCity")
                         .IsRequired();
+
+                    b.Property<bool>("Returned");
 
                     b.Property<int>("VehicleId");
 
@@ -527,6 +545,10 @@ namespace ProjectService.Migrations
                         .IsRequired();
 
                     b.Property<int>("NumberOfSeats");
+
+                    b.Property<int>("PricePerDay");
+
+                    b.Property<int>("RatedCount");
 
                     b.Property<int>("Rating");
 

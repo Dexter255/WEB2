@@ -54,6 +54,7 @@ import { AdminPasswordComponent } from './components/verify-email/admin-password
 import { VehicleListNicerComponent } from './components/vehicle-list-nicer/vehicle-list-nicer.component';
 import { VehicleReserveComponent } from './components/vehicle-list-nicer/vehicle-reserve/vehicle-reserve.component';
 import { ReservedVehicleDetailsComponent } from './components/reservation-list/reserved-vehicle-details/reserved-vehicle-details.component';
+import { RateComponent } from './components/reservation-list/rate/rate.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { ReservedVehicleDetailsComponent } from './components/reservation-list/r
     AdminPasswordComponent,
     VehicleListNicerComponent,
     VehicleReserveComponent,
-    ReservedVehicleDetailsComponent
+    ReservedVehicleDetailsComponent,
+    RateComponent
   ],
   imports: [
     CommonModule,

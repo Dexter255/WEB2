@@ -49,5 +49,8 @@ namespace ProjectService.Models.Flight
 
         [Required]
         public int Rating { get; set; }
+
+        [Required]
+        public int RatedCount { get; set; }
     }
 }

@@ -17,7 +17,15 @@
 						*ngFor="let flight of flightService.reservedFlights">
 						<p class="p-0 m-0 flex-grow-1">{{ flight.Destination }} </p>
 						<button class="btn btn-info ml-1" (click)="onReservedFlightDetails(flight)">Details</button>
-						<button class="btn btn-danger ml-1" (click)="onReservedFlightCancel(flight)">Cancel</button>
+						<div *ngIf="!flight.Landed">
+							<button class="btn btn-danger ml-1" (click)="onReservedFlightCancel(flight)">Cancel</button>
+						</div>
+						<div *ngIf="flight.Landed && !flight.Rated">
+							<button class="btn btn-success ml-1" (click)="onReservedFlightRate(flight)">Rate</button>
+						</div>
+						<div *ngIf="flight.Rated" class="text-center">
+							<label>Rating: {{ flight.Rating }}</label>
+						</div>
 					</li>
 				</ul>
 				<ng-template #flightsEmpty>
@@ -32,7 +40,15 @@
 						*ngFor="let vehicle of vehicleService.reservedVehicles">
 						<p class="p-0 m-0 flex-grow-1"> {{ vehicle.Brand }}, {{ vehicle.Model }} </p>
 						<button class="btn btn-info ml-1" (click)="onReservedVehicleDetails(vehicle)">Details</button>
-						<button class="btn btn-danger ml-1" (click)="onReservedVehicleCancel(vehicle)">Cancel</button>
+						<div *ngIf="!vehicle.Returned">
+							<button class="btn btn-danger ml-1" (click)="onReservedVehicleCancel(vehicle)">Cancel</button>
+						</div>
+						<div *ngIf="vehicle.Returned && !vehicle.Rated">
+							<button class="btn btn-success ml-1" (click)="onReservedVehicleRate(vehicle)">Rate</button>
+						</div>
+						<div *ngIf="vehicle.Rated" class="text-center">
+							<label>Rating: {{ vehicle.Rating }}</label>
+						</div>
 					</li>
 				</ul>
 				<ng-template #vehiclesEmpty>

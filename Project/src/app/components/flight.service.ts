@@ -14,7 +14,7 @@ export class FlightService {
     public flights: Flight[];
     public flight: Flight;
     public reservedFlights: ReservedFlight[];
-    public passengers: Passenger[];
+    public reservedFlight: ReservedFlight;
     public flightInvitations: FlightInvitation[];
     public invitationFromUser: string;
     public areTickets: boolean;
@@ -22,7 +22,6 @@ export class FlightService {
     constructor(private http: HttpClient) {
         this.flights = [];
         this.reservedFlights = [];
-        this.passengers = [];
         this.flightInvitations = [];
         this.areTickets = false;
     }
@@ -68,13 +67,20 @@ export class FlightService {
         return this.http.post(this.BaseURI + '/Flight/ReserveFlight/' + flightId, passengers);
     }
 
-    getReservedFlight(){
+    getReservedFlights(){
         return this.http.get(this.BaseURI + '/Flight/GetReservedFlights')
             .pipe(
                 tap((res: ReservedFlight[]) => this.reservedFlights = res)
             );
     }
 
+    getReservedFlight(flightId: number){
+        return this.http.get(this.BaseURI + '/Flight/GetReservedFlight/' + flightId)
+            .pipe(
+                tap((res: ReservedFlight) => this.reservedFlight = res)
+            );
+    }
+    
     cancelReservation(flightId: number){
         return this.http.get(this.BaseURI + '/Flight/CancelReservation/' + flightId);
     }
@@ -92,5 +98,9 @@ export class FlightService {
 
     declineFlightInvitation(flightId: number){
         return this.http.get(this.BaseURI + '/Flight/DeclineFlightInvitation/' + flightId);
+    }
+
+    rateFlight(flightId: number, companyRating: number, rating: number){
+        return this.http.get(this.BaseURI + '/Flight/RateReservedFlight/' + flightId + '/' + companyRating + '/' + rating);
     }
 }

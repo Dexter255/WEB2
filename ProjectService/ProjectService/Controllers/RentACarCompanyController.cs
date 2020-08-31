@@ -175,6 +175,8 @@ namespace ProjectService.Controllers
                 return BadRequest(new { message = "Unable to delete because one or more vehicles are reserved." });
             }
 
+            var reservedVehicles = await _context.ReservedVehicles.ToListAsync();
+
             foreach (var service in rentACarCompany.Services)
                 _context.Services.Remove(service);
 
@@ -187,6 +189,8 @@ namespace ProjectService.Controllers
                 {
                     _context.FreeDates.Remove(freeDate);
                 }
+
+                reservedVehicles.RemoveAll(x => x.VehicleId == vehicle.Id);
                 _context.Vehicles.Remove(vehicle);
             }
 

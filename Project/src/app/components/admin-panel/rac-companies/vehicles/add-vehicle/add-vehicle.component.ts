@@ -48,7 +48,8 @@ export class AddVehicleComponent implements OnInit {
 					'date': new FormGroup({
 						'freeFrom': new FormControl(null, [Validators.required, this.checkDate]),
 						'freeTo': new FormControl(null, [Validators.required, this.checkDate])
-					}, this.compareDates)
+					}, this.compareDates),
+					'pricePerDay': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')])
 				});
 
 				this.show = true;
@@ -75,7 +76,9 @@ export class AddVehicleComponent implements OnInit {
 								'yearOfProduction': new FormControl(vehicle.YearOfProduction.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
 								'kilometer': new FormControl(vehicle.Kilometers.toString(), [Validators.required, Validators.pattern('^[0-9]*$')]),
 								'seat': new FormControl(vehicle.NumberOfSeats.toString(), Validators.required),
-								'freeDates': new FormArray([])
+								'freeDates': new FormArray([]),
+								'pricePerDay': new FormControl(vehicle.PricePerDay, [Validators.required, Validators.pattern('^[0-9]*$')]),
+								'rating': new FormControl(vehicle.Rating)
 							});
 
 							vehicle.FreeDates.forEach(element => {
@@ -163,7 +166,9 @@ export class AddVehicleComponent implements OnInit {
 				this.addVehicle.get('yearOfProduction').value,
 				this.addVehicle.get('kilometer').value,
 				this.addVehicle.get('seat').value,
-				freeDates);
+				freeDates,
+				this.addVehicle.get('pricePerDay').value,
+				this.addVehicle.get('rating').value);
 
 			this.vehicleService.updateVehicle(vehicle).subscribe(
 				res => {
@@ -199,7 +204,9 @@ export class AddVehicleComponent implements OnInit {
 						this.addVehicle.get('yearOfProduction').value,
 						this.addVehicle.get('kilometer').value,
 						this.addVehicle.get('seat').value,
-						freeDates);
+						freeDates,
+						this.addVehicle.get('pricePerDay').value,
+						0);
 
 					racCompany.Vehicles.push(vehicle);
 					this.racCompanyService.updateRacCompany(racCompany).subscribe(

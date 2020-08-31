@@ -19,7 +19,7 @@ export class Flight {
     public Rating: number;
 
     constructor(id: number, startDestination: string, endDestination: string, startDateAndTime: Date, endDateAndTime: Date, hours: string, distance: number,
-        locations: Destination[], ticketPrice: number, discount: number) {
+        locations: Destination[], ticketPrice: number, discount: number, rating: number) {
         this.Id = id;
         this.StartDestination = startDestination;
         this.EndDestination = endDestination;
@@ -31,6 +31,6 @@ export class Flight {
         this.TicketPrice = ticketPrice;
         this.Discount = discount;
         this.Rows = [];
-        this.Rating = 0;
+        this.Rating = rating;
     }
 }

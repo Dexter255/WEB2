@@ -90,4 +90,8 @@ export class VehicleService {
             )
         )
     }
+
+    rateVehicle(vehicleId, companyRating: number, rating: number){
+        return this.http.get(this.BaseURI + '/Vehicle/RateReservedVehicle/' + vehicleId + '/' + companyRating + '/' + rating);
+    }
 }

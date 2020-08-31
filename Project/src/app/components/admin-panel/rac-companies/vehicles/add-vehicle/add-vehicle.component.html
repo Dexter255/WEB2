@@ -105,6 +105,19 @@
 				</span>
 			</div>
 		</div>
+		<div class="form-group row">
+			<label for="pricePerDay" class="col-md-2 col-form-label">Price per day</label>
+			<div class="col-md-3">
+				<input type="text" class="form-control" id="pricePerDay" formControlName="pricePerDay">
+			</div>
+			<div class="col-md-7">
+				<span *ngIf="!addVehicle.get('pricePerDay').valid && addVehicle.get('pricePerDay').touched">
+					<span *ngIf="addVehicle.get('pricePerDay').errors['required']">Price per day must be entered</span>
+					<span *ngIf="addVehicle.get('pricePerDay').errors['pattern']">Only numbers from 0-9 are
+						allowed</span>
+				</span>
+			</div>
+		</div>
 		<div class="form-group row" *ngIf="addVehicle.get('vehicleId').value === 0" formGroupName="date">
 			<label for="freeFrom" class="col-md-2 col-form-label">Free from</label>
 			<div class="col-md-3">

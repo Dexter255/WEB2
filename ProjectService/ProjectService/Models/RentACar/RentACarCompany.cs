@@ -30,6 +30,9 @@ namespace ProjectService.Models.RentACar
         public int Rating { get; set; }
 
         [Required]
+        public int RatedCount { get; set; }
+
+        [Required]
         public List<Service> Services { get; set; }
 
         [Required]

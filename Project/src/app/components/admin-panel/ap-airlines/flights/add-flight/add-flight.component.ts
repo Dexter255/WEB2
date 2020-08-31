@@ -52,7 +52,8 @@ export class AddFlightComponent implements OnInit {
 			'ticketPrice': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
 			'discount': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
 			'xSeats': new FormControl('9', [Validators.required, Validators.pattern('^[0-9]*$')]),
-			'ySeats': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')])
+			'ySeats': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+			'rating': new FormControl(0)
 		});
 
 		switch (this.route.snapshot['_routerState'].url.split('/')[5]) {
@@ -61,7 +62,6 @@ export class AddFlightComponent implements OnInit {
 					this.header = "Edit flight";
 					let flightId = +params['id'];
 
-					debugger;
 					this.flightService.getFlight(flightId).subscribe(
 						(res: Flight) => {
 							this.addFlight.setValue({
@@ -81,6 +81,7 @@ export class AddFlightComponent implements OnInit {
 								'discount': res.Discount,
 								'xSeats': res.Rows[0].Seats.length,
 								'ySeats': res.Rows.length,
+								'rating': res.Rating
 							});
 
 							res.Locations.forEach(element => {
@@ -181,7 +182,6 @@ export class AddFlightComponent implements OnInit {
 			locations.push(new Destination(0, element));
 		});
 
-		debugger;
 		let flight = new Flight(
 			this.addFlight.get('flightId').value,
 			this.addFlight.get('destination').get('startDestination').value,
@@ -192,7 +192,8 @@ export class AddFlightComponent implements OnInit {
 			this.addFlight.get('distance').value,
 			locations,
 			this.addFlight.get('ticketPrice').value,
-			this.addFlight.get('discount').value
+			this.addFlight.get('discount').value,
+			this.addFlight.get('rating').value
 		);
 
 		let xSeats = this.addFlight.get('xSeats').value

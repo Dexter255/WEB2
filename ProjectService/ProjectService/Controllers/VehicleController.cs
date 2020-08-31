@@ -136,6 +136,10 @@ namespace ProjectService.Controllers
                 return BadRequest(new { message = "Unable to delete because vehicle is reserved." });
             }
 
+            var reservedVehicles = await _context.ReservedVehicles.ToListAsync();
+
+            reservedVehicles.RemoveAll(x => x.VehicleId == id);
+
             foreach (var freeDate in vehicle.FreeDates)
                 _context.FreeDates.Remove(freeDate);
 
@@ -222,7 +226,53 @@ namespace ProjectService.Controllers
                 .Include(x => x.ReservedVehicles)
                 .FirstOrDefaultAsync(x => x.Id == userId);
 
+            var currentDateTime = DateTime.Now;
+            foreach (var reservedVehicle in user.ReservedVehicles)
+            {
+                if (!reservedVehicle.Returned)
+                {
+                    if (currentDateTime.Date > reservedVehicle.ReturnDate.Date)
+                    {
+                        var vehicleDB = await _context.Vehicles.FirstOrDefaultAsync(x => x.Id == reservedVehicle.VehicleId);
+                        vehicleDB.Reserved--;
+
+                        reservedVehicle.Returned = true;
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
             return user.ReservedVehicles;
+        }
+
+        // GET: api/Vehicle/RateReservedVehicle
+        [HttpGet("{vehicleId}/{companyRating}/{rating}")]
+        [Route("RateReservedVehicle/{vehicleId}/{companyRating}/{rating}")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> RateReservedVehicle(int vehicleId, int companyRating, int rating)
+        {
+            var reservedVehicle = await _context.ReservedVehicles.FirstOrDefaultAsync(x => x.Id == vehicleId);
+            var vehicle = await _context.Vehicles.FirstOrDefaultAsync(x => x.Id == reservedVehicle.VehicleId);
+            var racCompany = await _context.RentACarCompanies.FirstOrDefaultAsync(x => x.Vehicles.Any(y => y.Id == vehicle.Id));
+
+            if (reservedVehicle == null)
+                return NotFound();
+
+            reservedVehicle.Rated = true;
+            reservedVehicle.Rating = rating;
+
+            racCompany.RatedCount++;
+            racCompany.Rating += companyRating;
+            racCompany.Rating /= racCompany.RatedCount;
+
+            vehicle.RatedCount++;
+            vehicle.Rating += rating;
+            vehicle.Rating /= vehicle.RatedCount;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Company and vehicle was successfully rated." });
         }
 
         // GET: api/Vehicle/CancelReservation/
@@ -248,7 +298,7 @@ namespace ProjectService.Controllers
                 return BadRequest(new { message = "You can't cancel vehicle reservation less than 2 days before pickup date." });
             }
 
-            vehicleDB.Reserved = vehicleDB.Reserved - 1;
+            vehicleDB.Reserved--;
             pickupDate = reservedVehicle.PickupDate;
             var returnDate = reservedVehicle.ReturnDate;
             // dodati datume

@@ -1,6 +1,6 @@
 <div class="container" style="background-color: white;" *ngIf="flightService.flight">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<label> Take off destination: </label>
 		</div>
 		<div class="col-md-3">
@@ -8,7 +8,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<label> Landing destination: </label>
 		</div>
 		<div class="col-md-3">
@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<label> Take off date: </label>
 		</div>
 		<div class="col-md-3">
@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<label> Landing date: </label>
 		</div>
 		<div class="col-md-3">
@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<label> Duration: </label>
 		</div>
 		<div class="col-md-3">
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<label> Distance: </label>
 		</div>
 		<div class="col-md-3">
@@ -48,7 +48,7 @@
 		</div>
 	</div>
 	<div class="row" *ngIf="flightService.flight.Locations.length !== 0">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<label> Flight transfer(s): </label>
 		</div>
 		<ol class="row ml-2" *ngFor="let location of flightService.flight.Locations" start="1">
@@ -56,7 +56,7 @@
 		</ol>
 	</div>
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<label> Ticket price: </label>
 		</div>
 		<div class="col-md-3">
@@ -64,7 +64,15 @@
 		</div>
 	</div>
 	<div class="row">
+		<div class="col-md-4">
+			<label> Discount (quick tickets): </label>
+		</div>
 		<div class="col-md-3">
+			<label> {{ flightService.flight.Discount }} </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
 			<label> Rating: </label>
 		</div>
 		<div class="col-md-3">

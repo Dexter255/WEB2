@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightService } from '../../flight.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ReservedFlight } from 'src/app/models/flight/reserved-flight.model';
 
 @Component({
   selector: 'app-reserved-flight-details',
@@ -14,7 +15,12 @@ export class ReservedFlightDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.flightService.getFlight(+params['id']).subscribe();
+      this.flightService.getReservedFlight(+params['id']).subscribe(
+        (res: ReservedFlight) => {
+          this.flightService.getFlight(res.FlightId).subscribe();
+        },
+        err => {}
+      );
     });
   }
 

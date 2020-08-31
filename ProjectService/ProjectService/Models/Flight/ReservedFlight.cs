@@ -21,5 +21,14 @@ namespace ProjectService.Models.Flight
 
         [Required]
         public List<Passenger> Passengers { get; set; }
+
+        [Required]
+        public bool Landed { get; set; }
+
+        [Required]
+        public bool Rated { get; set; }
+
+        [Required]
+        public int Rating { get; set; }
     }
 }

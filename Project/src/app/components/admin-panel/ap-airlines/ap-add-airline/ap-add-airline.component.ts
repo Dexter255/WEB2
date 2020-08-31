@@ -31,7 +31,8 @@ export class ApAddAirlineComponent implements OnInit {
 			'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'description': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'destinations': new FormArray([]),
-			'luggageInfo': new FormArray([])
+			'luggageInfo': new FormArray([]),
+			'rating': new FormControl(0)
 		});
 		
 		switch (this.route.snapshot['_routerState'].url.split('/')[3]) {
@@ -53,7 +54,8 @@ export class ApAddAirlineComponent implements OnInit {
 								'address': res.Address,
 								'description': res.Description,
 								'destinations': [],
-								'luggageInfo': []
+								'luggageInfo': [],
+								'rating': res.Rating
 							});
 
 							res.Destinations.forEach(element => {
@@ -116,7 +118,8 @@ export class ApAddAirlineComponent implements OnInit {
 			this.addAirline.get('description').value,
 			destinations,
 			luggageInfo,
-			[]);
+			[],
+			this.addAirline.get('rating').value);
 
 		if (this.edit) {
 			this.airlineService.updateAirline(airline).subscribe(

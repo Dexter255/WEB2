@@ -66,6 +66,14 @@
     </div>
     <div class="row">
         <div class="col-md-4">
+            <label> Discount (quick tickets): </label>
+        </div>
+        <div class="col-md-4">
+            <label> {{ flightService.flight.Discount }} &euro; </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
             <label> Rating: </label>
         </div>
         <div class="col-md-4">
@@ -74,8 +82,8 @@
     </div>
 </div>
 <h5>Passengers</h5>
-<div class="container" style="background-color: white;" *ngIf="flightService.passengers">
-    <ul *ngFor="let passenger of flightService.passengers">
+<div class="container" style="background-color: white;" *ngIf="flightService.reservedFlight">
+    <ul *ngFor="let passenger of flightService.reservedFlight.Passengers">
         <li> {{ passenger.User_Fullname }}, {{ passenger.User_PassportNumber }} </li>
     </ul>
 </div>

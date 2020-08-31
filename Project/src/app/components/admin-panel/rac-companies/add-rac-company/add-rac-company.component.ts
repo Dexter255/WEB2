@@ -30,7 +30,8 @@ export class AddRacCompanyComponent implements OnInit {
 			'address': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'description': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'services': new FormArray([]),
-			'branches': new FormArray([])
+			'branches': new FormArray([]),
+			'rating': new FormControl(0)
 		});
 
 		switch (this.route.snapshot['_routerState'].url.split('/')[3]) {
@@ -48,21 +49,14 @@ export class AddRacCompanyComponent implements OnInit {
 						res => {
 							racCompany = res as RentACarCompany;
 
-							this.addRacCompany = new FormGroup({
-								'id': new FormControl(companyId),
-								'companyName': new FormControl(racCompany.CompanyName, [Validators.required, Validators.minLength(4)]),
-								'address': new FormControl(racCompany.Address, [Validators.required, Validators.minLength(4)]),
-								'description': new FormControl(racCompany.Description, [Validators.required, Validators.minLength(4)]),
-								'services': new FormArray([]),
-								'branches': new FormArray([])
-							});
 							this.addRacCompany.setValue({
 								'id': companyId,
 								'companyName': racCompany.CompanyName, 
 								'address': racCompany.Address, 
 								'description': racCompany.Description,
 								'services': [],
-								'branches': []
+								'branches': [],
+								'rating': racCompany.Rating
 							});
 
 							racCompany.Services.forEach(element => {
@@ -123,7 +117,8 @@ export class AddRacCompanyComponent implements OnInit {
 			this.addRacCompany.get('description').value.trim(),
 			services,
 			branches,
-			[]);
+			[],
+			this.addRacCompany.get('rating').value);
 
 		if (this.addRacCompany.get('id').value !== 0) {
 			this.racCompanyService.updateRacCompany(racCompany).subscribe(

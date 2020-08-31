@@ -44,9 +44,15 @@ namespace ProjectService.Models.RentACar
         public int Rating { get; set; }
 
         [Required]
+        public int RatedCount { get; set; }
+
+        [Required]
         public List<FreeDate> FreeDates { get; set; }
 
         public int Reserved { get; set; }
+
+        [Required]
+        public int PricePerDay { get; set; }
         #endregion
 
         #region Constructors
