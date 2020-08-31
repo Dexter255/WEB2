@@ -31,7 +31,8 @@ export class AddRacCompanyComponent implements OnInit {
 			'description': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'services': new FormArray([]),
 			'branches': new FormArray([]),
-			'rating': new FormControl(0)
+			'rating': new FormControl(0),
+			'ratedCount': new FormControl(0)
 		});
 
 		switch (this.route.snapshot['_routerState'].url.split('/')[3]) {
@@ -56,7 +57,8 @@ export class AddRacCompanyComponent implements OnInit {
 								'description': racCompany.Description,
 								'services': [],
 								'branches': [],
-								'rating': racCompany.Rating
+								'rating': racCompany.Rating,
+								'ratedCount': racCompany.RatedCount
 							});
 
 							racCompany.Services.forEach(element => {
@@ -118,7 +120,8 @@ export class AddRacCompanyComponent implements OnInit {
 			services,
 			branches,
 			[],
-			this.addRacCompany.get('rating').value);
+			this.addRacCompany.get('rating').value,
+			this.addRacCompany.get('ratedCount').value);
 
 		if (this.addRacCompany.get('id').value !== 0) {
 			this.racCompanyService.updateRacCompany(racCompany).subscribe(

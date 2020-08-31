@@ -82,7 +82,10 @@ export class VehicleListNicerComponent implements OnInit {
 		if(seat !== null)
 			body.Seat = seat;
 
-		this.vehicleService.searchVehicles(this.companyId, body).subscribe();
+		this.vehicleService.searchVehicles(this.companyId, body).subscribe(
+			res => {},
+			err => {}
+		);
 	}
 
 	onReset() {

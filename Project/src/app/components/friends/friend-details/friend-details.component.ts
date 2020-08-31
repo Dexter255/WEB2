@@ -15,7 +15,10 @@ export class FriendDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.serverService.getFriend(params['username']).subscribe();
+      this.serverService.getFriend(params['username']).subscribe(
+        res => {},
+        err => {}
+      );
     });
   }
 

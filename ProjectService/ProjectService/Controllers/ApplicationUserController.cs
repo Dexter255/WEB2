@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using EmailService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -94,7 +93,7 @@ namespace ProjectService.Controllers
 
             if(user == null)
             {
-                return NotFound(new { message = "User not found." });
+                return NotFound();
             }
 
             user.EmailConfirmed = true;
@@ -115,7 +114,7 @@ namespace ProjectService.Controllers
 
             if (user == null)
             {
-                return NotFound(new { message = "User not found." });
+                return NotFound();
             }
 
             var role = await _userManager.GetRolesAsync(user);
@@ -133,7 +132,7 @@ namespace ProjectService.Controllers
 
             if(user == null)
             {
-                return NotFound(new { message = "User not found." });
+                return NotFound();
             }
 
             user.EmailConfirmed = true;
@@ -530,6 +529,9 @@ namespace ProjectService.Controllers
             var friend = await _context.ApplicationUsers
                 .Include(x => x.FriendRequests)
                 .FirstOrDefaultAsync(x => x.UserName == username);
+
+            if (friend == null)
+                return NotFound();
 
             return new Friend()
             {

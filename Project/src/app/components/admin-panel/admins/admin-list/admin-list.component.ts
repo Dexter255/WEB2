@@ -34,9 +34,7 @@ export class AdminListComponent implements OnInit {
 				this.toastr.success('Admin was successfully deleted.', 'Admin');
 				this.adminService.getRacCompanyAdmins().subscribe();
 			},
-			err => {
-				console.log(err);
-			}
+			err => {}
 		);
 	}
 

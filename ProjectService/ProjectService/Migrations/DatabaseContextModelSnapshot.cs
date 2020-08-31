@@ -206,7 +206,7 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("RatedCount");
 
-                    b.Property<int>("Rating");
+                    b.Property<double>("Rating");
 
                     b.HasKey("Id");
 
@@ -259,7 +259,7 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("RatedCount");
 
-                    b.Property<int>("Rating");
+                    b.Property<double>("Rating");
 
                     b.Property<DateTime>("StartDateAndTime");
 
@@ -460,7 +460,7 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("RatedCount");
 
-                    b.Property<int>("Rating");
+                    b.Property<double>("Rating");
 
                     b.HasKey("Id");
 
@@ -550,7 +550,7 @@ namespace ProjectService.Migrations
 
                     b.Property<int>("RatedCount");
 
-                    b.Property<int>("Rating");
+                    b.Property<double>("Rating");
 
                     b.Property<int?>("RentACarCompanyId");
 

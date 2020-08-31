@@ -27,7 +27,7 @@ namespace ProjectService.Models.RentACar
         public string Description { get; set; }
 
         [Required]
-        public int Rating { get; set; }
+        public double Rating { get; set; }
 
         [Required]
         public int RatedCount { get; set; }

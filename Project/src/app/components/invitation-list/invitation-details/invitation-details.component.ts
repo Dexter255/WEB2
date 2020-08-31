@@ -14,7 +14,10 @@ export class InvitationDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.flightService.getFlight(+params['id']).subscribe();
+      this.flightService.getFlight(+params['id']).subscribe(
+        res => {},
+        err => {}
+      );
     });
   }
 

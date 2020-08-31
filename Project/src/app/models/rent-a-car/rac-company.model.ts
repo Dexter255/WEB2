@@ -11,9 +11,10 @@ export class RentACarCompany {
     public Services: Service[];
     public Vehicles: Vehicle[];
     public Branches: Branch[];
+    public RatedCount: number;
 
     constructor(id: number, companyName: string, address: string, description: string, services: Service[], 
-        branches: Branch[], vehicles: Vehicle[] = [], rating: number) {
+        branches: Branch[], vehicles: Vehicle[] = [], rating: number, ratedCount: number) {
         this.Id = id;
         this.CompanyName = companyName;
         this.Address = address;
@@ -22,5 +23,6 @@ export class RentACarCompany {
         this.Vehicles = vehicles;
         this.Branches = branches;
         this.Rating = rating;
+        this.RatedCount = ratedCount;
     }
 }

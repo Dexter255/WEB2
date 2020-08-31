@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectService.Models;
@@ -58,65 +57,65 @@ namespace ProjectService.Controllers
             return CreatedAtAction("PostAirline", new { id = airline.Id }, airline);
         }
 
-        // DELETE: api/Airline/5
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin_Airlines")]
-        public async Task<IActionResult> DeleteAirline(int id)
-        {
-            var airline = await _context.Airlines
-                            .Include(x => x.Destinations)
-                            .Include(x => x.Flights)
-                                .ThenInclude(y => y.Rows)
-                                    .ThenInclude(z => z.Seats)
-                            .Include(x => x.LuggageInfo)
-                            .FirstOrDefaultAsync(x => x.Id == id);
+        //// DELETE: api/Airline/5
+        //[HttpDelete("{id}")]
+        //[Authorize(Roles = "Admin_Airlines")]
+        //public async Task<IActionResult> DeleteAirline(int id)
+        //{
+        //    var airline = await _context.Airlines
+        //                    .Include(x => x.Destinations)
+        //                    .Include(x => x.Flights)
+        //                        .ThenInclude(y => y.Rows)
+        //                            .ThenInclude(z => z.Seats)
+        //                    .Include(x => x.LuggageInfo)
+        //                    .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (airline == null)
-            {
-                return NotFound(new { message = "Airline does not exist." });
-            }
+        //    if (airline == null)
+        //    {
+        //        return NotFound(new { message = "Airline does not exist." });
+        //    }
 
-            foreach (var flight in airline.Flights)
-            {
-                foreach (var row in flight.Rows)
-                {
-                    if (row.Seats.Any(x => x.Type == SeatType.Taken))
-                    {
-                        return BadRequest(new { message = "Unable to delete because one or more flights are reserved." });
-                    }
-                }
-            }
+        //    foreach (var flight in airline.Flights)
+        //    {
+        //        foreach (var row in flight.Rows)
+        //        {
+        //            if (row.Seats.Any(x => x.Type == SeatType.Taken))
+        //            {
+        //                return BadRequest(new { message = "Unable to delete because one or more flights are reserved." });
+        //            }
+        //        }
+        //    }
 
-            var reservedFlights = await _context.ReservedFlights.ToListAsync();
+        //    var reservedFlights = await _context.ReservedFlights.ToListAsync();
 
-            foreach (var flight in airline.Flights)
-            {
-                foreach (var reservedFlight in reservedFlights)
-                {
-                    if (reservedFlight.FlightId == flight.Id)
-                    {
-                        foreach (var passenger in reservedFlight.Passengers)
-                        {
-                            _context.Passengers.Remove(passenger);
-                        }
-                        _context.ReservedFlights.Remove(reservedFlight);
-                    }
-                }
+        //    foreach (var flight in airline.Flights)
+        //    {
+        //        foreach (var reservedFlight in reservedFlights)
+        //        {
+        //            if (reservedFlight.FlightId == flight.Id)
+        //            {
+        //                foreach (var passenger in reservedFlight.Passengers)
+        //                {
+        //                    _context.Passengers.Remove(passenger);
+        //                }
+        //                _context.ReservedFlights.Remove(reservedFlight);
+        //            }
+        //        }
 
-                _context.Flights.Remove(flight);
-            }
+        //        _context.Flights.Remove(flight);
+        //    }
 
-            foreach (var destination in airline.Destinations)
-                _context.Destinations.Remove(destination);
+        //    foreach (var destination in airline.Destinations)
+        //        _context.Destinations.Remove(destination);
 
-            foreach (var luggage in airline.LuggageInfo)
-                _context.Luggages.Remove(luggage);
+        //    foreach (var luggage in airline.LuggageInfo)
+        //        _context.Luggages.Remove(luggage);
 
-            _context.Airlines.Remove(airline);
-            await _context.SaveChangesAsync();
+        //    _context.Airlines.Remove(airline);
+        //    await _context.SaveChangesAsync();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         // PUT: api/Airline/5
         [HttpPut("{id}")]
@@ -202,6 +201,9 @@ namespace ProjectService.Controllers
             var airline = await _context.Airlines
                 .Include(x => x.Destinations)
                 .FirstOrDefaultAsync(x => x.Id == airlineId);
+
+            if (airline == null)
+                return NotFound();
 
             return airline.Destinations;
         }

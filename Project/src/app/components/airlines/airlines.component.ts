@@ -28,12 +28,7 @@ export class AirlinesComponent implements OnInit {
       'flightStartDate': new FormControl(null),
     });
 
-    this.airlineService.getAirlines().subscribe(
-      res => { },
-      err => {
-        console.log(err);
-      }
-    );
+    this.airlineService.getAirlines().subscribe();
   }
 
   onSearch() {
@@ -69,8 +64,7 @@ export class AirlinesComponent implements OnInit {
           'flightEndDestination': null,
           'flightStartDate': null,
         });
-      },
-      err => {}
+      }
     );
   }
 

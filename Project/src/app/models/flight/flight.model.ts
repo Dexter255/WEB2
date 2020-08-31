@@ -17,9 +17,10 @@ export class Flight {
     // mesta u avionu
     public Rows: Row[];
     public Rating: number;
+    public RatedCount: number;
 
     constructor(id: number, startDestination: string, endDestination: string, startDateAndTime: Date, endDateAndTime: Date, hours: string, distance: number,
-        locations: Destination[], ticketPrice: number, discount: number, rating: number) {
+        locations: Destination[], ticketPrice: number, discount: number, rating: number, ratedCount: number) {
         this.Id = id;
         this.StartDestination = startDestination;
         this.EndDestination = endDestination;
@@ -32,5 +33,6 @@ export class Flight {
         this.Discount = discount;
         this.Rows = [];
         this.Rating = rating;
+        this.RatedCount = ratedCount;
     }
 }

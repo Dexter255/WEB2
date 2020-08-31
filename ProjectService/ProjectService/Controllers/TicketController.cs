@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectService.Models;
@@ -49,6 +46,9 @@ namespace ProjectService.Controllers
             var airline = await _context.Airlines
                 .Include(x => x.Flights)
                 .FirstOrDefaultAsync(x => x.Id == airlineId);
+
+            if (airline == null)
+                return NotFound();
 
             airline.Flights = airline.Flights.FindAll(x => x.QuickReservationTicketCount > 0);
 

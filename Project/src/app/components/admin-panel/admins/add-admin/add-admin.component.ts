@@ -99,7 +99,8 @@ export class AddAdminComponent implements OnInit {
 				res => {
 					this.toastr.success('Admin was successfully edited.', 'Admin');
 					this.router.navigate(['../../'], { relativeTo: this.route });
-				}
+				},
+				err => {}
 			);
 		}
 		else {

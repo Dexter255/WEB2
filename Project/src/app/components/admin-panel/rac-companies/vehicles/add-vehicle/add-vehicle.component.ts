@@ -78,7 +78,8 @@ export class AddVehicleComponent implements OnInit {
 								'seat': new FormControl(vehicle.NumberOfSeats.toString(), Validators.required),
 								'freeDates': new FormArray([]),
 								'pricePerDay': new FormControl(vehicle.PricePerDay, [Validators.required, Validators.pattern('^[0-9]*$')]),
-								'rating': new FormControl(vehicle.Rating)
+								'rating': new FormControl(vehicle.Rating),
+								'ratedCount': new FormControl(vehicle.RatedCount)
 							});
 
 							vehicle.FreeDates.forEach(element => {
@@ -87,9 +88,7 @@ export class AddVehicleComponent implements OnInit {
 							});
 							this.show = true;
 						},
-						err => {
-							console.log(err);
-						}
+						err => {}
 					)
 				});
 				break;
@@ -168,7 +167,8 @@ export class AddVehicleComponent implements OnInit {
 				this.addVehicle.get('seat').value,
 				freeDates,
 				this.addVehicle.get('pricePerDay').value,
-				this.addVehicle.get('rating').value);
+				this.addVehicle.get('rating').value,
+				this.addVehicle.get('ratedCount').value);
 
 			this.vehicleService.updateVehicle(vehicle).subscribe(
 				res => {
@@ -206,6 +206,7 @@ export class AddVehicleComponent implements OnInit {
 						this.addVehicle.get('seat').value,
 						freeDates,
 						this.addVehicle.get('pricePerDay').value,
+						0,
 						0);
 
 					racCompany.Vehicles.push(vehicle);

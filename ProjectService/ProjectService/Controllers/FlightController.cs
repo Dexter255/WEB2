@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectService.Models;
 using ProjectService.Models.Flight;
-using ProjectService.Models.Users;
 
 namespace ProjectService.Controllers
 {
@@ -98,6 +95,9 @@ namespace ProjectService.Controllers
                 .Include(x => x.Rows)
                     .ThenInclude(y => y.Seats)
                 .FirstOrDefaultAsync(x => x.Id == flightId);
+
+            if (flight == null)
+                return NotFound();
 
             flight.QuickReservationTicketCount = passengers.Count;
 
@@ -274,6 +274,9 @@ namespace ProjectService.Controllers
                 .Include(x => x.Rows)
                     .ThenInclude(y => y.Seats)
                 .FirstOrDefaultAsync(x => x.Id == flightId);
+
+            if (flight == null)
+                return NotFound();
 
             List<Passenger> passengersTemp = new List<Passenger>();
             foreach (var passenger in passengers)

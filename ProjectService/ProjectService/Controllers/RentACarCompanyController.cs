@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectService.Models;
@@ -153,52 +152,52 @@ namespace ProjectService.Controllers
             return CreatedAtAction("GetRentACarCompany", new { id = rentACarCompany.Id }, rentACarCompany);
         }
 
-        // DELETE: api/RentACarCompany/5
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin_RentACarCompanies")]
-        public async Task<ActionResult<RentACarCompany>> DeleteRentACarCompany(int id)
-        {
-            var rentACarCompany = await _context.RentACarCompanies
-                            .Include(company => company.Branches)
-                            .Include(company => company.Services)
-                            .Include(company => company.Vehicles)
-                                .ThenInclude(vehicle => vehicle.FreeDates)
-                            .FirstOrDefaultAsync(x => x.Id == id);
+        //// DELETE: api/RentACarCompany/5
+        //[HttpDelete("{id}")]
+        //[Authorize(Roles = "Admin_RentACarCompanies")]
+        //public async Task<ActionResult<RentACarCompany>> DeleteRentACarCompany(int id)
+        //{
+        //    var rentACarCompany = await _context.RentACarCompanies
+        //                    .Include(company => company.Branches)
+        //                    .Include(company => company.Services)
+        //                    .Include(company => company.Vehicles)
+        //                        .ThenInclude(vehicle => vehicle.FreeDates)
+        //                    .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (rentACarCompany == null)
-            {
-                return NotFound(new { message = "Rent a car company does not exist." });
-            }
+        //    if (rentACarCompany == null)
+        //    {
+        //        return NotFound(new { message = "Rent a car company does not exist." });
+        //    }
 
-            if(rentACarCompany.Vehicles.Any(x => x.Reserved > 0))
-            {
-                return BadRequest(new { message = "Unable to delete because one or more vehicles are reserved." });
-            }
+        //    if(rentACarCompany.Vehicles.Any(x => x.Reserved > 0))
+        //    {
+        //        return BadRequest(new { message = "Unable to delete because one or more vehicles are reserved." });
+        //    }
 
-            var reservedVehicles = await _context.ReservedVehicles.ToListAsync();
+        //    var reservedVehicles = await _context.ReservedVehicles.ToListAsync();
 
-            foreach (var service in rentACarCompany.Services)
-                _context.Services.Remove(service);
+        //    foreach (var service in rentACarCompany.Services)
+        //        _context.Services.Remove(service);
 
-            foreach (var branch in rentACarCompany.Branches)
-                _context.Branches.Remove(branch);
+        //    foreach (var branch in rentACarCompany.Branches)
+        //        _context.Branches.Remove(branch);
 
-            foreach (var vehicle in rentACarCompany.Vehicles)
-            {
-                foreach (var freeDate in vehicle.FreeDates)
-                {
-                    _context.FreeDates.Remove(freeDate);
-                }
+        //    foreach (var vehicle in rentACarCompany.Vehicles)
+        //    {
+        //        foreach (var freeDate in vehicle.FreeDates)
+        //        {
+        //            _context.FreeDates.Remove(freeDate);
+        //        }
 
-                reservedVehicles.RemoveAll(x => x.VehicleId == vehicle.Id);
-                _context.Vehicles.Remove(vehicle);
-            }
+        //        reservedVehicles.RemoveAll(x => x.VehicleId == vehicle.Id);
+        //        _context.Vehicles.Remove(vehicle);
+        //    }
 
-            _context.RentACarCompanies.Remove(rentACarCompany);
-            await _context.SaveChangesAsync();
+        //    _context.RentACarCompanies.Remove(rentACarCompany);
+        //    await _context.SaveChangesAsync();
 
-            return rentACarCompany;
-        }
+        //    return rentACarCompany;
+        //}
 
         // POST: api/RentACarCompany/SearchRacCompanies
         [HttpPost]

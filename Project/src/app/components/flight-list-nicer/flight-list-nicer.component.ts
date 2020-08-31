@@ -26,7 +26,10 @@ export class FlightListNicerComponent implements OnInit {
 
 		this.route.params.subscribe((params: Params) => {
 			this.airlineId = +params['id'];
-			this.flightService.getFlights(this.airlineId).subscribe();
+			this.flightService.getFlights(this.airlineId).subscribe(
+				res => {},
+				err => {}
+			);
 		});
 	}
 

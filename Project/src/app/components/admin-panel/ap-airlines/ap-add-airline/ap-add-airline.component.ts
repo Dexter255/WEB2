@@ -32,7 +32,8 @@ export class ApAddAirlineComponent implements OnInit {
 			'description': new FormControl(null, [Validators.required, Validators.minLength(4)]),
 			'destinations': new FormArray([]),
 			'luggageInfo': new FormArray([]),
-			'rating': new FormControl(0)
+			'rating': new FormControl(0),
+			'ratedCount': new FormControl(0)
 		});
 		
 		switch (this.route.snapshot['_routerState'].url.split('/')[3]) {
@@ -55,7 +56,8 @@ export class ApAddAirlineComponent implements OnInit {
 								'description': res.Description,
 								'destinations': [],
 								'luggageInfo': [],
-								'rating': res.Rating
+								'rating': res.Rating,
+								'ratedCount': res.RatedCount
 							});
 
 							res.Destinations.forEach(element => {
@@ -67,9 +69,7 @@ export class ApAddAirlineComponent implements OnInit {
 							});
 							this.show = true;
 						},
-						err => {
-
-						}
+						err => {}
 					);
 				});
 				break;
@@ -119,7 +119,8 @@ export class ApAddAirlineComponent implements OnInit {
 			destinations,
 			luggageInfo,
 			[],
-			this.addAirline.get('rating').value);
+			this.addAirline.get('rating').value,
+			this.addAirline.get('ratedCount').value);
 
 		if (this.edit) {
 			this.airlineService.updateAirline(airline).subscribe(
@@ -135,8 +136,7 @@ export class ApAddAirlineComponent implements OnInit {
 				res => {
 					this.toastr.success('Airline was successfully added.', 'Airline');
 					this.router.navigate(['../'], { relativeTo: this.route });
-				},
-				err => {}
+				}
 			);
 		}
 	}

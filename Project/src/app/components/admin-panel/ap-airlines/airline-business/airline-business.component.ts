@@ -18,11 +18,8 @@ export class AirlineBusinessComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.airlineService.getAirline(+params['id']).subscribe(
-        res => {
-        },
-        err => {
-          console.log(err);
-        }
+        res => {},
+        err => {}
       );
     });
 

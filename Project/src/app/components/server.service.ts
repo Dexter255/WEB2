@@ -44,7 +44,7 @@ export class ServerService {
         return this.http.get(this.BaseURI + '/ApplicationUser/GetRole/' + id);
     }
     
-    SetNewPasswordForAdmin(body: any){
+    setNewPasswordForAdmin(body: any){
         return this.http.post(this.BaseURI + '/ApplicationUser/SetNewPasswordForAdmin', body);
     }
     

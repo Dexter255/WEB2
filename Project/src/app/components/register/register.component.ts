@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
 		this.serverService.register(user).subscribe(
 			(res: any) => {
 				if (res.Succeeded) {
-					this.toastr.success('You have successfully registered.', 'Register');
+					this.toastr.success('You have successfully registered.\nEmail verification was sent to you email address.', 'Register');
 					this.router.navigate(['login']);
 				}
 				else {

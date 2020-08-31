@@ -16,9 +16,10 @@ export class Vehicle {
     public FreeDates: FreeDate[];
     public Reserved: number;
     public PricePerDay: number;
+    public RatedCount: number;
 
     constructor(id: number, brand: string, model: string, type: VehicleType, cubicCapacity: number, horsePower: number, yearOfProduction: number,
-        kilometers: number, numberOfSeats: number, freeDates: FreeDate[], pricePerDay: number, rating: number) {
+        kilometers: number, numberOfSeats: number, freeDates: FreeDate[], pricePerDay: number, rating: number, ratedCount: number) {
         this.Id = id;
         this.Brand = brand;
         this.Model = model;
@@ -31,5 +32,6 @@ export class Vehicle {
         this.FreeDates = freeDates;
         this.PricePerDay = pricePerDay;
         this.Rating = rating;
+        this.RatedCount = ratedCount;
     }
 }

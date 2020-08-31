@@ -71,7 +71,8 @@ export class UserProfile implements OnInit {
 		this.serverService.updateUser(user).subscribe(
 			res => {
 				this.toastr.success('User profile successfully updated.', 'User');
-			}
+			},
+			err => {}
 		);
 	}
 
@@ -95,13 +96,6 @@ export class UserProfile implements OnInit {
 		this.serverService.changePassword(body).subscribe(
 			res => {
 				this.toastr.success('Password was successfully changed.', 'Password');
-				this.editPassword = new FormGroup({
-					'oldPassword': new FormControl(null, Validators.required),
-					'passwordGroup': new FormGroup({
-						'newPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-						'reentered': new FormControl(null, Validators.required)
-					}, this.comparePasswords)
-				});
 				this.editPassword.setValue({
 					'oldPassword': null,
 					'passwordGroup': {

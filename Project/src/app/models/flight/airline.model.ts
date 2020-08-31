@@ -11,9 +11,10 @@ export class Airline {
     public Flights: Flight[];
     public LuggageInfo: Luggage[];
     public Rating: number;
+    public RatedCount: number;
 
     constructor(id: number, companyName: string, address: string, description: string, destinations: Destination[],
-        luggageInfo: Luggage[], flights: Flight[], rating: number) {
+        luggageInfo: Luggage[], flights: Flight[], rating: number, ratedCount: number) {
         this.Id = id;
         this.CompanyName = companyName;
         this.Address = address;
@@ -22,5 +23,6 @@ export class Airline {
         this.Flights = flights;
         this.LuggageInfo = luggageInfo;
         this.Rating = rating;
+        this.RatedCount = ratedCount;
     }
 }

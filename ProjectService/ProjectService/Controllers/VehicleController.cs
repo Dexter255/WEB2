@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -154,10 +153,15 @@ namespace ProjectService.Controllers
         [Route("SearchVehicles/{companyId}")]
         public async Task<ActionResult<IEnumerable<Vehicle>>> SearchVehicles(int companyId, SearchVehicleModel vehicle)
         {
-            var vehicles = (await _context.RentACarCompanies
+            var racCompany = await _context.RentACarCompanies
                 .Include(x => x.Vehicles)
                     .ThenInclude(y => y.FreeDates)
-                .FirstOrDefaultAsync(x => x.Id == companyId)).Vehicles;
+                .FirstOrDefaultAsync(x => x.Id == companyId);
+
+            if (racCompany == null)
+                return NotFound();
+
+            var vehicles = racCompany.Vehicles;
 
             if (vehicle.FromDate.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d") &&
                 vehicle.ToDate.Date.ToString("d") != new DateTime(2001, 1, 1).Date.ToString("d"))
@@ -180,6 +184,7 @@ namespace ProjectService.Controllers
         // POST: api/Vehicle/ReserveVehicle/
         [HttpPost]
         [Route("ReserveVehicle")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> ReserveVehicle(ReservedVehicle vehicle)
         {
             string userId = User.Claims.First(x => x.Type == "UserID").Value;
@@ -219,6 +224,7 @@ namespace ProjectService.Controllers
         // GET: api/Vehicle/GetReservedVehicles/
         [HttpGet]
         [Route("GetReservedVehicles")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<IEnumerable<ReservedVehicle>>> GetReservedVehicles()
         {
             string userId = User.Claims.First(x => x.Type == "UserID").Value;
@@ -262,22 +268,25 @@ namespace ProjectService.Controllers
             reservedVehicle.Rated = true;
             reservedVehicle.Rating = rating;
 
-            racCompany.RatedCount++;
+            racCompany.RatedCount = racCompany.RatedCount + 1;
             racCompany.Rating += companyRating;
-            racCompany.Rating /= racCompany.RatedCount;
+            racCompany.Rating = racCompany.Rating / racCompany.RatedCount;
 
-            vehicle.RatedCount++;
+            await _context.SaveChangesAsync();
+
+            vehicle.RatedCount = vehicle.RatedCount + 1;
             vehicle.Rating += rating;
-            vehicle.Rating /= vehicle.RatedCount;
+            vehicle.Rating = vehicle.Rating / vehicle.RatedCount;
 
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Company and vehicle was successfully rated." });
         }
 
-        // GET: api/Vehicle/CancelReservation/
+        // GET: api/Vehicle/CancelReservation/2
         [HttpGet("{vehicleId}")]
         [Route("CancelReservation/{vehicleId}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> CancelReservation(int vehicleId)
         {
             string userId = User.Claims.First(x => x.Type == "UserID").Value;
@@ -321,6 +330,7 @@ namespace ProjectService.Controllers
         // GET: api/Vehicle/GetReservedVehicle/5
         [HttpGet("{vehicleId}")]
         [Route("GetReservedVehicle/{vehicleId}")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<ReservedVehicle>> GetReservedVehicle(int vehicleId)
         {
             var vehicle = await _context.ReservedVehicles

@@ -35,7 +35,10 @@ export class FlightReserveComponent implements OnInit {
 
 		this.route.params.subscribe((params: Params) => {
 			this.flightId = +params['id'];
-			this.flightService.getFlight(this.flightId).subscribe();
+			this.flightService.getFlight(this.flightId).subscribe(
+				res => {},
+				err => {}
+			);
 			this.serverService.getUserProfile().subscribe();
 		});
 	}
@@ -129,7 +132,8 @@ export class FlightReserveComponent implements OnInit {
 				res => {
 					this.toastr.success('Flight reservation successfully made', 'Reservation');
 					this.router.navigate(['reservations']);
-				}
+				},
+				err => {}
 			);
 		}
 	}

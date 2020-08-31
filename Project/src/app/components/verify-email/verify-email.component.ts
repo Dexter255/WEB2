@@ -31,15 +31,11 @@ export class VerifyEmailComponent implements OnInit {
 								this.toastr.success(res['message'], 'Email');
 								this.router.navigate(['login']);
 							},
-							err => {
-								this.toastr.error(err.error['message'], 'Email');
-							}
+							err => {}
 						)
 					}
 				},
-				err => {
-					this.router.navigate(['error'], { skipLocationChange: true });
-				}
+				err => {}
 			);
 		});
 	}

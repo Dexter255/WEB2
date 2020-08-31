@@ -48,7 +48,7 @@ namespace ProjectService.Models.Flight
         public List<Row> Rows { get; set; }
 
         [Required]
-        public int Rating { get; set; }
+        public double Rating { get; set; }
 
         [Required]
         public int RatedCount { get; set; }

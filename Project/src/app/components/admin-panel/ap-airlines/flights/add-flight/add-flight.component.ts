@@ -31,9 +31,7 @@ export class AddFlightComponent implements OnInit {
 			(res: Destination[]) => {
 				this.destinations = res;
 			},
-			err => {
-				console.log(err);
-			}
+			err => {}
 		);
 
 		this.addFlight = new FormGroup({
@@ -44,8 +42,8 @@ export class AddFlightComponent implements OnInit {
 				'endDestination': new FormControl(null, Validators.required)
 			}, this.compareDestinations),
 			'dateAndTime': new FormGroup({
-				'startDateAndTime': new FormControl(null, [Validators.required, this.checkDate]),
-				'endDateAndTime': new FormControl(null, [Validators.required, this.checkDate]),
+				'startDateAndTime': new FormControl(null, [Validators.required]),
+				'endDateAndTime': new FormControl(null, [Validators.required]),
 			}, this.compareDates),
 			'distance': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
 			'locations': new FormArray([]),
@@ -53,7 +51,8 @@ export class AddFlightComponent implements OnInit {
 			'discount': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
 			'xSeats': new FormControl('9', [Validators.required, Validators.pattern('^[0-9]*$')]),
 			'ySeats': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
-			'rating': new FormControl(0)
+			'rating': new FormControl(0),
+			'ratedCount': new FormControl(0)
 		});
 
 		switch (this.route.snapshot['_routerState'].url.split('/')[5]) {
@@ -81,16 +80,15 @@ export class AddFlightComponent implements OnInit {
 								'discount': res.Discount,
 								'xSeats': res.Rows[0].Seats.length,
 								'ySeats': res.Rows.length,
-								'rating': res.Rating
+								'rating': res.Rating,
+								'ratedCount': res.RatedCount
 							});
 
 							res.Locations.forEach(element => {
 								this.onAddLocation(element.City);
 							});
 						},
-						err => {
-							console.log(err);
-						}
+						err => {}
 					);
 				});
 				break;
@@ -193,7 +191,8 @@ export class AddFlightComponent implements OnInit {
 			locations,
 			this.addFlight.get('ticketPrice').value,
 			this.addFlight.get('discount').value,
-			this.addFlight.get('rating').value
+			this.addFlight.get('rating').value,
+			this.addFlight.get('ratedCount').value
 		);
 
 		let xSeats = this.addFlight.get('xSeats').value

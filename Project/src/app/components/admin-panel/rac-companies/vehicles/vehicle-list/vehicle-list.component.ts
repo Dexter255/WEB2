@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { VehicleService } from 'src/app/components/vehicle.service';
 import { VehicleType } from 'src/app/models/rent-a-car/vehicle-type.model';
-import { ToastrService } from 'ngx-toastr';
+import { Vehicle } from 'src/app/models/rent-a-car/vehicle.model';
 
 @Component({
 	selector: 'app-vehicle-list',
@@ -38,7 +39,15 @@ export class VehicleListComponent implements OnInit {
 	}
 
 	onEditVehicle(vehicleId: number) {
-		this.router.navigate(['edit', vehicleId], { relativeTo: this.route });
+		this.vehicleService.getVehicle(vehicleId).subscribe(
+			(res: Vehicle) => {
+				if(res.Reserved > 0)
+					this.toastr.error('Unable to edit vehicle because it is reserved.', 'Vehicle');
+				else
+				this.router.navigate(['edit', vehicleId], { relativeTo: this.route });
+			},
+			err => {}
+		)
 	}
 
 	onDeleteVehicle(vehicleId: number) {

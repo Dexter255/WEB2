@@ -41,7 +41,7 @@ namespace ProjectService.Models.RentACar
         public int NumberOfSeats { get; set; }
 
         [Required]
-        public int Rating { get; set; }
+        public double Rating { get; set; }
 
         [Required]
         public int RatedCount { get; set; }

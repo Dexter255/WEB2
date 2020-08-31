@@ -23,7 +23,7 @@ export class FlightDetailsComponent implements OnInit {
 			this.flightService.getFlight(flightId).subscribe(
 				res => { },
 				err => { }
-			)
+			);
 		});
 	}
 

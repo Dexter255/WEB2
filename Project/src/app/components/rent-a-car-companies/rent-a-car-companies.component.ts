@@ -21,10 +21,7 @@ export class RentACarCompaniesComponent implements OnInit {
 			'toDate': new FormControl(null)
 		})
 
-		this.racCompanyService.getRacCompanies().subscribe(
-			res => { },
-			err => { }
-		)
+		this.racCompanyService.getRacCompanies().subscribe();
 	}
 
 	onSortChange(sortBy: string) {
@@ -71,8 +68,7 @@ export class RentACarCompaniesComponent implements OnInit {
 				'fromDate': null,
 				'toDate': null,
 			  });
-			},
-			err => {}
+			}
 		  );
 	}
 }

@@ -32,14 +32,12 @@ export class AdminPasswordComponent implements OnInit {
 			'id': this.passwordForm.get('id').value,
 			'password': this.passwordForm.get('password').value
 		};
-		this.serverService.SetNewPasswordForAdmin(body).subscribe(
+		this.serverService.setNewPasswordForAdmin(body).subscribe(
 			res => {
 				this.toastr.success(res['message'], 'Email');
 				this.router.navigate(['login']);
 			},
-			err => {
-				this.toastr.error(err.error['message'], 'Email');
-			}
+			err => {}
 		);
 	}
 

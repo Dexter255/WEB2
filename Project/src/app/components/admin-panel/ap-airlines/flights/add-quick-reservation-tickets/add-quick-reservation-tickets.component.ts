@@ -79,7 +79,8 @@ export class AddQuickReservationTicketsComponent implements OnInit {
 				res => {
 					this.toastr.success('Seats for quick reservation tickets successfully added.', 'Quick reservation tickets');
 					this.router.navigate(['../../'], {relativeTo: this.route});
-				}
+				},
+				err => {}
 			);
 		}
 	}
