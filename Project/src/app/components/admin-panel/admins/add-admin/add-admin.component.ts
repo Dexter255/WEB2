@@ -92,7 +92,7 @@ export class AddAdminComponent implements OnInit {
 			this.addAdmin.get('address').value.trim(),
 			this.addAdmin.get('number').value,
 			adminOf,
-			'defaultPassword');
+			'defaultPassword', '001000000');
 
 		if (this.edit) {
 			this.adminsService.updateAdmin(admin).subscribe(

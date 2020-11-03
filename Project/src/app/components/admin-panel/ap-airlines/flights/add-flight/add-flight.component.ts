@@ -42,8 +42,8 @@ export class AddFlightComponent implements OnInit {
 				'endDestination': new FormControl(null, Validators.required)
 			}, this.compareDestinations),
 			'dateAndTime': new FormGroup({
-				'startDateAndTime': new FormControl(null, [Validators.required]),
-				'endDateAndTime': new FormControl(null, [Validators.required]),
+				'startDateAndTime': new FormControl(null, [Validators.required, this.checkDate]),
+				'endDateAndTime': new FormControl(null, [Validators.required, this.checkDate]),
 			}, this.compareDates),
 			'distance': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
 			'locations': new FormArray([]),
